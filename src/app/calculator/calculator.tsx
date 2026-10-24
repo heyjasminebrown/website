@@ -186,7 +186,7 @@ function ReportForm({ inputs }: { inputs: FlipInputs }) {
         disabled={pending}
         className="w-full rounded-full bg-accent px-6 py-3 text-accent-foreground hover:opacity-90 disabled:opacity-60"
       >
-        {pending ? "Sending…" : "Email me my report"}
+        {pending ? "Sending…" : "I'm Ready!"}
       </button>
     </form>
   );
