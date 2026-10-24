@@ -177,7 +177,7 @@ function ReportForm({ inputs }: { inputs: FlipInputs }) {
       ))}
       <input name="name" required placeholder="Your name" autoComplete="name" defaultValue={v.name} aria-label="Your name" className={field} />
       <input name="email" type="email" required placeholder="Email" autoComplete="email" defaultValue={v.email} aria-label="Email" className={field} />
-      <input name="phone" type="tel" placeholder="Phone (optional)" autoComplete="tel" defaultValue={v.phone} aria-label="Phone (optional)" className={field} />
+      <input name="phone" type="tel" required placeholder="Phone" autoComplete="tel" defaultValue={v.phone} aria-label="Phone" className={field} />
       <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
       <p aria-live="polite" className="text-sm text-red-600">
         {state.status === "error" && state.message}

@@ -19,6 +19,9 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
   if (!values.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
     return { status: "error", values, message: "Please enter your name and a valid email." };
   }
+  if (values.phone.replace(/\D/g, "").length < 10) {
+    return { status: "error", values, message: "Please enter a full phone number." };
+  }
 
   // Recalculate on the server rather than trusting numbers sent from the browser.
   const i = parseInputs((key) => formData.get(key));
@@ -55,7 +58,7 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
     `Total all-in cost: ${money(r.totalCost)}`,
   ].join("\n");
 
-  const lead = `Name: ${values.name}\nEmail: ${values.email}\nPhone: ${values.phone || "(not given)"}`;
+  const lead = `Name: ${values.name}\nEmail: ${values.email}\nPhone: ${values.phone}`;
   const result = await sendEmail({
     subject: `Calculator lead: ${values.name} (${money(r.profit)} net profit deal)`,
     text: `${lead}\n\n${report}`,
