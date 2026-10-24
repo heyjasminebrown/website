@@ -17,7 +17,6 @@ export const site = {
 
 export const nav = [
   { label: "About", href: "/about" },
-  { label: "Invest", href: "/passiveincome" },
   { label: "Fund Your Deal", href: "/loan" },
   { label: "Events", href: "/events" },
   { label: "Newsletter", href: "/subscribe" },
@@ -62,8 +61,8 @@ export const about = {
 // The buttons beside your photo on the home page.
 export const homeLinks = [
   { label: "Fund Your Deal", href: "/loan" },
+  { label: "Refer a Friend", href: "/referral" },
   { label: "Upcoming Events", href: "/events" },
-  { label: "Get Your Money Makeover", href: "/contact?topic=Money%20Makeover" },
   { label: "Wealthy Notes Newsletter", href: "/subscribe" },
 ];
 
