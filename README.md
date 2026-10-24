@@ -15,7 +15,7 @@ All copy (business name, tagline, services, pricing, testimonials, bio, email, s
 | Contact       | `src/app/contact/`          |
 | Header/Footer | `src/components/`           |
 
-Colours are defined as CSS variables at the top of `src/app/globals.css` (light and dark mode).
+Brand colours (plum, blush, lavender) are CSS variables at the top of `src/app/globals.css`. Fonts are Marcellus (headings) and PT Serif (body), set in `src/app/layout.tsx`. Photos live in `public/images/`.
 
 ## Local development
 

@@ -10,13 +10,13 @@ export default function LoanPage() {
     <>
       <section className="mx-auto max-w-5xl px-4 pb-8 pt-20 sm:px-6">
         <p className="text-sm font-medium uppercase tracking-wider text-accent">Financing</p>
-        <h1 className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">{loans.heading}</h1>
+        <h1 className="mt-2 text-4xl sm:text-5xl">{loans.heading}</h1>
         <p className="mt-6 max-w-2xl text-lg text-muted">{loans.intro}</p>
       </section>
       <section className="mx-auto grid max-w-5xl gap-6 px-4 py-8 sm:grid-cols-2 sm:px-6">
         {loans.types.map((t) => (
           <div key={t.title} className="rounded-2xl border border-border bg-surface p-6">
-            <h2 className="text-lg font-semibold">{t.title}</h2>
+            <h2 className="text-lg">{t.title}</h2>
             <p className="mt-2 text-muted">{t.body}</p>
           </div>
         ))}

@@ -5,7 +5,7 @@ export function Header() {
   return (
     <header className="border-b border-border">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="/" className="text-lg font-semibold tracking-tight">
+        <Link href="/" className="text-lg">
           {site.name}
         </Link>
         <nav className="hidden items-center gap-6 text-sm sm:flex">

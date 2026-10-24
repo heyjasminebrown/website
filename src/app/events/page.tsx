@@ -14,7 +14,7 @@ export default function EventsPage() {
               <p className="text-sm font-medium text-accent">
                 {e.date} · {e.location}
               </p>
-              <h2 className="mt-1 text-xl font-semibold">{e.title}</h2>
+              <h2 className="mt-1 text-xl">{e.title}</h2>
               <p className="mt-1 text-muted">{e.summary}</p>
             </div>
             {e.link && (

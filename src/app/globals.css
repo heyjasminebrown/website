@@ -1,13 +1,16 @@
 @import "tailwindcss";
 
+/* Brand colours, matched to the original heyjasminebrown.com. */
 :root {
-  --background: #fbfaf8;
-  --foreground: #1c1917;
-  --muted: #57534e;
-  --surface: #ffffff;
-  --border: #e7e5e4;
-  --accent: #9a3412;
-  --accent-foreground: #ffffff;
+  --background: #ebeaeb;
+  --foreground: #34223a;
+  --muted: #5e4d63;
+  --surface: #f6f5f6;
+  --border: #d6cfd8;
+  --accent: #34223a;
+  --accent-foreground: #e3b79c;
+  --blush: #ceac9c;
+  --lavender: #c0b0c3;
 }
 
 @theme inline {
@@ -18,23 +21,21 @@
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0c0a09;
-    --foreground: #f5f5f4;
-    --muted: #a8a29e;
-    --surface: #1c1917;
-    --border: #292524;
-    --accent: #fb923c;
-    --accent-foreground: #1c1917;
-  }
+  --color-blush: var(--blush);
+  --color-lavender: var(--lavender);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-body);
+  --font-display: var(--font-display);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
 }

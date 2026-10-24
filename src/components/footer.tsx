@@ -22,7 +22,7 @@ export function Footer() {
             ))}
           </ul>
           <ul className="space-y-2">
-            {site.social.map((item) => (
+            {site.social.filter((item) => item.href).map((item) => (
               <li key={item.href}>
                 <a href={item.href} className="hover:text-foreground" target="_blank" rel="noreferrer">
                   {item.label}

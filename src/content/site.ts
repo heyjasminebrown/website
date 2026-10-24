@@ -3,12 +3,16 @@
 export const site = {
   name: "Hey Jasmine Brown",
   owner: "Jasmine Brown",
-  tagline: "Building wealth through real estate, smart money moves and better business systems.",
+  tagline: "Finance & Real Estate",
   description:
     "Jasmine Brown helps small businesses grow through marketing and technology, and guides homeowners and investors through their real estate decisions.",
   url: "https://heyjasminebrown.com",
   email: "jasmine@heyjasminebrown.com",
-  social: [{ label: "Instagram", href: "https://instagram.com/heyjasminebrown" }],
+  social: [
+    { label: "Instagram", href: "https://instagram.com/heyjasminebrown" },
+    // TODO: add your LinkedIn profile URL; the icon is hidden until it's set.
+    { label: "LinkedIn", href: "" },
+  ],
 };
 
 export const nav = [
@@ -47,11 +51,30 @@ export const offerings = [
 ];
 
 export const about = {
-  heading: "Hey, I'm Jasmine.",
+  heading: "Hey there, I’m Jasmine.",
   paragraphs: [
-    "My career began in corporate America, where I spent over a decade working with Fortune 500 companies, developing data-driven strategies and streamlining complex operations.",
-    "From there I moved into real estate investing. Today I help small businesses optimize their growth through marketing and technology, and I guide homeowners and investors through their real estate decisions.",
+    "Thanks for stopping by my corner of the internet! My career began in corporate America, where I spent over a decade working with Fortune 500 companies to develop data-driven strategies and streamline complex operations. This foundation in risk management, strategy, and project leadership sharpened my ability to analyze challenges from multiple angles and deliver tailored, practical solutions. I later applied this strategic mindset to real estate investing, growing my own portfolio while helping others navigate buying, selling, and investing with confidence.",
+    "Today, I combine my corporate expertise and real estate experience to support both small businesses and individual clients. I help businesses optimize growth through marketing and technology, while guiding homeowners and investors through their real estate decisions. With empathy and a results-focused approach, I provide personalized service designed to deliver clarity, confidence, and success across all my clients’ goals.",
+    "Committed to open communication and thoughtful guidance, I work closely with each client to understand their unique needs and objectives. My aim is to make every business challenge and real estate transaction as smooth and rewarding as possible, so you can move forward with peace of mind. I look forward to the opportunity of working with you!",
   ],
+};
+
+// The buttons beside your photo on the home page.
+export const homeLinks = [
+  { label: "Fund Your Deal", href: "/loan" },
+  { label: "Upcoming Events", href: "/events" },
+  { label: "Get Your Money Makeover", href: "/contact?topic=Money%20Makeover" },
+  { label: "Wealthy Notes Newsletter", href: "/subscribe" },
+];
+
+export const gallery = {
+  heading: "Let’s Keep Growing Together!",
+  photos: [
+    { src: "/images/growing-1.jpg", alt: "Signing closing documents at a desk" },
+    { src: "/images/growing-2.jpg", alt: "Jasmine smiling while signing paperwork" },
+    { src: "/images/growing-3.jpg", alt: "Celebrating in front of a brick property" },
+  ],
+  connect: "Let’s stay connected on Instagram & LinkedIn!",
 };
 
 export const passiveIncome = {
