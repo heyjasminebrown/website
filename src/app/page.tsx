@@ -10,12 +10,13 @@ export default function Home() {
         <h1 className="text-center text-5xl leading-tight sm:text-7xl lg:text-8xl">{site.tagline}</h1>
         <div className="mt-10 grid items-center gap-12 md:grid-cols-2">
           <Image
-            src="/images/jasmine-portrait.jpg"
+            src="/images/Jasmine-Home-1.jpg"
             alt={site.owner}
-            width={540}
-            height={540}
+            width={1365}
+            height={2048}
             priority
-            className="mx-auto aspect-square w-full max-w-md rounded-full object-cover"
+            sizes="(min-width: 768px) 448px, 100vw"
+            className="mx-auto aspect-square w-full max-w-md rounded-full object-cover object-[center_62%]"
           />
           <nav className="mx-auto flex w-full max-w-xs flex-col gap-3">
             {homeLinks.map((l) => (
@@ -50,8 +51,9 @@ export default function Home() {
               key={p.src}
               src={p.src}
               alt={p.alt}
-              width={570}
-              height={598}
+              width={768}
+              height={806}
+              sizes="(min-width: 640px) 33vw, 100vw"
               className="aspect-[570/598] w-full object-cover"
             />
           ))}

@@ -69,9 +69,9 @@ export const homeLinks = [
 export const gallery = {
   heading: "Let’s Keep Growing Together!",
   photos: [
-    { src: "/images/growing-1.jpg", alt: "Signing closing documents at a desk" },
-    { src: "/images/growing-2.jpg", alt: "Jasmine smiling while signing paperwork" },
-    { src: "/images/growing-3.jpg", alt: "Celebrating in front of a brick property" },
+    { src: "/images/Jasmine-Closing-1.jpg", alt: "Signing closing documents at a desk" },
+    { src: "/images/Jasmine-Closing-2.jpg", alt: "Jasmine smiling while signing paperwork" },
+    { src: "/images/Jasmine-Closing-3.jpg", alt: "Celebrating in front of a brick property" },
   ],
   connect: "Let’s stay connected on Instagram & LinkedIn!",
 };
