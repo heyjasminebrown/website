@@ -54,7 +54,7 @@ const sections: { title: string; note?: string; showPayment?: boolean; fields: [
     title: "Selling costs",
     fields: [
       ["realtorPct", "Realtor fees (% of ARV)", "%"],
-      ["sellClosingPct", "Closing costs: title & attorney (% of ARV)", "%"],
+      ["sellClosingPct", "Closing costs", "%"],
     ],
   },
 ];
