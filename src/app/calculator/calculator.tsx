@@ -76,6 +76,11 @@ export function Calculator() {
   );
   const inputs = Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, toNumber(v)])) as FlipInputs;
   const r = underwrite(inputs);
+  // Dollar amounts shown under the percentage fields, once there's a number to apply them to.
+  const financed: Partial<Record<Key, number>> = {
+    purchaseFinancedPct: inputs.purchasePrice ? (inputs.purchasePrice * inputs.purchaseFinancedPct) / 100 : undefined,
+    rehabFinancedPct: inputs.renovationCost ? (inputs.renovationCost * inputs.rehabFinancedPct) / 100 : undefined,
+  };
 
   return (
     <div className="grid gap-10 lg:grid-cols-[1fr_380px]">
@@ -109,6 +114,9 @@ export function Calculator() {
                       </span>
                     )}
                   </span>
+                  {financed[key] !== undefined && (
+                    <span className="mt-1 block text-muted tabular-nums">{money(financed[key])} financed</span>
+                  )}
                 </label>
               ))}
             </div>
