@@ -1,5 +1,6 @@
 "use server";
 
+import { saveLead } from "@/lib/leads";
 import { sendEmail, sendFailureMessage } from "@/lib/send-email";
 import { referralLoanTypes } from "@/content/site";
 
@@ -41,13 +42,23 @@ export async function sendReferral(_prev: ReferralState, formData: FormData): Pr
   ].join("\n");
 
   // Reply-to is the referral, so hitting Reply starts the conversation with them.
-  const result = await sendEmail({
-    subject: `Loan referral: ${firstName} ${lastName} (from ${referrerName})`,
-    text,
-    replyTo: email,
-  });
+  const [saved, result] = await Promise.all([
+    saveLead({
+      source: "Referral",
+      name: `${firstName} ${lastName}`,
+      email,
+      phone,
+      details: { referredBy: referrerName, loanType },
+    }),
+    sendEmail({
+      subject: `Loan referral: ${firstName} ${lastName} (from ${referrerName})`,
+      text,
+      replyTo: email,
+    }),
+  ]);
   if (result === "logged") return { status: "success", message: "Dev mode: referral logged to the server console." };
-  if (result !== "sent") return { status: "error", values, message: sendFailureMessage(result) };
+  // The lead counts as received if it reached either the database or the inbox.
+  if (result !== "sent" && !saved) return { status: "error", values, message: sendFailureMessage(result) };
   return {
     status: "success",
     message: `Thank you, ${referrerName.split(" ")[0]}! I'll reach out to ${firstName} soon.`,

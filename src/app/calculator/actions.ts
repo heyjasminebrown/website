@@ -2,6 +2,7 @@
 
 import { site } from "@/content/site";
 import { hasDeal, money, parseInputs, percent, underwrite } from "@/lib/flip-calc";
+import { saveLead } from "@/lib/leads";
 import { sendEmail, sendFailureMessage } from "@/lib/send-email";
 
 export type ReportState = {
@@ -59,13 +60,29 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
   ].join("\n");
 
   const lead = `Name: ${values.name}\nEmail: ${values.email}\nPhone: ${values.phone}`;
-  const result = await sendEmail({
-    subject: `Calculator lead: ${values.name} (${money(r.profit)} net profit deal)`,
-    text: `${lead}\n\n${report}`,
-    replyTo: values.email,
-  });
+  const [saved, result] = await Promise.all([
+    saveLead({
+      source: "Calculator",
+      name: values.name,
+      email: values.email,
+      phone: values.phone,
+      details: {
+        inputs: i,
+        netProfit: Math.round(r.profit),
+        roi: Number((r.roi * 100).toFixed(1)),
+        loanAmount: Math.round(r.first.amount),
+        totalCost: Math.round(r.totalCost),
+      },
+    }),
+    sendEmail({
+      subject: `Calculator lead: ${values.name} (${money(r.profit)} net profit deal)`,
+      text: `${lead}\n\n${report}`,
+      replyTo: values.email,
+    }),
+  ]);
   if (result === "logged") return { status: "success", message: "Dev mode: report logged to the server console." };
-  if (result !== "sent") return { status: "error", values, message: sendFailureMessage(result) };
+  // The lead counts as received if it reached either the database or the inbox.
+  if (result !== "sent" && !saved) return { status: "error", values, message: sendFailureMessage(result) };
 
   // The lead's copy is a nice-to-have: Jasmine already has their details if this fails.
   await sendEmail({

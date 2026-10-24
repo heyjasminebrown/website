@@ -33,6 +33,17 @@ The form posts to a Server Action (`src/app/contact/actions.ts`) that emails enq
 Without a key, messages are logged to the console in development, and in production the form
 asks visitors to email you directly, so nothing is silently lost.
 
+## Leads database (Supabase)
+
+Every form submission (contact, loan, investor, newsletter, referral, calculator) is saved to a
+`leads` table in Supabase as well as emailed. To set it up:
+
+1. In Supabase, open **SQL Editor → New query**, paste [`supabase/leads.sql`](supabase/leads.sql) and click **Run**.
+2. In Vercel, add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` (Supabase **Project Settings → API**) and redeploy.
+
+View leads in Supabase under **Table Editor → leads**; export with the **Export → CSV** button.
+A submission counts as received if it reaches either Supabase or your inbox.
+
 ## Deploying (Vercel or Netlify)
 
 1. Import this GitHub repo in Vercel or Netlify. Both detect Next.js automatically; no config needed.
