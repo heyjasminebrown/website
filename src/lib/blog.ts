@@ -86,8 +86,3 @@ export function getPosts(): Post[] {
 }
 
 export const getPost = (slug: string) => getPosts().find((p) => p.slug === slug);
-
-export const formatDate = (date: string) =>
-  date
-    ? new Date(`${date}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
-    : "";

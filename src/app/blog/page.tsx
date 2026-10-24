@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { newsletter } from "@/content/site";
-import { formatDate, getPosts } from "@/lib/blog";
+import { getPosts } from "@/lib/blog";
 import { Subscribe } from "./subscribe";
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export default function BlogPage() {
                 )}
                 <div className="flex flex-1 flex-col p-6">
                   <p className="text-sm text-muted">
-                    {formatDate(p.date)} · {p.minutes} min read{p.draft && " · Draft"}
+                    {p.minutes} min read{p.draft && " · Draft"}
                   </p>
                   <h2 className="mt-2 text-2xl">{p.title}</h2>
                   <p className="mt-2 text-muted">{p.description}</p>

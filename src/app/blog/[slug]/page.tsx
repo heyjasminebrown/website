@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { site } from "@/content/site";
-import { formatDate, getPost, getPosts } from "@/lib/blog";
+import { getPost, getPosts } from "@/lib/blog";
 import { Subscribe } from "../subscribe";
 
 export function generateStaticParams() {
@@ -62,7 +62,7 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
         </Link>
         <h1 className="mt-4 text-4xl leading-tight sm:text-5xl">{post.title}</h1>
         <p className="mt-4 text-muted">
-          {formatDate(post.date)} · {post.minutes} min read{post.draft && " · Draft (not on the live site)"}
+          {post.minutes} min read{post.draft && " · Draft (not on the live site)"}
         </p>
         {post.image && (
           <Image
