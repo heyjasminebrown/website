@@ -87,7 +87,8 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
           <div>
             <p className="font-display text-xl">Written by {site.owner}</p>
             <p className="mt-1 text-sm text-muted">
-              Real estate investor helping Atlanta investors fund their deals and build wealth.{" "}
+              Jasmine specializes in financing flips, new construction, DSCR, and multifamily nationwide. As an investor, she
+              brings first-hand experience and strategic insights to her clients.{" "}
               <Link href="/loan" className="text-accent underline underline-offset-4">
                 Fund your next deal
               </Link>
