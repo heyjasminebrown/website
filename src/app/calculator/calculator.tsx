@@ -28,7 +28,7 @@ const sections: { title: string; note?: string; showPayment?: boolean; fields: [
   },
   {
     title: "Second loan",
-    note: "Private money or gap funding. Leave at $0 if there's no second loan",
+    note: "Enter the amount of any additional financing being used toward the project.",
     fields: [
       ["partnerAmount", "Investment amount", "$"],
       ["secondRate", "Interest rate", "%"],
