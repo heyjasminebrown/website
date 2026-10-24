@@ -3,7 +3,11 @@ import { Section } from "@/components/section";
 import { ContactForm } from "@/app/contact/contact-form";
 import { passiveIncome } from "@/content/site";
 
-export const metadata: Metadata = { title: "Passive Income", description: passiveIncome.intro };
+export const metadata: Metadata = {
+  title: "Passive Income",
+  description: passiveIncome.intro,
+  alternates: { canonical: "/passiveincome" },
+};
 
 export default function PassiveIncomePage() {
   return (

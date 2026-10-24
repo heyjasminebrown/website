@@ -1,17 +1,24 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { SocialIcons } from "@/components/social-icons";
 import { about, gallery, homeLinks, site } from "@/content/site";
+
+export const metadata: Metadata = {
+  title: { absolute: "Hey Jasmine Brown | Hard Money Loans & Real Estate Financing in Atlanta" },
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (
     <>
       <section className="mx-auto max-w-6xl px-4 pb-20 pt-10 sm:px-6">
         <h1 className="text-center text-5xl leading-tight sm:text-7xl lg:text-8xl">{site.tagline}</h1>
+        <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-muted sm:text-xl">{site.subtagline}</p>
         <div className="mt-10 grid items-center gap-12 md:grid-cols-2">
           <Image
             src="/images/Jasmine-Home-1.jpg"
-            alt={site.owner}
+            alt="Jasmine Brown, Atlanta real estate investor, at home"
             width={1365}
             height={2048}
             priority

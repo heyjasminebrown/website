@@ -3,7 +3,12 @@ import { Section } from "@/components/section";
 import { ContactForm } from "@/app/contact/contact-form";
 import { loans } from "@/content/site";
 
-export const metadata: Metadata = { title: "Fund Your Deal", description: loans.intro };
+export const metadata: Metadata = {
+  title: "Hard Money Loans in Atlanta, GA",
+  description:
+    "Fix & flip, new construction, DSCR and multifamily loans for Atlanta real estate investors. Tell me about your deal and let's get it funded.",
+  alternates: { canonical: "/loan" },
+};
 
 export default function LoanPage() {
   return (

@@ -4,8 +4,11 @@ export const site = {
   name: "Hey Jasmine Brown",
   owner: "Jasmine Brown",
   tagline: "Finance & Real Estate",
+  // The line under the big heading on the home page: says plainly who this is for, for people and search engines.
+  subtagline: "Hard money loans for Atlanta investors, plus the money moves that help you build wealth.",
   description:
-    "Jasmine Brown helps small businesses grow through marketing and technology, and guides homeowners and investors through their real estate decisions.",
+    "Hard money loans for Atlanta real estate investors (fix & flip, new construction, DSCR and multifamily), plus money and real estate guidance from Jasmine Brown.",
+  areaServed: "Atlanta, GA",
   url: "https://heyjasminebrown.com",
   email: "jasmine@heyjasminebrown.com",
   social: [
@@ -71,9 +74,9 @@ export const homeLinks = [
 export const gallery = {
   heading: "Let’s Keep Growing Together!",
   photos: [
-    { src: "/images/Jasmine-Closing-1.jpg", alt: "Signing closing documents at a desk" },
-    { src: "/images/Jasmine-Closing-2.jpg", alt: "Jasmine smiling while signing paperwork" },
-    { src: "/images/Jasmine-Closing-3.jpg", alt: "Celebrating in front of a brick property" },
+    { src: "/images/Jasmine-Closing-1.jpg", alt: "Jasmine Brown signing closing documents on a real estate deal" },
+    { src: "/images/Jasmine-Closing-2.jpg", alt: "Jasmine Brown smiling while signing closing paperwork" },
+    { src: "/images/Jasmine-Closing-3.jpg", alt: "Jasmine Brown celebrating in front of an investment property" },
   ],
   connect: "Let’s stay connected on Instagram & LinkedIn!",
 };

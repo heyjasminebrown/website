@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { Section } from "@/components/section";
 import { events } from "@/content/site";
 
-export const metadata: Metadata = { title: "Events" };
+export const metadata: Metadata = {
+  title: "Real Estate Investor Events",
+  description: "Upcoming real estate investing conferences and meetups where you can connect with Jasmine Brown.",
+  alternates: { canonical: "/events" },
+};
 
 export default function EventsPage() {
   return (

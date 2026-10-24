@@ -4,6 +4,7 @@ import { ReferralForm } from "./referral-form";
 
 export const metadata: Metadata = {
   title: "Refer a Friend",
+  alternates: { canonical: "/referral" },
   description: "Know someone who needs funding for a real estate deal? Send them my way.",
 };
 

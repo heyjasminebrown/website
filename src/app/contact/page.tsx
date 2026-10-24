@@ -4,7 +4,11 @@ import { Section } from "@/components/section";
 import { site } from "@/content/site";
 import { ContactForm } from "./contact-form";
 
-export const metadata: Metadata = { title: "Contact" };
+export const metadata: Metadata = {
+  title: "Contact",
+  description: "Get in touch with Jasmine Brown about funding your next real estate deal, a money makeover or working together.",
+  alternates: { canonical: "/contact" },
+};
 
 async function TopicForm({ searchParams }: { searchParams: PageProps<"/contact">["searchParams"] }) {
   const { topic } = await searchParams;

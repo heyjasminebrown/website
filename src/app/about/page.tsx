@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { about } from "@/content/site";
 
-export const metadata: Metadata = { title: "About" };
+export const metadata: Metadata = {
+  title: "About Jasmine Brown",
+  description:
+    "From a decade with Fortune 500 companies to real estate investing: meet Jasmine Brown, who helps Atlanta investors and small businesses grow.",
+  alternates: { canonical: "/about" },
+};
 
 export default function AboutPage() {
   return (

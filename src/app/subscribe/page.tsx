@@ -3,7 +3,11 @@ import { Section } from "@/components/section";
 import { ContactForm } from "@/app/contact/contact-form";
 import { newsletter } from "@/content/site";
 
-export const metadata: Metadata = { title: `${newsletter.name} Newsletter`, description: newsletter.intro };
+export const metadata: Metadata = {
+  title: `${newsletter.name} Newsletter`,
+  description: newsletter.intro,
+  alternates: { canonical: "/subscribe" },
+};
 
 export default function SubscribePage() {
   return (

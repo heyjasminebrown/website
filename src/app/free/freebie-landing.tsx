@@ -5,7 +5,7 @@ import { FreebieForm } from "./freebie-form";
 
 export function freebieMetadata(slug: string): Metadata {
   const magnet = getLeadMagnet(slug);
-  return { title: magnet?.title, description: magnet?.pitch };
+  return { title: magnet?.title, description: magnet?.pitch, alternates: { canonical: `/free/${slug}` } };
 }
 
 /** Landing page for a free guide: the pitch on the left, the signup form on the right. */

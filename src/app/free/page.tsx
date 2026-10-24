@@ -4,6 +4,7 @@ import { leadMagnets } from "@/content/lead-magnets";
 
 export const metadata: Metadata = {
   title: "Free Guides & Tools",
+  alternates: { canonical: "/free" },
   description: "Free checklists, worksheets and guides for real estate investors and anyone building wealth.",
 };
 
