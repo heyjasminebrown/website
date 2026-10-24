@@ -20,6 +20,7 @@ export function ContactForm({
   submitLabel?: string;
 }) {
   const [state, formAction, pending] = useActionState(sendContact, initialState);
+  const v = state.values ?? {};
 
   if (state.status === "success") {
     return <p className="rounded-lg border border-border bg-surface p-6 text-lg">{state.message}</p>;
@@ -31,23 +32,23 @@ export function ContactForm({
       <div className={signup ? "grid gap-5 sm:grid-cols-2" : "space-y-5"}>
         <div>
           <label htmlFor="name" className="text-sm font-medium">Name</label>
-          <input id="name" name="name" required autoComplete="name" className={field} />
+          <input id="name" name="name" defaultValue={v.name} required autoComplete="name" className={field} />
         </div>
         <div>
           <label htmlFor="email" className="text-sm font-medium">Email</label>
-          <input id="email" name="email" type="email" required autoComplete="email" className={field} />
+          <input id="email" name="email" defaultValue={v.email} type="email" required autoComplete="email" className={field} />
         </div>
       </div>
       {loanTypes && (
         <>
           <div>
             <label htmlFor="phone" className="text-sm font-medium">Phone</label>
-            <input id="phone" name="phone" type="tel" autoComplete="tel" className={field} />
+            <input id="phone" name="phone" defaultValue={v.phone} type="tel" autoComplete="tel" className={field} />
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
               <label htmlFor="loanType" className="text-sm font-medium">Loan type</label>
-              <select id="loanType" name="loanType" className={field}>
+              <select key={v.loanType} id="loanType" name="loanType" defaultValue={v.loanType} className={field}>
                 {loanTypes.map((t) => (
                   <option key={t}>{t}</option>
                 ))}
@@ -55,12 +56,12 @@ export function ContactForm({
             </div>
             <div>
               <label htmlFor="amount" className="text-sm font-medium">Loan amount needed</label>
-              <input id="amount" name="amount" inputMode="numeric" placeholder="$" className={field} />
+              <input id="amount" name="amount" defaultValue={v.amount} inputMode="numeric" placeholder="$" className={field} />
             </div>
           </div>
           <div>
             <label htmlFor="location" className="text-sm font-medium">Property location</label>
-            <input id="location" name="location" placeholder="City, State" className={field} />
+            <input id="location" name="location" defaultValue={v.location} placeholder="City, State" className={field} />
           </div>
         </>
       )}
@@ -69,7 +70,7 @@ export function ContactForm({
           <label htmlFor="message" className="text-sm font-medium">
             {loanTypes ? "Tell me about the deal" : "How can I help?"}
           </label>
-          <textarea id="message" name="message" required rows={5} className={field} />
+          <textarea id="message" name="message" defaultValue={v.message} required rows={5} className={field} />
         </div>
       )}
       <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
