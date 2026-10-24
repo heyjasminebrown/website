@@ -17,5 +17,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       .filter((p) => !p.draft)
       .map((p) => `/blog/${p.slug}`),
   ];
-  return [{ url: site.url, priority: 1 }, ...paths.map((p) => ({ url: `${site.url}${p}` }))];
+  return [{ url: site.url, priority: 1 }, ...[...new Set(paths)].map((p) => ({ url: `${site.url}${p}` }))];
 }

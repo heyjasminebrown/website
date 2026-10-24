@@ -8,7 +8,7 @@ export function Header() {
         <Link href="/" className="text-lg">
           {site.name}
         </Link>
-        <nav className="hidden items-center gap-6 text-sm sm:flex">
+        <nav className="hidden items-center gap-6 text-sm lg:flex">
           {nav.map((item) => (
             <Link key={item.href} href={item.href} className="text-muted hover:text-foreground">
               {item.label}
@@ -21,7 +21,7 @@ export function Header() {
             Contact
           </Link>
         </nav>
-        <details className="relative sm:hidden">
+        <details className="relative lg:hidden">
           <summary className="cursor-pointer list-none rounded-md border border-border px-3 py-1.5 text-sm">
             Menu
           </summary>
@@ -31,6 +31,9 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
+            <Link href="/contact" className="mt-1 rounded bg-accent px-3 py-2 text-sm text-accent-foreground hover:opacity-90">
+              Contact
+            </Link>
           </nav>
         </details>
       </div>
