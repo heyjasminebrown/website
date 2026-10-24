@@ -19,7 +19,7 @@ export const site = {
 };
 
 export const nav = [
-  { label: "About", href: "/about" },
+  { label: "Home", href: "/" },
   { label: "Fund Your Deal", href: "/loan" },
   { label: "Calculator", href: "/calculator" },
   { label: "Events", href: "/events" },
