@@ -30,9 +30,9 @@ export function GuideShell({ slug, intro, children }: { slug: string; intro: str
 export function FillLine({ label, columns = 1 }: { label: string; columns?: number }) {
   return (
     <div className="flex items-end gap-3 border-b border-border py-2 text-sm">
-      <span className="flex-1">{label}</span>
+      <span className="min-w-0 flex-1">{label}</span>
       {Array.from({ length: columns }, (_, i) => (
-        <span key={i} className="w-24 shrink-0 border-b border-dotted border-muted/50 text-muted">$</span>
+        <span key={i} className="w-16 shrink-0 border-b border-dotted border-muted/50 text-muted sm:w-24 print:w-24">$</span>
       ))}
     </div>
   );

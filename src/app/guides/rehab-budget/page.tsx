@@ -10,9 +10,9 @@ export default function RehabBudgetGuide() {
       intro="Fill in your own estimate for each line, then compare it with your contractors' quotes. Skip anything the property doesn't need."
     >
       <div className="flex justify-end gap-3 text-xs font-medium uppercase tracking-wider text-muted">
-        <span className="w-24">Your estimate</span>
-        <span className="w-24">Quote 1</span>
-        <span className="w-24">Quote 2</span>
+        <span className="w-16 sm:w-24 print:w-24">Your estimate</span>
+        <span className="w-16 sm:w-24 print:w-24">Quote 1</span>
+        <span className="w-16 sm:w-24 print:w-24">Quote 2</span>
       </div>
       {rehabCategories.map((c) => (
         <section key={c.heading} className="break-inside-avoid !mt-6">
