@@ -47,8 +47,8 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
     "",
     "DEAL COSTS",
     `Carrying costs: ${money(r.monthlyHolding)}/mo x ${i.holdMonths} = ${money(r.holdingCost)} (interest-only payment, HOA, utilities)`,
-    `Acquisition costs: ${money(r.costToBuy)} (incl. ${money(i.propertyTaxes)} property taxes, ${money(i.insurance)} insurance)`,
-    `Selling costs: ${money(r.costToSell)} (incl. ${i.realtorPct}% agent commission)`,
+    `Acquisition costs: ${money(r.costToBuy)} (${i.buyClosingPct}% closing costs, ${money(i.propertyTaxes)} property taxes, ${money(i.insurance)} insurance)`,
+    `Selling costs: ${money(r.costToSell)} (${i.realtorPct}% realtor fees + ${i.sellClosingPct}% closing costs)`,
     `Total all-in cost: ${money(r.totalCost)}`,
   ].join("\n");
 

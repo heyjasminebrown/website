@@ -17,12 +17,10 @@ export type FlipInputs = {
   secondRate: number;
   monthlyHoa: number;
   monthlyUtilities: number;
-  buyAttorneyFees: number;
   propertyTaxes: number;
   insurance: number;
-  buyTitlePct: number;
-  sellAttorneyFees: number;
-  sellTitlePct: number;
+  buyClosingPct: number;
+  sellClosingPct: number;
   realtorPct: number;
 };
 
@@ -39,13 +37,11 @@ export const defaultInputs: FlipInputs = {
   secondRate: 12,
   monthlyHoa: 0,
   monthlyUtilities: 200,
-  buyAttorneyFees: 600,
   propertyTaxes: 9_000,
   insurance: 1_800,
-  buyTitlePct: 1,
-  sellAttorneyFees: 600,
-  sellTitlePct: 1,
-  realtorPct: 2.5,
+  buyClosingPct: 1,
+  sellClosingPct: 1,
+  realtorPct: 3,
 };
 
 function loan(amount: number, points: number, rate: number, months: number) {
@@ -65,12 +61,13 @@ export function underwrite(i: FlipInputs) {
   const monthlyHolding = first.monthlyPayment + i.monthlyHoa + i.monthlyUtilities;
   const holdingCost = monthlyHolding * i.holdMonths;
 
-  const buyTitle = (i.purchasePrice * i.buyTitlePct) / 100;
-  const costToBuy = i.buyAttorneyFees + buyTitle + i.propertyTaxes + i.insurance;
+  // Closing costs cover title and attorney fees together.
+  const buyClosing = (i.purchasePrice * i.buyClosingPct) / 100;
+  const costToBuy = buyClosing + i.propertyTaxes + i.insurance;
 
-  const sellTitle = (i.resaleValue * i.sellTitlePct) / 100;
+  const sellClosing = (i.resaleValue * i.sellClosingPct) / 100;
   const realtorFees = (i.resaleValue * i.realtorPct) / 100;
-  const costToSell = i.sellAttorneyFees + sellTitle + realtorFees;
+  const costToSell = sellClosing + realtorFees;
 
   const totalCost = projectCost + financingCost + holdingCost + costToBuy + costToSell;
   const profit = i.resaleValue - totalCost;
@@ -84,9 +81,9 @@ export function underwrite(i: FlipInputs) {
     financingCost,
     monthlyHolding,
     holdingCost,
-    buyTitle,
+    buyClosing,
     costToBuy,
-    sellTitle,
+    sellClosing,
     realtorFees,
     costToSell,
     totalCost,

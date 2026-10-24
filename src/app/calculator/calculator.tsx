@@ -45,8 +45,7 @@ const sections: { title: string; note?: string; showPayment?: boolean; fields: [
   {
     title: "Acquisition costs",
     fields: [
-      ["buyAttorneyFees", "Attorney fees", "$"],
-      ["buyTitlePct", "Title & closing fees (% of purchase price)", "%"],
+      ["buyClosingPct", "Closing costs: title & attorney (% of purchase price)", "%"],
       ["propertyTaxes", "Property taxes", "$"],
       ["insurance", "Insurance", "$"],
     ],
@@ -54,9 +53,8 @@ const sections: { title: string; note?: string; showPayment?: boolean; fields: [
   {
     title: "Selling costs",
     fields: [
-      ["sellAttorneyFees", "Attorney fees", "$"],
-      ["sellTitlePct", "Title & closing fees (% of ARV)", "%"],
-      ["realtorPct", "Agent commission (% of ARV)", "%"],
+      ["realtorPct", "Realtor fees (% of ARV)", "%"],
+      ["sellClosingPct", "Closing costs: title & attorney (% of ARV)", "%"],
     ],
   },
 ];
