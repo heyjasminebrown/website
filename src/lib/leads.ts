@@ -12,9 +12,17 @@ export type Lead = {
   details?: Record<string, unknown>;
 };
 
+/** Accepts the project URL, or the dashboard URL people often paste by mistake. */
+function projectUrl(raw: string | undefined) {
+  if (!raw) return undefined;
+  const ref = raw.match(/supabase\.com\/dashboard\/project\/([a-z0-9]+)/i)?.[1];
+  if (ref) return `https://${ref}.supabase.co`;
+  return raw.replace(/\/(rest\/v1)?\/*$/, "");
+}
+
 /** Returns true if the lead was stored. Never throws, so a database problem can't break a form. */
 export async function saveLead(lead: Lead): Promise<boolean> {
-  const url = env("SUPABASE_URL");
+  const url = projectUrl(env("SUPABASE_URL"));
   const key = env("SUPABASE_SERVICE_ROLE_KEY");
   if (!url || !key) {
     if (process.env.NODE_ENV !== "production") console.log("[leads] Supabase not configured; not saved:", lead);
@@ -22,7 +30,7 @@ export async function saveLead(lead: Lead): Promise<boolean> {
   }
 
   try {
-    const res = await fetch(`${url.replace(/\/+$/, "")}/rest/v1/leads`, {
+    const res = await fetch(`${url}/rest/v1/leads`, {
       method: "POST",
       headers: {
         apikey: key,
