@@ -39,3 +39,15 @@ h3 {
   font-family: var(--font-display);
   font-weight: 400;
 }
+
+/* Printable guides (/guides/*): print just the page content on white. */
+@media print {
+  body > header,
+  body > footer,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+}

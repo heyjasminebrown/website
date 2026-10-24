@@ -14,6 +14,11 @@ All copy (business name, tagline, services, pricing, testimonials, bio, email, s
 | About         | `src/app/about/page.tsx`    |
 | Contact       | `src/app/contact/`          |
 | Header/Footer | `src/components/`           |
+| Free guides   | `src/app/free/`, `src/app/guides/` |
+
+Free guides and tools (lead magnets) are listed in [`src/content/lead-magnets.ts`](src/content/lead-magnets.ts),
+along with all their wording. Each has a signup page at `/free/<name>`; signups are saved to Supabase as
+`Lead magnet: <title>` and emailed a link to the printable guide at `/guides/<name>` (the quiz emails the score instead).
 
 Brand colours (plum, blush, lavender) are CSS variables at the top of `src/app/globals.css`. Fonts are Marcellus (headings) and PT Serif (body), set in `src/app/layout.tsx`. Photos live in `public/images/`.
 
