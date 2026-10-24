@@ -101,6 +101,9 @@ export const loans = {
   ],
 };
 
+// The loan options on the referral page (/referral).
+export const referralLoanTypes = ["Fix and Flip", "New Construction", "DSCR", "Multifamily (5+ units)"];
+
 // Add, remove or update events here. Leave `link` empty if there's no ticket page.
 export const events = [
   {
