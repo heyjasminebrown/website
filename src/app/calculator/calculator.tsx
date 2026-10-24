@@ -12,7 +12,7 @@ const sections: { title: string; note?: string; showPayment?: boolean; fields: [
     title: "The deal",
     fields: [
       ["purchasePrice", "Purchase price", "$"],
-      ["renovationCost", "Rehab budget (all-in: staging, warranty, architect, etc.)", "$"],
+      ["renovationCost", "Rehab budget", "$"],
       ["resaleValue", "ARV (after repair value)", "$"],
     ],
   },
