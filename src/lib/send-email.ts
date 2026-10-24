@@ -5,15 +5,17 @@ const env = (key: string) => process.env[key]?.trim().replace(/^["']|["']$/g, ""
 
 export type SendResult = "sent" | "logged" | "not-configured" | "failed";
 
-/** Emails a form submission to the site owner via Resend. */
+/** Emails a form submission via Resend; goes to the site owner unless `to` is given. */
 export async function sendEmail({
   subject,
   text,
   replyTo,
+  to,
 }: {
   subject: string;
   text: string;
   replyTo?: string;
+  to?: string;
 }): Promise<SendResult> {
   const apiKey = env("RESEND_API_KEY");
   if (!apiKey) {
@@ -30,7 +32,7 @@ export async function sendEmail({
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from: env("CONTACT_FROM_EMAIL") ?? "Website <onboarding@resend.dev>",
-        to: env("CONTACT_TO_EMAIL") ?? site.email,
+        to: to ?? env("CONTACT_TO_EMAIL") ?? site.email,
         reply_to: replyTo,
         subject,
         text,

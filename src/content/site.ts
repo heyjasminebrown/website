@@ -18,6 +18,7 @@ export const site = {
 export const nav = [
   { label: "About", href: "/about" },
   { label: "Fund Your Deal", href: "/loan" },
+  { label: "Calculator", href: "/calculator" },
   { label: "Events", href: "/events" },
   { label: "Newsletter", href: "/subscribe" },
 ];
@@ -62,6 +63,7 @@ export const about = {
 export const homeLinks = [
   { label: "Fund Your Deal", href: "/loan" },
   { label: "Refer a Friend", href: "/referral" },
+  { label: "Fix & Flip Calculator", href: "/calculator" },
   { label: "Upcoming Events", href: "/events" },
   { label: "Wealthy Notes Newsletter", href: "/subscribe" },
 ];
