@@ -27,8 +27,8 @@ const sections: { title: string; note?: string; fields: [Key, string, Unit][] }[
     ],
   },
   {
-    title: "Partners",
-    note: "Private money or gap funding. Leave at $0 if there are no partners",
+    title: "Second loan",
+    note: "Private money or gap funding. Leave at $0 if there's no second loan",
     fields: [
       ["partnerAmount", "Investment amount", "$"],
       ["secondRate", "Interest rate", "%"],
@@ -126,7 +126,7 @@ export function Calculator() {
             ["Financing costs (points + interest)", money(r.financingCost)],
             ["Loan amount", money(r.first.amount)],
             ["Loan payment (interest only)", `${money(r.first.monthlyPayment)}/mo`],
-            ...(inputs.partnerAmount > 0 ? [["Partner payment (interest only)", `${money(r.second.monthlyPayment)}/mo`]] : []),
+            ...(inputs.partnerAmount > 0 ? [["Second loan payment (interest only)", `${money(r.second.monthlyPayment)}/mo`]] : []),
             [`Carrying costs (${money(r.monthlyHolding)}/mo)`, money(r.holdingCost)],
             ["Acquisition costs", money(r.costToBuy)],
             ["Selling costs", money(r.costToSell)],

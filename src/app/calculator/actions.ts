@@ -40,7 +40,7 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
     `Loan: ${money(r.first.amount)} (${i.purchaseFinancedPct}% of purchase + ${i.rehabFinancedPct}% of rehab) at ${i.firstRate}%, ${i.firstPoints} points (${money(r.first.monthlyPayment)}/mo interest only)`,
     ...(i.partnerAmount > 0
       ? [
-          `Partners: ${money(i.partnerAmount)} at ${i.secondRate}% (${money(r.second.monthlyPayment)}/mo interest only)`,
+          `Second loan: ${money(i.partnerAmount)} at ${i.secondRate}% (${money(r.second.monthlyPayment)}/mo interest only)`,
         ]
       : []),
     `Financing costs (points + interest): ${money(r.financingCost)}`,
