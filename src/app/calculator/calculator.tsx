@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { defaultInputs, money, percent, underwrite, type FlipInputs } from "@/lib/flip-calc";
+import { defaultInputs, hasDeal, money, percent, underwrite, type FlipInputs } from "@/lib/flip-calc";
 import { sendReport, type ReportState } from "./actions";
 
 type Key = keyof FlipInputs;
@@ -71,7 +71,7 @@ const field =
 export function Calculator() {
   const [raw, setRaw] = useState(() =>
     Object.fromEntries(
-      sections.flatMap((s) => s.fields.map(([k, , unit]) => [k, format(defaultInputs[k], unit)])),
+      sections.flatMap((s) => s.fields.map(([k, , unit]) => [k, defaultInputs[k] ? format(defaultInputs[k], unit) : ""])),
     ) as Record<Key, string>,
   );
   const inputs = Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, toNumber(v)])) as FlipInputs;
@@ -98,9 +98,10 @@ export function Calculator() {
                     {unit === "$" && <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-muted">$</span>}
                     <input
                       inputMode="decimal"
+                      placeholder="0"
                       value={raw[key]}
                       onChange={(e) => setRaw({ ...raw, [key]: e.target.value })}
-                      onBlur={() => setRaw({ ...raw, [key]: format(toNumber(raw[key]), unit) })}
+                      onBlur={() => raw[key].trim() && setRaw({ ...raw, [key]: format(toNumber(raw[key]), unit) })}
                       className={`${field} ${unit === "$" ? "pl-7" : ""} ${unit !== "$" ? "pr-12" : ""}`}
                     />
                     {unit !== "$" && (
@@ -119,10 +120,16 @@ export function Calculator() {
       <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
         <div className="rounded-2xl bg-accent p-6 text-blush">
           <p className="text-sm uppercase tracking-wider opacity-80">Net profit</p>
-          <p className={`mt-1 font-display text-5xl ${r.profit < 0 ? "text-red-300" : ""}`}>{money(r.profit)}</p>
-          <p className="mt-3 text-lg">
-            ROI <span className="font-display text-2xl">{percent(r.roi)}</span>
-          </p>
+          {hasDeal(inputs) ? (
+            <>
+              <p className={`mt-1 font-display text-5xl ${r.profit < 0 ? "text-red-300" : ""}`}>{money(r.profit)}</p>
+              <p className="mt-3 text-lg">
+                ROI <span className="font-display text-2xl">{percent(r.roi)}</span>
+              </p>
+            </>
+          ) : (
+            <p className="mt-2 text-lg">Enter your purchase price, rehab budget and ARV to see your profit and ROI.</p>
+          )}
         </div>
 
         <dl className="divide-y divide-border rounded-2xl border border-border bg-surface text-sm">

@@ -1,7 +1,7 @@
 "use server";
 
 import { site } from "@/content/site";
-import { money, parseInputs, percent, underwrite } from "@/lib/flip-calc";
+import { hasDeal, money, parseInputs, percent, underwrite } from "@/lib/flip-calc";
 import { sendEmail, sendFailureMessage } from "@/lib/send-email";
 
 export type ReportState = {
@@ -22,6 +22,9 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
 
   // Recalculate on the server rather than trusting numbers sent from the browser.
   const i = parseInputs((key) => formData.get(key));
+  if (!hasDeal(i)) {
+    return { status: "error", values, message: "Enter your purchase price and ARV first, then send your report." };
+  }
   const r = underwrite(i);
   const report = [
     "FIX & FLIP DEAL ANALYSIS",

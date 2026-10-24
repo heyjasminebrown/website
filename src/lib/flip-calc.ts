@@ -24,25 +24,29 @@ export type FlipInputs = {
   realtorPct: number;
 };
 
+// Visitors start with these filled in; everything else starts blank (0).
 export const defaultInputs: FlipInputs = {
-  resaleValue: 1_400_000,
-  renovationCost: 400_000,
-  purchasePrice: 675_000,
-  holdMonths: 9,
+  resaleValue: 0,
+  renovationCost: 0,
+  purchasePrice: 0,
+  holdMonths: 12,
   purchaseFinancedPct: 80,
   rehabFinancedPct: 100,
   firstPoints: 1,
-  firstRate: 11,
+  firstRate: 0,
   partnerAmount: 0,
-  secondRate: 12,
+  secondRate: 0,
   monthlyHoa: 0,
-  monthlyUtilities: 200,
-  propertyTaxes: 9_000,
-  insurance: 1_800,
+  monthlyUtilities: 0,
+  propertyTaxes: 0,
+  insurance: 0,
   buyClosingPct: 1,
   sellClosingPct: 1,
   realtorPct: 3,
 };
+
+/** True once there's enough to analyze: a purchase price and an ARV. */
+export const hasDeal = (i: FlipInputs) => i.purchasePrice > 0 && i.resaleValue > 0;
 
 function loan(amount: number, points: number, rate: number, months: number) {
   const pointsCost = (amount * points) / 100;
