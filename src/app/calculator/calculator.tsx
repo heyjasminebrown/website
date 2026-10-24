@@ -167,7 +167,7 @@ function ReportForm({ inputs }: { inputs: FlipInputs }) {
   return (
     <form action={formAction} className="space-y-4 rounded-2xl border border-border bg-surface p-6">
       <div>
-        <h2 className="text-2xl">Get your full report</h2>
+        <h2 className="text-2xl">Get Your Pre-Approval</h2>
         <p className="mt-1 text-sm text-muted">
           I&apos;ll email you this analysis and reach out about funding options for your deal.
         </p>
