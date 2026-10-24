@@ -21,7 +21,7 @@ export default function BlogPage() {
           <p className="text-sm uppercase tracking-wider opacity-80">{newsletter.tagline}</p>
           <h1 className="mt-2 text-5xl sm:text-7xl">{newsletter.name}</h1>
           <p className="mx-auto mt-6 max-w-xl text-lg">
-            Real talk on real estate investing, funding your deals and building wealth, from my notebook to yours.
+            Real talk on real estate investing and personal finance, from my notebook to yours.
           </p>
         </div>
       </section>
