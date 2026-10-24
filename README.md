@@ -38,6 +38,14 @@ The form posts to a Server Action (`src/app/contact/actions.ts`) that emails enq
 Without a key, messages are logged to the console in development, and in production the form
 asks visitors to email you directly, so nothing is silently lost.
 
+## Wealthy Notes blog
+
+Posts are Markdown files in [`content/blog/`](content/blog/). Copy
+[`_template.md`](content/blog/_template.md), rename it (the file name becomes the URL, e.g.
+`first-flip.md` → `/blog/first-flip`), fill in the header and write the post. Posts with
+`draft: true` are hidden on the live site. Put post photos in `public/images/blog/`.
+An RSS feed is at `/blog/feed.xml`.
+
 ## Leads database (Supabase)
 
 Every form submission (contact, loan, investor, newsletter, referral, calculator) is saved to a

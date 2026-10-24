@@ -23,7 +23,7 @@ export const nav = [
   { label: "Fund Your Deal", href: "/loan" },
   { label: "Calculator", href: "/calculator" },
   { label: "Events", href: "/events" },
-  { label: "Newsletter", href: "/subscribe" },
+  { label: "Wealthy Notes", href: "/blog" },
 ];
 
 export const offerings = [

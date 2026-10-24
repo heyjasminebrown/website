@@ -1,0 +1,70 @@
+// Wealthy Notes blog posts live as Markdown files in content/blog/<slug>.md, with a header like:
+//
+//   ---
+//   title: How hard money loans work
+//   description: One or two sentences for Google and the post list.
+//   date: 2026-10-24
+//   image: /images/blog/my-photo.jpg   (optional)
+//   draft: true                         (optional; drafts are hidden on the live site)
+//   ---
+import { readdirSync, readFileSync } from "node:fs";
+import path from "node:path";
+import { marked } from "marked";
+
+const dir = path.join(process.cwd(), "content/blog");
+
+export type Post = {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  image?: string;
+  draft: boolean;
+  html: string;
+  minutes: number;
+};
+
+function parse(file: string): Post {
+  const raw = readFileSync(path.join(dir, file), "utf8");
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+  const meta: Record<string, string> = {};
+  for (const line of (match?.[1] ?? "").split(/\r?\n/)) {
+    const i = line.indexOf(":");
+    if (i > 0) meta[line.slice(0, i).trim()] = line.slice(i + 1).trim().replace(/^["']|["']$/g, "");
+  }
+  const body = match ? match[2] : raw;
+  return {
+    slug: file.replace(/\.md$/, ""),
+    title: meta.title || file,
+    description: meta.description || "",
+    date: meta.date || "",
+    image: meta.image || undefined,
+    draft: meta.draft === "true",
+    html: marked.parse(body, { async: false }),
+    minutes: Math.max(1, Math.round(body.split(/\s+/).length / 230)),
+  };
+}
+
+// Drafts show everywhere except the live site, so they can be previewed before publishing.
+const showDrafts = process.env.VERCEL_ENV !== "production";
+
+/** Published posts, newest first. */
+export function getPosts(): Post[] {
+  let files: string[] = [];
+  try {
+    files = readdirSync(dir).filter((f) => f.endsWith(".md") && !f.startsWith("_"));
+  } catch {
+    return [];
+  }
+  return files
+    .map(parse)
+    .filter((p) => showDrafts || !p.draft)
+    .sort((a, b) => b.date.localeCompare(a.date));
+}
+
+export const getPost = (slug: string) => getPosts().find((p) => p.slug === slug);
+
+export const formatDate = (date: string) =>
+  date
+    ? new Date(`${date}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+    : "";

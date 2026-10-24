@@ -51,3 +51,65 @@ h3 {
     background: white;
   }
 }
+
+/* Wealthy Notes blog post body (Markdown rendered to HTML). */
+.prose {
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+.prose > * + * {
+  margin-top: 1.25em;
+}
+.prose h2 {
+  margin-top: 2em;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+.prose h3 {
+  margin-top: 1.6em;
+  font-size: 1.5rem;
+}
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.5em;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose li + li {
+  margin-top: 0.4em;
+}
+.prose blockquote {
+  border-left: 3px solid var(--lavender);
+  padding-left: 1em;
+  font-style: italic;
+  color: var(--muted);
+}
+.prose img {
+  border-radius: 1rem;
+}
+.prose strong {
+  font-weight: 700;
+}
+.prose hr {
+  border-color: var(--border);
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+.prose th,
+.prose td {
+  border-bottom: 1px solid var(--border);
+  padding: 0.5em 0.25em;
+  text-align: left;
+}
