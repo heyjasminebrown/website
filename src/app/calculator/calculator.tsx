@@ -11,36 +11,35 @@ const sections: { title: string; note?: string; fields: [Key, string, Unit][] }[
   {
     title: "The deal",
     fields: [
-      ["resaleValue", "ARV (after repair value)", "$"],
       ["purchasePrice", "Purchase price", "$"],
       ["renovationCost", "Rehab budget (all-in: staging, warranty, architect, etc.)", "$"],
-      ["holdMonths", "Hold time (rehab + days on market + 2 months)", "mo"],
+      ["resaleValue", "ARV (after repair value)", "$"],
     ],
   },
   {
-    title: "Lender",
-    note: "Hard money or private lender, as a % of purchase + rehab",
+    title: "The loan",
     fields: [
-      ["firstLtc", "LTC (loan to cost)", "%"],
+      ["purchaseFinancedPct", "% of purchase financed", "%"],
+      ["rehabFinancedPct", "% of rehab financed", "%"],
       ["firstRate", "Interest rate", "%"],
+      ["holdMonths", "Hold time", "mo"],
       ["firstPoints", "Origination points", "pts"],
     ],
   },
   {
-    title: "Investor",
-    note: "Private money or gap funding. Leave LTC at 0% if there's no investor",
+    title: "Partners",
+    note: "Private money or gap funding. Leave at $0 if there are no partners",
     fields: [
-      ["secondLtc", "LTC (loan to cost)", "%"],
+      ["partnerAmount", "Investment amount", "$"],
       ["secondRate", "Interest rate", "%"],
-      ["secondPoints", "Origination points", "pts"],
     ],
   },
   {
     title: "Monthly carrying costs",
     fields: [
       ["monthlyTaxes", "Property taxes", "$"],
-      ["monthlyHoa", "HOA dues", "$"],
-      ["monthlyInsurance", "Builder's risk insurance", "$"],
+      ["monthlyHoa", "HOA", "$"],
+      ["monthlyInsurance", "Insurance", "$"],
       ["monthlyUtilities", "Utilities", "$"],
     ],
   },
@@ -125,8 +124,9 @@ export function Calculator() {
           {[
             ["Purchase + rehab", money(r.projectCost)],
             ["Financing costs (points + interest)", money(r.financingCost)],
-            ["Lender payment (interest only)", `${money(r.first.monthlyPayment)}/mo`],
-            ...(inputs.secondLtc > 0 ? [["Investor payment (interest only)", `${money(r.second.monthlyPayment)}/mo`]] : []),
+            ["Loan amount", money(r.first.amount)],
+            ["Loan payment (interest only)", `${money(r.first.monthlyPayment)}/mo`],
+            ...(inputs.partnerAmount > 0 ? [["Partner payment (interest only)", `${money(r.second.monthlyPayment)}/mo`]] : []),
             [`Carrying costs (${money(r.monthlyHolding)}/mo)`, money(r.holdingCost)],
             ["Acquisition costs", money(r.costToBuy)],
             ["Selling costs", money(r.costToSell)],

@@ -37,10 +37,10 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
     `Purchase + rehab: ${money(r.projectCost)}`,
     "",
     "FINANCING",
-    `Lender: ${i.firstLtc}% LTC = ${money(r.first.amount)} at ${i.firstRate}%, ${i.firstPoints} points (${money(r.first.monthlyPayment)}/mo interest only)`,
-    ...(i.secondLtc > 0
+    `Loan: ${money(r.first.amount)} (${i.purchaseFinancedPct}% of purchase + ${i.rehabFinancedPct}% of rehab) at ${i.firstRate}%, ${i.firstPoints} points (${money(r.first.monthlyPayment)}/mo interest only)`,
+    ...(i.partnerAmount > 0
       ? [
-          `Investor: ${i.secondLtc}% LTC = ${money(r.second.amount)} at ${i.secondRate}%, ${i.secondPoints} points (${money(r.second.monthlyPayment)}/mo interest only)`,
+          `Partners: ${money(i.partnerAmount)} at ${i.secondRate}% (${money(r.second.monthlyPayment)}/mo interest only)`,
         ]
       : []),
     `Financing costs (points + interest): ${money(r.financingCost)}`,

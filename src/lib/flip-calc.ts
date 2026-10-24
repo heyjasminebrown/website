@@ -1,16 +1,18 @@
 // Fix & flip underwriting, ported from Jasmine's "Property Analysis Template" spreadsheet.
 // Percentages are whole numbers (80 = 80%); points are whole numbers (2 = 2 points).
+// The lender finances a share of the purchase plus a share of the rehab; partners put in a
+// dollar amount. Both are interest only for the full hold time.
 
 export type FlipInputs = {
   resaleValue: number;
   renovationCost: number;
   purchasePrice: number;
   holdMonths: number;
-  firstLtc: number;
+  purchaseFinancedPct: number;
+  rehabFinancedPct: number;
   firstPoints: number;
   firstRate: number;
-  secondLtc: number;
-  secondPoints: number;
+  partnerAmount: number;
   secondRate: number;
   monthlyTaxes: number;
   monthlyHoa: number;
@@ -28,11 +30,11 @@ export const defaultInputs: FlipInputs = {
   renovationCost: 400_000,
   purchasePrice: 675_000,
   holdMonths: 9,
-  firstLtc: 80,
+  purchaseFinancedPct: 80,
+  rehabFinancedPct: 100,
   firstPoints: 2,
   firstRate: 11,
-  secondLtc: 0,
-  secondPoints: 0,
+  partnerAmount: 0,
   secondRate: 12,
   monthlyTaxes: 1_000,
   monthlyHoa: 0,
@@ -45,8 +47,7 @@ export const defaultInputs: FlipInputs = {
   realtorPct: 2.5,
 };
 
-function loan(projectCost: number, ltc: number, points: number, rate: number, months: number) {
-  const amount = (projectCost * ltc) / 100;
+function loan(amount: number, points: number, rate: number, months: number) {
   const pointsCost = (amount * points) / 100;
   const monthlyPayment = (amount * rate) / 100 / 12;
   const interest = monthlyPayment * months;
@@ -55,8 +56,9 @@ function loan(projectCost: number, ltc: number, points: number, rate: number, mo
 
 export function underwrite(i: FlipInputs) {
   const projectCost = i.purchasePrice + i.renovationCost;
-  const first = loan(projectCost, i.firstLtc, i.firstPoints, i.firstRate, i.holdMonths);
-  const second = loan(projectCost, i.secondLtc, i.secondPoints, i.secondRate, i.holdMonths);
+  const lenderAmount = (i.purchasePrice * i.purchaseFinancedPct + i.renovationCost * i.rehabFinancedPct) / 100;
+  const first = loan(lenderAmount, i.firstPoints, i.firstRate, i.holdMonths);
+  const second = loan(i.partnerAmount, 0, i.secondRate, i.holdMonths);
   const financingCost = first.pointsCost + first.interest + second.pointsCost + second.interest;
 
   const monthlyHolding = i.monthlyTaxes + i.monthlyHoa + i.monthlyInsurance + i.monthlyUtilities;
