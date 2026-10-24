@@ -18,7 +18,7 @@ export function Header() {
             href="/contact"
             className="rounded-full bg-accent px-4 py-2 font-medium text-accent-foreground hover:opacity-90"
           >
-            Book a call
+            Contact
           </Link>
         </nav>
         <details className="relative sm:hidden">

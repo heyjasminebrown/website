@@ -4,6 +4,13 @@ const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
+  // Keep old links and printed QR codes working.
+  async redirects() {
+    return [
+      { source: "/qrcode", destination: "/", permanent: true },
+      { source: "/services", destination: "/", permanent: true },
+    ];
+  },
   turbopack: {
     rules: {
       "*.css": {

@@ -2,5 +2,5 @@ import type { MetadataRoute } from "next";
 import { nav, site } from "@/content/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [{ url: site.url }, ...nav.map((item) => ({ url: `${site.url}${item.href}` }))];
+  return [{ url: site.url }, ...[...nav, { href: "/contact" }].map((item) => ({ url: `${site.url}${item.href}` }))];
 }

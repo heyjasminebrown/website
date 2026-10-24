@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Section } from "@/components/section";
 import { site } from "@/content/site";
 import { ContactForm } from "./contact-form";
 
 export const metadata: Metadata = { title: "Contact" };
 
-export default function ContactPage() {
+async function TopicForm({ searchParams }: { searchParams: PageProps<"/contact">["searchParams"] }) {
+  const { topic } = await searchParams;
+  return <ContactForm topic={typeof topic === "string" ? topic.slice(0, 100) : undefined} />;
+}
+
+export default function ContactPage({ searchParams }: PageProps<"/contact">) {
   return (
     <Section eyebrow="Contact" title="Let's talk">
       <p className="mb-8 max-w-xl text-muted">
@@ -13,9 +19,11 @@ export default function ContactPage() {
         <a href={`mailto:${site.email}`} className="font-medium text-accent underline underline-offset-4">
           {site.email}
         </a>
-        . I reply within two business days.
+        .
       </p>
-      <ContactForm />
+      <Suspense fallback={<ContactForm />}>
+        <TopicForm searchParams={searchParams} />
+      </Suspense>
     </Section>
   );
 }

@@ -7,7 +7,6 @@ export function Footer() {
       <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-10 text-sm text-muted sm:flex-row sm:justify-between sm:px-6">
         <div>
           <p className="font-medium text-foreground">{site.name}</p>
-          <p>{site.location}</p>
           <a href={`mailto:${site.email}`} className="hover:text-foreground">
             {site.email}
           </a>
