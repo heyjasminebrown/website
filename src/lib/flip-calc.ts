@@ -33,7 +33,7 @@ export const defaultInputs: FlipInputs = {
   holdMonths: 9,
   purchaseFinancedPct: 80,
   rehabFinancedPct: 100,
-  firstPoints: 2,
+  firstPoints: 1,
   firstRate: 11,
   partnerAmount: 0,
   secondRate: 12,
