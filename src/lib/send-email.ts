@@ -9,11 +9,13 @@ export type SendResult = "sent" | "logged" | "not-configured" | "failed";
 export async function sendEmail({
   subject,
   text,
+  html,
   replyTo,
   to,
 }: {
   subject: string;
   text: string;
+  html?: string;
   replyTo?: string;
   to?: string;
 }): Promise<SendResult> {
@@ -36,6 +38,7 @@ export async function sendEmail({
         reply_to: replyTo,
         subject,
         text,
+        html,
       }),
     });
     if (!res.ok) {

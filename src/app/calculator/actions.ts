@@ -2,6 +2,7 @@
 
 import { site } from "@/content/site";
 import { hasDeal, money, parseInputs, percent, underwrite } from "@/lib/flip-calc";
+import { dealSections, escapeHtml, reportHtml, reportText } from "@/lib/deal-report";
 import { saveLead } from "@/lib/leads";
 import { sendEmail, sendFailureMessage } from "@/lib/send-email";
 
@@ -30,34 +31,9 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
     return { status: "error", values, message: "Enter your purchase price and ARV first, then send your report." };
   }
   const r = underwrite(i);
-  const report = [
-    "FIX & FLIP DEAL ANALYSIS",
-    "",
-    `Net profit: ${money(r.profit)}`,
-    `ROI: ${percent(r.roi)}`,
-    "",
-    "THE DEAL",
-    `ARV: ${money(i.resaleValue)}`,
-    `Purchase price: ${money(i.purchasePrice)}`,
-    `Rehab budget: ${money(i.renovationCost)}`,
-    `Hold time: ${i.holdMonths} months`,
-    `Purchase + rehab: ${money(r.projectCost)}`,
-    "",
-    "FINANCING",
-    `Loan: ${money(r.first.amount)} (${i.purchaseFinancedPct}% of purchase + ${i.rehabFinancedPct}% of rehab) at ${i.firstRate}%, ${i.firstPoints} points (${money(r.first.monthlyPayment)}/mo interest only)`,
-    ...(i.partnerAmount > 0
-      ? [
-          `Second loan: ${money(i.partnerAmount)} at ${i.secondRate}% (${money(r.second.monthlyPayment)}/mo interest only)`,
-        ]
-      : []),
-    `Financing costs (points${i.partnerAmount > 0 ? " + second loan interest" : ""}): ${money(r.financingCost)}`,
-    "",
-    "DEAL COSTS",
-    `Carrying costs: ${money(r.monthlyHolding)}/mo x ${i.holdMonths} = ${money(r.holdingCost)} (interest-only payment, HOA, utilities)`,
-    `Acquisition costs: ${money(r.costToBuy)} (${i.buyClosingPct}% closing costs, ${money(i.propertyTaxes)} property taxes, ${money(i.insurance)} insurance)`,
-    `Selling costs: ${money(r.costToSell)} (${i.realtorPct}% realtor fees + ${i.sellClosingPct}% closing costs)`,
-    `Total all-in cost: ${money(r.totalCost)}`,
-  ].join("\n");
+  const sections = dealSections(i, r);
+  const report = reportText(r, sections);
+  const firstName = values.name.split(" ")[0];
 
   const lead = `Name: ${values.name}\nEmail: ${values.email}\nPhone: ${values.phone}`;
   const [saved, result] = await Promise.all([
@@ -77,6 +53,19 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
     sendEmail({
       subject: `Calculator lead: ${values.name} (${money(r.profit)} net profit deal)`,
       text: `${lead}\n\n${report}`,
+      html: reportHtml({
+        preheader: `${values.name} ran a deal: ${money(r.profit)} net profit, ${percent(r.roi)} ROI`,
+        top: `
+          <p style="margin:0 0 4px;font-size:24px;">New calculator lead</p>
+          <p style="margin:0;font-size:16px;line-height:1.6;">
+            <strong>${escapeHtml(values.name)}</strong><br>
+            <a href="mailto:${escapeHtml(values.email)}" style="color:#34223a;">${escapeHtml(values.email)}</a><br>
+            <a href="tel:${escapeHtml(values.phone.replace(/[^\d+]/g, ""))}" style="color:#34223a;">${escapeHtml(values.phone)}</a>
+          </p>
+          <p style="margin:12px 0 0;font-size:14px;color:#6b5a70;">Reply to this email to reach them directly.</p>`,
+        r,
+        sections,
+      }),
       replyTo: values.email,
     }),
   ]);
@@ -90,19 +79,34 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
     replyTo: site.email,
     subject: "Your fix & flip deal analysis",
     text: [
-      `Hi ${values.name.split(" ")[0]},`,
+      `Hi ${firstName},`,
       "",
-      "Here's the analysis you ran on my fix & flip calculator.",
+      "Thanks for running your deal through my fix & flip calculator! Here are your numbers.",
       "",
       report,
       "",
-      "Want to talk about funding this deal? Just reply to this email.",
+      "Ready to talk about funding this deal? Just reply to this email.",
       "",
-      `${site.owner}`,
+      site.owner,
       site.url,
       "",
-      "These figures are estimates for illustration only and are not a loan offer or commitment.",
+      "These figures are estimates for illustration only and are not a loan offer or commitment to lend.",
     ].join("\n"),
+    html: reportHtml({
+      preheader: `Your deal: ${money(r.profit)} net profit, ${percent(r.roi)} ROI`,
+      top: `
+        <p style="margin:0 0 12px;font-size:24px;">Hi ${escapeHtml(firstName)},</p>
+        <p style="margin:0;font-size:16px;line-height:1.6;">
+          Thanks for running your deal through my fix &amp; flip calculator! Here are your numbers.
+          Ready to talk about funding it? Reply to this email or tap the button below.
+        </p>`,
+      r,
+      sections,
+      cta: {
+        label: "Let's talk about funding",
+        href: `mailto:${site.email}?subject=${encodeURIComponent("Funding my fix & flip")}`,
+      },
+    }),
   });
 
   return {
