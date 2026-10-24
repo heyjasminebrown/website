@@ -38,6 +38,16 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
     image: `${site.url}${post.image ?? "/images/Jasmine-Home-1.jpg"}`,
     author: { "@id": `${site.url}/#jasmine` },
     publisher: { "@id": `${site.url}/#business` },
+    ...(post.faq.length && {
+      mainEntity: {
+        "@type": "FAQPage",
+        mainEntity: post.faq.map((f) => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: { "@type": "Answer", text: f.answer },
+        })),
+      },
+    }),
   };
 
   return (

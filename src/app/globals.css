@@ -103,7 +103,9 @@ h3 {
   border-color: var(--border);
 }
 .prose table {
-  width: 100%;
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
   border-collapse: collapse;
   font-size: 1rem;
 }

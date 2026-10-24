@@ -22,7 +22,29 @@ export type Post = {
   draft: boolean;
   html: string;
   minutes: number;
+  // Questions under a "## Frequently asked questions" heading (each "### Question" followed by its answer).
+  faq: { question: string; answer: string }[];
 };
+
+function extractFaq(body: string) {
+  const section = body.split(/^## Frequently asked questions\s*$/im)[1]?.split(/^## /m)[0];
+  if (!section) return [];
+  return section
+    .split(/^### /m)
+    .slice(1)
+    .map((chunk) => {
+      const [question, ...rest] = chunk.split("\n");
+      // Plain-text answer: drop Markdown links, emphasis and extra whitespace.
+      const answer = rest
+        .join(" ")
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+        .replace(/[*_`>]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+      return { question: question.trim(), answer };
+    })
+    .filter((f) => f.question && f.answer);
+}
 
 function parse(file: string): Post {
   const raw = readFileSync(path.join(dir, file), "utf8");
@@ -42,6 +64,7 @@ function parse(file: string): Post {
     draft: meta.draft === "true",
     html: marked.parse(body, { async: false }),
     minutes: Math.max(1, Math.round(body.split(/\s+/).length / 230)),
+    faq: extractFaq(body),
   };
 }
 
