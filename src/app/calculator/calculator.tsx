@@ -88,7 +88,7 @@ export function Calculator() {
               {s.showPayment && (
                 <div className="text-sm sm:col-span-2">
                   <span className="mb-1 block">Interest-only payment (from the loan above)</span>
-                  <output className={`${field} block bg-transparent pl-3 tabular-nums`}>{money(r.first.monthlyPayment)}</output>
+                  <output className={`${field} block bg-transparent pl-3 tabular-nums`}>{r.first.monthlyPayment ? money(r.first.monthlyPayment) : "\u00a0"}</output>
                 </div>
               )}
               {s.fields.map(([key, label, unit]) => (
@@ -98,7 +98,6 @@ export function Calculator() {
                     {unit === "$" && <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-muted">$</span>}
                     <input
                       inputMode="decimal"
-                      placeholder="0"
                       value={raw[key]}
                       onChange={(e) => setRaw({ ...raw, [key]: e.target.value })}
                       onBlur={() => raw[key].trim() && setRaw({ ...raw, [key]: format(toNumber(raw[key]), unit) })}
