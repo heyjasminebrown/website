@@ -7,7 +7,7 @@ import { sendReport, type ReportState } from "./actions";
 type Key = keyof FlipInputs;
 type Unit = "$" | "%" | "pts" | "mo";
 
-const sections: { title: string; note?: string; fields: [Key, string, Unit][] }[] = [
+const sections: { title: string; note?: string; showPayment?: boolean; fields: [Key, string, Unit][] }[] = [
   {
     title: "The deal",
     fields: [
@@ -36,10 +36,9 @@ const sections: { title: string; note?: string; fields: [Key, string, Unit][] }[
   },
   {
     title: "Monthly carrying costs",
+    showPayment: true,
     fields: [
-      ["monthlyTaxes", "Property taxes", "$"],
       ["monthlyHoa", "HOA", "$"],
-      ["monthlyInsurance", "Insurance", "$"],
       ["monthlyUtilities", "Utilities", "$"],
     ],
   },
@@ -48,6 +47,8 @@ const sections: { title: string; note?: string; fields: [Key, string, Unit][] }[
     fields: [
       ["buyAttorneyFees", "Attorney fees", "$"],
       ["buyTitlePct", "Title & closing fees (% of purchase price)", "%"],
+      ["propertyTaxes", "Property taxes", "$"],
+      ["insurance", "Insurance", "$"],
     ],
   },
   {
@@ -86,6 +87,12 @@ export function Calculator() {
             <legend className="px-1 font-display text-xl">{s.title}</legend>
             {s.note && <p className="mb-4 text-sm text-muted">{s.note}</p>}
             <div className="grid gap-4 sm:grid-cols-2">
+              {s.showPayment && (
+                <div className="text-sm sm:col-span-2">
+                  <span className="mb-1 block">Interest-only payment (from the loan above)</span>
+                  <output className={`${field} block bg-transparent pl-3 tabular-nums`}>{money(r.first.monthlyPayment)}</output>
+                </div>
+              )}
               {s.fields.map(([key, label, unit]) => (
                 <label key={key} className="block text-sm">
                   <span className="mb-1 block">{label}</span>
@@ -123,11 +130,9 @@ export function Calculator() {
         <dl className="divide-y divide-border rounded-2xl border border-border bg-surface text-sm">
           {[
             ["Purchase + rehab", money(r.projectCost)],
-            ["Financing costs (points + interest)", money(r.financingCost)],
             ["Loan amount", money(r.first.amount)],
-            ["Loan payment (interest only)", `${money(r.first.monthlyPayment)}/mo`],
-            ...(inputs.partnerAmount > 0 ? [["Second loan payment (interest only)", `${money(r.second.monthlyPayment)}/mo`]] : []),
-            [`Carrying costs (${money(r.monthlyHolding)}/mo)`, money(r.holdingCost)],
+            [inputs.partnerAmount > 0 ? "Financing (points + second loan interest)" : "Financing (origination points)", money(r.financingCost)],
+            [`Carrying costs (${money(r.monthlyHolding)}/mo × ${inputs.holdMonths})`, money(r.holdingCost)],
             ["Acquisition costs", money(r.costToBuy)],
             ["Selling costs", money(r.costToSell)],
             ["Total all-in cost", money(r.totalCost)],

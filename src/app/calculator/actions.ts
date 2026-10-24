@@ -43,11 +43,11 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
           `Second loan: ${money(i.partnerAmount)} at ${i.secondRate}% (${money(r.second.monthlyPayment)}/mo interest only)`,
         ]
       : []),
-    `Financing costs (points + interest): ${money(r.financingCost)}`,
+    `Financing costs (points${i.partnerAmount > 0 ? " + second loan interest" : ""}): ${money(r.financingCost)}`,
     "",
     "DEAL COSTS",
-    `Carrying costs: ${money(r.monthlyHolding)}/mo x ${i.holdMonths} = ${money(r.holdingCost)}`,
-    `Acquisition costs: ${money(r.costToBuy)}`,
+    `Carrying costs: ${money(r.monthlyHolding)}/mo x ${i.holdMonths} = ${money(r.holdingCost)} (interest-only payment, HOA, utilities)`,
+    `Acquisition costs: ${money(r.costToBuy)} (incl. ${money(i.propertyTaxes)} property taxes, ${money(i.insurance)} insurance)`,
     `Selling costs: ${money(r.costToSell)} (incl. ${i.realtorPct}% agent commission)`,
     `Total all-in cost: ${money(r.totalCost)}`,
   ].join("\n");

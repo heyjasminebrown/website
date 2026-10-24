@@ -1,7 +1,8 @@
 // Fix & flip underwriting, ported from Jasmine's "Property Analysis Template" spreadsheet.
 // Percentages are whole numbers (80 = 80%); points are whole numbers (2 = 2 points).
-// The lender finances a share of the purchase plus a share of the rehab; partners put in a
-// dollar amount. Both are interest only for the full hold time.
+// The lender finances a share of the purchase plus a share of the rehab; a second loan is a
+// dollar amount. Both are interest only for the full hold time. The first loan's interest is
+// counted as a monthly carrying cost; points and second-loan interest are financing costs.
 
 export type FlipInputs = {
   resaleValue: number;
@@ -14,11 +15,11 @@ export type FlipInputs = {
   firstRate: number;
   partnerAmount: number;
   secondRate: number;
-  monthlyTaxes: number;
   monthlyHoa: number;
-  monthlyInsurance: number;
   monthlyUtilities: number;
   buyAttorneyFees: number;
+  propertyTaxes: number;
+  insurance: number;
   buyTitlePct: number;
   sellAttorneyFees: number;
   sellTitlePct: number;
@@ -36,11 +37,11 @@ export const defaultInputs: FlipInputs = {
   firstRate: 11,
   partnerAmount: 0,
   secondRate: 12,
-  monthlyTaxes: 1_000,
   monthlyHoa: 0,
-  monthlyInsurance: 200,
   monthlyUtilities: 200,
   buyAttorneyFees: 600,
+  propertyTaxes: 9_000,
+  insurance: 1_800,
   buyTitlePct: 1,
   sellAttorneyFees: 600,
   sellTitlePct: 1,
@@ -59,13 +60,13 @@ export function underwrite(i: FlipInputs) {
   const lenderAmount = (i.purchasePrice * i.purchaseFinancedPct + i.renovationCost * i.rehabFinancedPct) / 100;
   const first = loan(lenderAmount, i.firstPoints, i.firstRate, i.holdMonths);
   const second = loan(i.partnerAmount, 0, i.secondRate, i.holdMonths);
-  const financingCost = first.pointsCost + first.interest + second.pointsCost + second.interest;
+  const financingCost = first.pointsCost + second.pointsCost + second.interest;
 
-  const monthlyHolding = i.monthlyTaxes + i.monthlyHoa + i.monthlyInsurance + i.monthlyUtilities;
+  const monthlyHolding = first.monthlyPayment + i.monthlyHoa + i.monthlyUtilities;
   const holdingCost = monthlyHolding * i.holdMonths;
 
   const buyTitle = (i.purchasePrice * i.buyTitlePct) / 100;
-  const costToBuy = i.buyAttorneyFees + buyTitle;
+  const costToBuy = i.buyAttorneyFees + buyTitle + i.propertyTaxes + i.insurance;
 
   const sellTitle = (i.resaleValue * i.sellTitlePct) / 100;
   const realtorFees = (i.resaleValue * i.realtorPct) / 100;
