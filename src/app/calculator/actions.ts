@@ -26,35 +26,35 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
   const report = [
     "FIX & FLIP DEAL ANALYSIS",
     "",
-    `Projected profit: ${money(r.profit)}`,
+    `Net profit: ${money(r.profit)}`,
     `ROI: ${percent(r.roi)}`,
     "",
     "THE DEAL",
-    `Resale value (ARV): ${money(i.resaleValue)}`,
+    `ARV: ${money(i.resaleValue)}`,
     `Purchase price: ${money(i.purchasePrice)}`,
-    `Renovation costs: ${money(i.renovationCost)}`,
-    `Holding period: ${i.holdMonths} months`,
-    `Total purchase + renovation: ${money(r.projectCost)}`,
+    `Rehab budget: ${money(i.renovationCost)}`,
+    `Hold time: ${i.holdMonths} months`,
+    `Purchase + rehab: ${money(r.projectCost)}`,
     "",
     "FINANCING",
-    `First mortgage: ${i.firstLtc}% = ${money(r.first.amount)} at ${i.firstRate}%, ${i.firstPoints} points (${money(r.first.monthlyPayment)}/mo interest only)`,
+    `Lender: ${i.firstLtc}% LTC = ${money(r.first.amount)} at ${i.firstRate}%, ${i.firstPoints} points (${money(r.first.monthlyPayment)}/mo interest only)`,
     ...(i.secondLtc > 0
       ? [
-          `Investor: ${i.secondLtc}% = ${money(r.second.amount)} at ${i.secondRate}%, ${i.secondPoints} points (${money(r.second.monthlyPayment)}/mo interest only)`,
+          `Investor: ${i.secondLtc}% LTC = ${money(r.second.amount)} at ${i.secondRate}%, ${i.secondPoints} points (${money(r.second.monthlyPayment)}/mo interest only)`,
         ]
       : []),
-    `Total financing cost (points + interest): ${money(r.financingCost)}`,
+    `Financing costs (points + interest): ${money(r.financingCost)}`,
     "",
-    "COSTS",
-    `Holding: ${money(r.monthlyHolding)}/mo x ${i.holdMonths} = ${money(r.holdingCost)}`,
-    `Closing costs to buy: ${money(r.costToBuy)}`,
-    `Closing costs to sell: ${money(r.costToSell)} (incl. ${i.realtorPct}% realtor fees)`,
+    "DEAL COSTS",
+    `Carrying costs: ${money(r.monthlyHolding)}/mo x ${i.holdMonths} = ${money(r.holdingCost)}`,
+    `Acquisition costs: ${money(r.costToBuy)}`,
+    `Selling costs: ${money(r.costToSell)} (incl. ${i.realtorPct}% agent commission)`,
     `Total all-in cost: ${money(r.totalCost)}`,
   ].join("\n");
 
   const lead = `Name: ${values.name}\nEmail: ${values.email}\nPhone: ${values.phone || "(not given)"}`;
   const result = await sendEmail({
-    subject: `Calculator lead: ${values.name} (${money(r.profit)} profit deal)`,
+    subject: `Calculator lead: ${values.name} (${money(r.profit)} net profit deal)`,
     text: `${lead}\n\n${report}`,
     replyTo: values.email,
   });

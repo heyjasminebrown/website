@@ -11,52 +11,52 @@ const sections: { title: string; note?: string; fields: [Key, string, Unit][] }[
   {
     title: "The deal",
     fields: [
-      ["resaleValue", "Resale value (per sold comps from the MLS)", "$"],
+      ["resaleValue", "ARV (after repair value)", "$"],
       ["purchasePrice", "Purchase price", "$"],
-      ["renovationCost", "Renovation costs (all in: staging, warranty, architect, etc.)", "$"],
-      ["holdMonths", "Holding period (renovation time + days on market + 2 months)", "mo"],
+      ["renovationCost", "Rehab budget (all-in: staging, warranty, architect, etc.)", "$"],
+      ["holdMonths", "Hold time (rehab + days on market + 2 months)", "mo"],
     ],
   },
   {
-    title: "First mortgage",
-    note: "Percent of purchase + renovation",
+    title: "Lender",
+    note: "Hard money or private lender, as a % of purchase + rehab",
     fields: [
-      ["firstLtc", "Loan to cost", "%"],
-      ["firstRate", "Interest rate (annual)", "%"],
-      ["firstPoints", "Points", "pts"],
+      ["firstLtc", "LTC (loan to cost)", "%"],
+      ["firstRate", "Interest rate", "%"],
+      ["firstPoints", "Origination points", "pts"],
     ],
   },
   {
     title: "Investor",
-    note: "Leave loan to cost at 0% if there's no investor",
+    note: "Private money or gap funding. Leave LTC at 0% if there's no investor",
     fields: [
-      ["secondLtc", "Loan to cost", "%"],
-      ["secondRate", "Interest rate (annual)", "%"],
-      ["secondPoints", "Points", "pts"],
+      ["secondLtc", "LTC (loan to cost)", "%"],
+      ["secondRate", "Interest rate", "%"],
+      ["secondPoints", "Origination points", "pts"],
     ],
   },
   {
-    title: "Monthly holding costs",
+    title: "Monthly carrying costs",
     fields: [
-      ["monthlyTaxes", "Taxes", "$"],
-      ["monthlyHoa", "HOA fees", "$"],
+      ["monthlyTaxes", "Property taxes", "$"],
+      ["monthlyHoa", "HOA dues", "$"],
       ["monthlyInsurance", "Builder's risk insurance", "$"],
       ["monthlyUtilities", "Utilities", "$"],
     ],
   },
   {
-    title: "Closing costs to buy",
+    title: "Acquisition costs",
     fields: [
       ["buyAttorneyFees", "Attorney fees", "$"],
-      ["buyTitlePct", "Title company fees (% of purchase)", "%"],
+      ["buyTitlePct", "Title & closing fees (% of purchase price)", "%"],
     ],
   },
   {
-    title: "Closing costs to sell",
+    title: "Selling costs",
     fields: [
       ["sellAttorneyFees", "Attorney fees", "$"],
-      ["sellTitlePct", "Title company fees (% of resale)", "%"],
-      ["realtorPct", "Realtor fees (% of resale)", "%"],
+      ["sellTitlePct", "Title & closing fees (% of ARV)", "%"],
+      ["realtorPct", "Agent commission (% of ARV)", "%"],
     ],
   },
 ];
@@ -114,7 +114,7 @@ export function Calculator() {
 
       <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
         <div className="rounded-2xl bg-accent p-6 text-blush">
-          <p className="text-sm uppercase tracking-wider opacity-80">Projected profit</p>
+          <p className="text-sm uppercase tracking-wider opacity-80">Net profit</p>
           <p className={`mt-1 font-display text-5xl ${r.profit < 0 ? "text-red-300" : ""}`}>{money(r.profit)}</p>
           <p className="mt-3 text-lg">
             ROI <span className="font-display text-2xl">{percent(r.roi)}</span>
@@ -123,13 +123,13 @@ export function Calculator() {
 
         <dl className="divide-y divide-border rounded-2xl border border-border bg-surface text-sm">
           {[
-            ["Purchase + renovation", money(r.projectCost)],
-            ["Financing (points + interest)", money(r.financingCost)],
-            ["First mortgage payment", `${money(r.first.monthlyPayment)}/mo`],
-            ...(inputs.secondLtc > 0 ? [["Investor payment", `${money(r.second.monthlyPayment)}/mo`]] : []),
-            [`Holding (${money(r.monthlyHolding)}/mo)`, money(r.holdingCost)],
-            ["Closing costs to buy", money(r.costToBuy)],
-            ["Closing costs to sell", money(r.costToSell)],
+            ["Purchase + rehab", money(r.projectCost)],
+            ["Financing costs (points + interest)", money(r.financingCost)],
+            ["Lender payment (interest only)", `${money(r.first.monthlyPayment)}/mo`],
+            ...(inputs.secondLtc > 0 ? [["Investor payment (interest only)", `${money(r.second.monthlyPayment)}/mo`]] : []),
+            [`Carrying costs (${money(r.monthlyHolding)}/mo)`, money(r.holdingCost)],
+            ["Acquisition costs", money(r.costToBuy)],
+            ["Selling costs", money(r.costToSell)],
             ["Total all-in cost", money(r.totalCost)],
           ].map(([label, value]) => (
             <div key={label} className="flex justify-between gap-4 px-5 py-3">
