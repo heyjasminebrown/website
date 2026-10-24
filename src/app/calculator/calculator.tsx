@@ -27,8 +27,8 @@ const sections: { title: string; note?: string; fields: [Key, string, Unit][] }[
     ],
   },
   {
-    title: "Second mortgage (optional)",
-    note: "Leave loan to cost at 0% if there's no second",
+    title: "Investor",
+    note: "Leave loan to cost at 0% if there's no investor",
     fields: [
       ["secondLtc", "Loan to cost", "%"],
       ["secondRate", "Interest rate (annual)", "%"],
@@ -126,7 +126,7 @@ export function Calculator() {
             ["Purchase + renovation", money(r.projectCost)],
             ["Financing (points + interest)", money(r.financingCost)],
             ["First mortgage payment", `${money(r.first.monthlyPayment)}/mo`],
-            ...(inputs.secondLtc > 0 ? [["Second mortgage payment", `${money(r.second.monthlyPayment)}/mo`]] : []),
+            ...(inputs.secondLtc > 0 ? [["Investor payment", `${money(r.second.monthlyPayment)}/mo`]] : []),
             [`Holding (${money(r.monthlyHolding)}/mo)`, money(r.holdingCost)],
             ["Closing costs to buy", money(r.costToBuy)],
             ["Closing costs to sell", money(r.costToSell)],
