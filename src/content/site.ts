@@ -69,7 +69,6 @@ export const homeLinks = [
   { label: "Refer a Friend", href: "/referral" },
   { label: "Fix & Flip Calculator", href: "/calculator" },
   { label: "Upcoming Events", href: "/events" },
-  { label: "Wealthy Notes Newsletter", href: "/subscribe" },
 ];
 
 export const gallery = {
