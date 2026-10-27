@@ -36,7 +36,7 @@ const address: QuoteField = {
   hint: "The property you want to finance, not your home address. No property yet? Enter the city and state.",
 };
 
-// Shared by Fix and Flip and New Construction.
+// Used by Ground Up Construction; Fix and Flip reuses some of these in its own order.
 const projectDetails: QuoteField[] = [
   { name: "rehabCost", label: "Rehab cost", kind: "money", required: true, row: 3 },
   { name: "projectMonths", label: "Estimated project length (months)", kind: "number", required: true, row: 3 },
@@ -78,9 +78,12 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
   "Fix and Flip": [
     address,
     { name: "purchasePrice", label: "Purchase price", kind: "money", required: true },
-    ...projectDetails,
+    { name: "rehabCost", label: "Rehab cost", kind: "money", required: true, row: 3 },
+    { name: "arv", label: "ARV (after repair value)", kind: "money", required: true, row: 3 },
+    { name: "projectDescription", label: "Brief description", kind: "textarea", required: true },
+    ...projectDetails.filter((f) => ["currentProperty", "futureProperty", "comps", "exitStrategy"].includes(f.name)),
   ],
-  "New Construction": [
+  "Ground Up Construction": [
     address,
     { name: "vacantLand", label: "Is the property currently vacant land?", kind: "radio", options: yesNo, required: true },
     { name: "ownLand", label: "Do you own the land?", kind: "radio", options: yesNo, required: true },
