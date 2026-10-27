@@ -80,10 +80,8 @@ export const products: Product[] = [
 export const relationshipManager = {
   greeting: "Hey, there. I’m Jasmine.",
   paragraphs: [
-    "I’m a private lender and real estate investor focused on helping operators fund real estate projects.",
-    "My background in financial services, risk management, and operations allows me to quickly assess opportunities, communicate clearly, and help investors navigate the lending process with confidence.",
-    "As an active investor, I bring a lending perspective grounded in real-world experience, allowing me to align capital with operators to support successful outcomes. In addition to funding deals, I create spaces for investors to connect and grow through local meetups and national events, cultivating relationships that extend beyond a single transaction.",
-    "I invite you to explore our loan programs and referral opportunities. As a direct lender, we also consider deals outside of the box. If you or someone in your network is looking for a lending partner, I’d love to be a resource.",
+    "Jasmine is a lender specializing in financing fix-and-flips, new construction, rental, and multifamily real estate investment projects nationwide. She brings a strategic, solutions-oriented approach to every transaction, helping real estate investors navigate financing with clarity and confidence.",
+    "As an active investor, Jasmine understands the realities of executing real estate projects and the importance of having a financing partner who sees the bigger picture. She is passionate about helping real estate investors build wealth while creating a lasting impact in the communities they serve.",
   ],
   signoff: "Your partner in growth,",
   signature: "Jasmine T. Brown",
