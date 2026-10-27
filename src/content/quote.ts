@@ -47,12 +47,14 @@ export const borrowerExperience: QuoteField[] = [
 export const experienceNote =
   "In the past 3 years, how many projects have you completed? And how many rentals do you own today? Only count properties where you or your entity were on title.";
 
-const address: QuoteField = {
-  name: "propertyAddress",
-  label: "Project property address",
-  kind: "text",
+const address: QuoteField = { name: "propertyAddress", label: "Address", kind: "text", required: true };
+
+const propertyType: QuoteField = {
+  name: "propertyType",
+  label: "Property type",
+  kind: "select",
+  options: ["Single Family - 1 unit", "Duplex", "Triplex", "Quad", "5+ units"],
   required: true,
-  hint: "The property you want to finance, not your home address. No property yet? Enter the city and state.",
 };
 
 // Used by Ground Up Construction; Fix and Flip reuses some of these in its own order.
@@ -60,20 +62,6 @@ const projectDetails: QuoteField[] = [
   { name: "rehabCost", label: "Rehab cost", kind: "money", required: true, row: 3 },
   { name: "projectMonths", label: "Estimated project length (months)", kind: "number", required: true, row: 3 },
   { name: "projectDescription", label: "Brief project description", kind: "textarea", required: true },
-  {
-    name: "currentProperty",
-    label: "Current property type, bed/bath/sq ft",
-    kind: "text",
-    required: true,
-    placeholder: "e.g. Single family, 3 bed / 2 bath, 1,450 sq ft",
-  },
-  {
-    name: "futureProperty",
-    label: "Future property type, bed/bath/sq ft",
-    kind: "text",
-    required: true,
-    placeholder: "e.g. Single family, 4 bed / 3 bath, 2,100 sq ft",
-  },
   { name: "arv", label: "ARV (after repair value)", kind: "money", required: true },
   {
     name: "comps",
@@ -89,6 +77,7 @@ const yesNo = ["Yes", "No"];
 // TODO: placeholder questions until Jasmine sends the DSCR fields.
 const dscrPlaceholder: QuoteField[] = [
   address,
+  propertyType,
   { name: "loanAmount", label: "Estimated loan amount", kind: "money" },
   { name: "dealNotes", label: "Anything else about your deal?", kind: "textarea" },
 ];
@@ -96,14 +85,21 @@ const dscrPlaceholder: QuoteField[] = [
 export const quoteLoanTypes: Record<string, QuoteField[]> = {
   "Fix and Flip": [
     address,
+    propertyType,
     { name: "purchasePrice", label: "Purchase price", kind: "money", required: true },
     { name: "rehabCost", label: "Rehab cost", kind: "money", required: true, row: 3 },
     { name: "arv", label: "ARV (after repair value)", kind: "money", required: true, row: 3 },
-    { name: "projectDescription", label: "Brief description", kind: "textarea", required: true },
-    ...projectDetails.filter((f) => ["currentProperty", "futureProperty", "comps", "exitStrategy"].includes(f.name)),
+    {
+      name: "projectDescription",
+      label: "What are you planning to do for the rehab?",
+      kind: "textarea",
+      required: true,
+    },
+    ...projectDetails.filter((f) => ["comps", "exitStrategy"].includes(f.name)),
   ],
   "Ground Up Construction": [
     address,
+    propertyType,
     { name: "vacantLand", label: "Is the property currently vacant land?", kind: "radio", options: yesNo, required: true },
     { name: "ownLand", label: "Do you own the land?", kind: "radio", options: yesNo, required: true },
     {
