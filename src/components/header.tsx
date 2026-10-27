@@ -1,12 +1,21 @@
+import Image from "next/image";
 import Link from "next/link";
 import { nav, site } from "@/content/site";
 
 export function Header() {
   return (
     <header className="border-b border-border">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="/" className="text-lg">
-          {site.name}
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-6 px-4 py-3 sm:px-6">
+        <Link href="/" className="shrink-0">
+          <Image
+            src="/images/logo.png"
+            alt={site.name}
+            width={1200}
+            height={258}
+            priority
+            sizes="200px"
+            className="h-9 w-auto sm:h-10"
+          />
         </Link>
         <nav className="hidden items-center gap-6 text-sm lg:flex">
           {nav.map((item) => (
