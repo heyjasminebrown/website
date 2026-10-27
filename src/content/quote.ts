@@ -99,15 +99,15 @@ export const experienceNote =
 
 const address: QuoteField = { name: "propertyAddress", label: "Property Address", kind: "text", required: true };
 
-// Matches the Conventus loan sizer's list; used by every loan type.
+// Used by every loan type.
 const propertyTypes = [
-  "SFR (1 Unit)",
-  "2-4 Unit",
-  "5-9 Units",
-  "10+ Units",
+  "Single-Family, 1 unit",
+  "Duplex",
+  "Triplex",
+  "Fourplex",
+  "Townhomes",
+  "Apartment Building",
   "Mixed-Use",
-  "Condo (Warrantable)",
-  "Condo (Non-Warrantable)",
 ];
 
 const propertyType: QuoteField = {
@@ -138,7 +138,7 @@ const yesNo = ["Yes", "No"];
 const purchaseTypes = ["Purchase", "Delayed Finance"];
 const refiTypes = ["Refi - Rate/Term", "Refi - Cash Out"];
 const portfolios = ["2-10 Properties (Portfolio)", "11-20 Properties (Portfolio)"];
-const oneUnitTypes = ["SFR (1 Unit)", "Condo (Warrantable)", "Condo (Non-Warrantable)"];
+const oneUnitTypes = ["Single-Family, 1 unit"];
 // Highest LTV Conventus allows by transaction type.
 const maxLtv: Record<string, number> = { "Delayed Finance": 80, "Refi - Rate/Term": 80, "Refi - Cash Out": 75 };
 // For a portfolio, income and expense questions cover all the properties together.
