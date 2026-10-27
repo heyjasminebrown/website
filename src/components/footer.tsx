@@ -10,9 +10,6 @@ export function Footer() {
           <Link href="/" className="inline-block">
             <Image src="/images/logo.png" alt={site.name} width={1200} height={258} sizes="200px" className="h-9 w-auto" />
           </Link>
-          <a href={`mailto:${site.email}`} className="mt-3 block hover:text-foreground">
-            {site.email}
-          </a>
         </div>
         <div className="flex gap-10">
           <ul className="space-y-2">
