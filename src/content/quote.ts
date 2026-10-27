@@ -140,7 +140,7 @@ const refiTypes = ["Refi - Rate/Term", "Refi - Cash Out"];
 const portfolios = ["2-10 Properties (Portfolio)", "11-20 Properties (Portfolio)"];
 const oneUnitTypes = ["SFR (1 Unit)", "Condo (Warrantable)", "Condo (Non-Warrantable)"];
 // Highest LTV Conventus allows by transaction type.
-const maxLtv: Record<string, number> = { "Refi - Rate/Term": 80, "Refi - Cash Out": 75 };
+const maxLtv: Record<string, number> = { "Delayed Finance": 80, "Refi - Rate/Term": 80, "Refi - Cash Out": 75 };
 // For a portfolio, income and expense questions cover all the properties together.
 const combined = (label: string) => (a: Answers) =>
   a.propertiesInLoan && portfolios.includes(a.propertiesInLoan) ? `Combined ${label}` : undefined;
@@ -226,11 +226,18 @@ const dscr: QuoteField[] = [
     required: true,
   },
   {
+    name: "rentalType",
+    label: "Rental Type",
+    kind: "radio",
+    options: ["Long-Term Rental", "Short-Term Rental"],
+    required: true,
+    section: "Income",
+  },
+  {
     name: "grossMonthlyRent",
     label: "Gross Monthly Rent",
     kind: "money",
     required: true,
-    section: "Income",
     labelFor: combined("Gross Monthly Rent"),
   },
   { name: "section8", label: "Are any units Section 8 / LIHTC?", kind: "radio", options: ["No", "Yes"] },
