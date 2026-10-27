@@ -1,6 +1,6 @@
 "use server";
 
-import { borrowerExperience, calculatedUnits, quoteLoanTypes, visibleFields, type QuoteField } from "@/content/quote";
+import { borrowerExperience, quoteLoanTypes, visibleFields, type QuoteField } from "@/content/quote";
 import { saveLead } from "@/lib/leads";
 import { sendEmail, sendFailureMessage } from "@/lib/send-email";
 
@@ -42,9 +42,6 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
     loanType,
     ...Object.fromEntries(allFields.map((f) => [f.name, get(f.name, f.kind === "textarea" ? 3000 : 300)])),
   };
-  // Where units are buildings × units per building, work them out here rather than trusting the browser.
-  const units = calculatedUnits(values);
-  if (allFields.some((f) => f.units) && units !== undefined) values.totalUnits = String(units);
   // Questions hidden by an earlier answer don't count.
   const shown = visibleFields(allFields, values);
   const isVisible = new Set(shown.map((f) => f.name));

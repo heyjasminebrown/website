@@ -15,8 +15,8 @@ export type QuoteField = {
   showIf?: { field: string; equals?: string; oneOf?: string[]; notEquals?: string };
   // Starts a new titled section within the loan type's questions.
   section?: string;
-  // Ground Up total units: worked out from building type × count where possible, otherwise typed in.
-  units?: boolean;
+  // A bold question shown above this field's row (used with sub-labelled boxes, e.g. beds/baths/sq ft).
+  lead?: string;
   // Fields with the same row number sit side by side on wider screens.
   row?: number;
   // Only digits can be typed, up to this many (e.g. 3 for a credit score).
@@ -48,22 +48,6 @@ export function visibleFields(fields: QuoteField[], answers: Record<string, stri
     if (ok) visible.add(f.name);
     return ok;
   });
-}
-
-// Ground Up Construction: units per building for property types where the total can be worked out.
-export const unitsPerBuilding: Record<string, number> = {
-  "Single-Family Homes": 1,
-  Duplexes: 2,
-  Triplexes: 3,
-  Fourplexes: 4,
-};
-
-/** Total units for building types where it's buildings × units per building; undefined when the borrower enters it. */
-export function calculatedUnits(answers: Record<string, string | undefined>) {
-  const perBuilding = unitsPerBuilding[answers.buildType ?? ""];
-  const buildings = Number(String(answers.buildingCount ?? "").replace(/,/g, ""));
-  if (!perBuilding || !Number.isInteger(buildings) || buildings < 1) return undefined;
-  return buildings * perBuilding;
 }
 
 export const borrowerExperience: QuoteField[] = [
@@ -143,7 +127,7 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
   "Ground Up Construction": [
     address,
 
-    // Section 1. If they don't own the land yet they may still be evaluating a lot, so no dates are required then.
+    // Section 1. If they don't own the land yet they may still be evaluating a lot, so no dates are asked then.
     {
       name: "ownLand",
       label: "Do you currently own the land?",
@@ -188,11 +172,12 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
       name: "estimatedLandPrice",
       label: "What is the estimated land purchase price?",
       kind: "money",
+      required: true,
       showIf: { field: "ownLand", equals: "No" },
     },
     {
       name: "existingLoan",
-      label: "Is there an existing loan on the land?",
+      label: "Is there an existing loan on the property?",
       kind: "radio",
       options: yesNo,
       required: true,
@@ -213,20 +198,19 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
       required: true,
     },
 
-    // Section 2: buildings and residential units are counted separately.
+    // Section 2
     {
       name: "buildType",
       label: "What type of property are you building?",
       kind: "select",
       options: [
-        "Single-Family Homes",
-        "Duplexes",
-        "Triplexes",
-        "Fourplexes",
-        "Townhomes",
-        "Multifamily Apartments",
+        "Single-Family Home",
+        "Duplex",
+        "Triplex",
+        "Fourplex",
+        "Townhome",
+        "Multifamily Apartment",
         "Mixed-Use",
-        "Other",
       ],
       required: true,
       section: "Proposed Construction",
@@ -237,33 +221,28 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
       kind: "text",
       required: true,
       placeholder: "e.g. 2 retail units on the ground floor with 6 apartments above",
-      showIf: { field: "buildType", oneOf: ["Mixed-Use", "Other"] },
+      showIf: { field: "buildType", equals: "Mixed-Use" },
     },
-    { name: "buildingCount", label: "How many buildings are you constructing?", kind: "number", required: true, row: 5 },
+    { name: "totalUnits", label: "How many total units are you building?", kind: "number", required: true },
     {
-      name: "totalUnits",
-      label: "How many total residential units will the project have?",
+      name: "bedsPerUnit",
+      label: "Bedrooms",
       kind: "number",
       required: true,
-      units: true,
-      row: 5,
+      placeholder: "e.g. 3",
+      sub: true,
+      row: 6,
+      lead: "What is the bed/bath/sq ft per unit?",
     },
-    { name: "totalSqft", label: "What is the estimated total finished square footage?", kind: "number", required: true },
-    {
-      name: "bedBath",
-      label: "What is the proposed bedroom/bathroom configuration?",
-      kind: "text",
-      required: true,
-      placeholder: "e.g. 3 bed / 2.5 bath per unit",
-      hint: "Different layouts? Describe the unit mix, e.g. 4 units at 3 bed / 2 bath and 2 units at 2 bed / 1 bath.",
-    },
+    { name: "bathsPerUnit", label: "Bathrooms", kind: "number", required: true, placeholder: "e.g. 2.5", sub: true, row: 6 },
+    { name: "sqftPerUnit", label: "Sq ft", kind: "number", required: true, placeholder: "e.g. 1,800", sub: true, row: 6 },
 
     // Section 3
     {
       name: "permitStatus",
-      label: "What is the status of your plans and permits?",
+      label: "Where are you at with permits?",
       kind: "select",
-      options: ["Not Started", "In Progress", "Submitted for Approval", "Approved"],
+      options: ["Not Started", "In Progress", "Approved"],
       required: true,
       section: "Plans, Permits & Construction Status",
     },
@@ -293,12 +272,6 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
       name: "monthsToComplete",
       label: "What is the estimated time to complete construction (months)?",
       kind: "number",
-      required: true,
-    },
-    {
-      name: "projectDescription",
-      label: "Briefly describe your project and any remaining work.",
-      kind: "textarea",
       required: true,
     },
   ],

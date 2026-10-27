@@ -3,7 +3,6 @@
 import { useActionState, useState } from "react";
 import {
   borrowerExperience,
-  calculatedUnits,
   experienceNote,
   visibleFields,
   quoteLoanTypes,
@@ -34,15 +33,7 @@ function Label({
   );
 }
 
-function Input({ f, value, live }: { f: QuoteField; value?: string; live: Record<string, string> }) {
-  const units = f.units ? calculatedUnits(live) : undefined;
-  if (units !== undefined)
-    return (
-      <>
-        <input id={f.name} name={f.name} readOnly value={units} className={`${field} bg-background text-muted`} />
-        <span className="mt-1 text-xs text-muted">Calculated from the number of buildings</span>
-      </>
-    );
+function Input({ f, value }: { f: QuoteField; value?: string }) {
   const common = {
     id: f.name,
     name: f.name,
@@ -101,15 +92,7 @@ function Input({ f, value, live }: { f: QuoteField; value?: string; live: Record
 const COLUMNS: Record<number, string> = { 2: "sm:grid-cols-2", 3: "sm:grid-cols-3" };
 
 /** Renders questions in order, putting fields that share a row number side by side and starting titled sections. */
-function Fields({
-  fields,
-  values,
-  live = {},
-}: {
-  fields: QuoteField[];
-  values: Record<string, string | undefined>;
-  live?: Record<string, string>;
-}) {
+function Fields({ fields, values }: { fields: QuoteField[]; values: Record<string, string | undefined> }) {
   const groups: QuoteField[][] = [];
   for (const f of fields) {
     const last = groups.at(-1);
@@ -119,20 +102,21 @@ function Fields({
   return groups.map((g) => (
     <div key={g[0].name} className="space-y-5">
       {g[0].section && <p className="pt-2 font-display text-lg text-accent">{g[0].section}</p>}
+      {g[0].lead && <p className="text-sm font-semibold">{g[0].lead}</p>}
     <div className={g.length > 1 ? `grid gap-5 ${COLUMNS[g.length]}` : undefined}>
       {g.map((f) => (
         <div key={f.name} className={f.kind === "radio" ? "" : "flex flex-col justify-end"}>
           {f.kind === "radio" ? (
             <fieldset>
               <legend className="text-sm font-medium">{f.label}</legend>
-              <Input f={f} value={values[f.name]} live={live} />
+              <Input f={f} value={values[f.name]} />
             </fieldset>
           ) : (
             <>
               <Label htmlFor={f.name} optional={!f.required} sub={f.sub}>
                 {f.label}
               </Label>
-              <Input f={f} value={values[f.name]} live={live} />
+              <Input f={f} value={values[f.name]} />
             </>
           )}
           {f.hint && <p className="mt-1 text-xs text-muted">{f.hint}</p>}
@@ -216,7 +200,7 @@ export function QuoteForm() {
         </div>
         {fields.length > 0 && (
           <div key={loanType} className="space-y-5">
-            <Fields fields={fields} values={v.loanType === loanType ? v : {}} live={answers} />
+            <Fields fields={fields} values={v.loanType === loanType ? v : {}} />
           </div>
         )}
       </fieldset>
