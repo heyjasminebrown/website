@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { saveLead } from "@/lib/leads";
 import { sendEmail, sendFailureMessage } from "@/lib/send-email";
 import { referralLoanTypes } from "@/content/site";
@@ -62,11 +63,10 @@ export async function sendReferral(_prev: ReferralState, formData: FormData): Pr
       replyTo: email || undefined,
     }),
   ]);
-  if (result === "logged") return { status: "success", message: "Dev mode: referral logged to the server console." };
   // The lead counts as received if it reached either the database or the inbox.
-  if (result !== "sent" && !saved) return { status: "error", values, message: sendFailureMessage(result) };
-  return {
-    status: "success",
-    message: `Thank you, ${referrerName.split(" ")[0]}! I'll reach out to ${firstName} soon.`,
-  };
+  if (result !== "sent" && result !== "logged" && !saved) {
+    return { status: "error", values, message: sendFailureMessage(result) };
+  }
+  const params = new URLSearchParams({ from: referrerName.split(" ")[0], to: firstName });
+  redirect(`/referral/thanks?${params}`);
 }
