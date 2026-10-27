@@ -20,9 +20,9 @@ export const site = {
 
 export const nav = [
   { label: "Home", href: "/" },
-  { label: "Get a Quote", href: "/quote" },
   { label: "Loan Products", href: "/conventus" },
-  { label: "Referral", href: "/referral" },
+  { label: "Get a Quote", href: "/quote" },
+  { label: "Refer a Friend", href: "/referral" },
   { label: "Calculator", href: "/calculator" },
   { label: "Events", href: "/events" },
   { label: "Wealthy Notes", href: "/blog" },
@@ -39,9 +39,9 @@ export const about = {
 
 // The buttons beside your photo on the home page.
 export const homeLinks = [
-  { label: "Fund Your Deal", href: "/quote" },
+  { label: "Get a Quote", href: "/quote" },
   { label: "Refer a Friend", href: "/referral" },
-  { label: "Fix & Flip Calculator", href: "/calculator" },
+  { label: "Underwrite Your Deal", href: "/calculator" },
   { label: "Upcoming Events", href: "/events" },
 ];
 

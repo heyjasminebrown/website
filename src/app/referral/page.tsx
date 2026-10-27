@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { ConventusTheme } from "@/components/conventus-theme";
 import { referralLoanTypes } from "@/content/site";
 import { ReferralForm } from "./referral-form";
 
@@ -18,22 +19,22 @@ const steps = [
 
 export default function ReferralPage() {
   return (
-    <>
-      <section className="bg-accent px-4 py-16 text-blush sm:px-6 sm:py-20">
+    <ConventusTheme>
+      <section className="bg-cv-dark px-4 py-16 text-white sm:px-6 sm:py-20">
         <div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[1.2fr_1fr]">
           <div>
-            <p className="text-sm uppercase tracking-wider opacity-80">Loan Referral Program</p>
+            <p className="text-sm uppercase tracking-[0.3em] text-cv-mint">Loan Referral Program</p>
             <h1 className="mt-3 text-4xl leading-tight sm:text-6xl">Earn up to $1,500 when you refer a fellow investor!</h1>
             <p className="mt-6 max-w-xl text-lg">
               Know someone working on a real estate deal? Earn a referral bonus when they complete a loan with us*
             </p>
             <a
               href="#refer"
-              className="mt-8 inline-block rounded-full bg-blush px-7 py-3 text-accent transition-opacity hover:opacity-90"
+              className="mt-8 inline-block rounded-full bg-cv-mint px-7 py-3 text-cv-dark transition-opacity hover:opacity-90"
             >
               Refer an investor
             </a>
-            <p className="mt-6 text-sm opacity-80">*Referral bonus up to $1,500, based on final loan amount.</p>
+            <p className="mt-6 text-sm text-cv-mint-light">*Referral bonus up to $1,500, based on final loan amount.</p>
           </div>
           <Image
             src="/images/Jasmine-Closing-2.jpg"
@@ -52,7 +53,7 @@ export default function ReferralPage() {
         <ol className="mt-10 grid gap-6 md:grid-cols-3">
           {steps.map((s, i) => (
             <li key={s.title} className="rounded-2xl border border-border bg-surface p-6">
-              <span className="grid h-12 w-12 place-items-center rounded-full bg-accent font-display text-2xl text-blush">
+              <span className="grid h-12 w-12 place-items-center rounded-full bg-cv-teal font-display text-2xl text-white">
                 {i + 1}
               </span>
               <h3 className="mt-4 text-2xl">{s.title}</h3>
@@ -72,6 +73,6 @@ export default function ReferralPage() {
           <ReferralForm />
         </div>
       </section>
-    </>
+    </ConventusTheme>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ConventusTheme } from "@/components/conventus-theme";
 import { quote } from "@/content/quote";
 import { QuoteForm } from "./quote-form";
 
@@ -12,13 +13,13 @@ export const metadata: Metadata = {
 
 export default function QuotePage() {
   return (
-    <>
-      <section className="bg-accent px-4 py-16 text-blush sm:px-6 sm:py-20">
+    <ConventusTheme>
+      <section className="bg-cv-dark px-4 py-16 text-white sm:px-6 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <p className="text-sm uppercase tracking-wider opacity-80">{quote.eyebrow}</p>
+          <p className="text-sm uppercase tracking-[0.3em] text-cv-mint">{quote.eyebrow}</p>
           <h1 className="mt-3 text-5xl leading-tight sm:text-6xl">{quote.heading}</h1>
-          <p className="mt-6 text-lg sm:text-xl">{quote.intro}</p>
-          <Link href="/conventus" className="mt-6 inline-block underline underline-offset-4 hover:opacity-80">
+          <p className="mt-6 text-lg text-cv-mint-light sm:text-xl">{quote.intro}</p>
+          <Link href="/conventus" className="mt-6 inline-block text-cv-mint underline underline-offset-4 hover:opacity-80">
             Learn more about our loan products →
           </Link>
         </div>
@@ -30,6 +31,6 @@ export default function QuotePage() {
           <QuoteForm />
         </div>
       </section>
-    </>
+    </ConventusTheme>
   );
 }

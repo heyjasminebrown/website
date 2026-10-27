@@ -62,6 +62,14 @@ h3 {
 /* Loan Products page: Conventus typography (Inter body, bold Helvetica/Arial headings). */
 .cv-page {
   font-family: var(--font-cv-body), "Helvetica Neue", Arial, sans-serif;
+  /* Swap the site's plum accents for Conventus colours, so shared forms and buttons follow. */
+  --accent: #00967a;
+  --accent-foreground: #ffffff;
+  --blush: #00d09a;
+  --lavender: #bce2dc;
+  --foreground: #00382f;
+  --muted: #4b5f5b;
+  color: var(--foreground);
 }
 .cv-page h1,
 .cv-page h2,

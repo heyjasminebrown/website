@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
+import { ConventusTheme } from "@/components/conventus-theme";
 import { lender, productRows, products, relationshipManager } from "@/content/loan-products";
-
-// Conventus body font; headings use the Helvetica/Arial bold from their materials (see .cv-page in globals.css).
-const inter = Inter({ subsets: ["latin"], variable: "--font-cv-body" });
 
 export const metadata: Metadata = {
   title: "Loan Products",
@@ -49,7 +46,7 @@ const HouseIcon = () => (
 
 export default function LoanProductsPage() {
   return (
-    <div className={`${inter.variable} cv-page`}>
+    <ConventusTheme>
       <section className="bg-cv-dark px-4 py-16 text-white sm:px-6 sm:py-20">
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.3fr_1fr]">
           <div>
@@ -244,6 +241,6 @@ export default function LoanProductsPage() {
           </div>
         </div>
       </section>
-    </div>
+    </ConventusTheme>
   );
 }
