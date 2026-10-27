@@ -191,6 +191,13 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
       showIf: { field: "existingLoan", equals: "Yes" },
     },
     {
+      name: "loanDueDate",
+      label: "When is the loan due?",
+      kind: "date",
+      required: true,
+      showIf: { field: "existingLoan", equals: "Yes" },
+    },
+    {
       name: "landCondition",
       label: "What is the current condition of the land?",
       kind: "radio",
