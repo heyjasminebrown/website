@@ -13,6 +13,9 @@ export type QuoteState = {
 /** Returns an error message for a field's answer, or nothing if it's fine. */
 function check(f: QuoteField, value: string): string | undefined {
   if (!value) return f.required ? `Please fill in "${f.label}".` : undefined;
+  if (f.digits && !new RegExp(`^\\d{${f.digits}}$`).test(value)) {
+    return `"${f.label}" should be ${f.digits} digits, e.g. 726.`;
+  }
   if (f.kind === "number") {
     const n = Number(value.replace(/,/g, ""));
     if (!Number.isFinite(n) || n < 0) return `"${f.label}" should be a number.`;

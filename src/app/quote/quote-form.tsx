@@ -58,6 +58,17 @@ function Input({ f, value }: { f: QuoteField; value?: string }) {
       </span>
     );
   if (f.kind === "date") return <input type="date" {...common} />;
+  if (f.digits)
+    return (
+      <input
+        inputMode="numeric"
+        maxLength={f.digits}
+        pattern={`\\d{${f.digits}}`}
+        title={`Enter ${f.digits} digits`}
+        onInput={(e) => (e.currentTarget.value = e.currentTarget.value.replace(/\D/g, "").slice(0, f.digits))}
+        {...common}
+      />
+    );
   return <input inputMode={f.kind === "number" ? "numeric" : undefined} {...common} />;
 }
 

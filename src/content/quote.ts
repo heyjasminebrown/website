@@ -14,13 +14,22 @@ export type QuoteField = {
   showIf?: { field: string; equals: string };
   // Fields with the same row number sit side by side on wider screens.
   row?: number;
+  // Only digits can be typed, up to this many (e.g. 3 for a credit score).
+  digits?: number;
 };
 
 export const isShown = (f: QuoteField, answers: Record<string, string | undefined>) =>
   !f.showIf || answers[f.showIf.field] === f.showIf.equals;
 
 export const borrowerExperience: QuoteField[] = [
-  { name: "creditScore", label: "Estimated credit score", kind: "number", required: true, placeholder: "e.g. 726" },
+  {
+    name: "creditScore",
+    label: "Estimated credit score",
+    kind: "number",
+    required: true,
+    placeholder: "e.g. 726",
+    digits: 3,
+  },
   { name: "flipsCompleted", label: "Flips completed", kind: "number", required: true, placeholder: "0", row: 1 },
   { name: "constructionCompleted", label: "New construction completed", kind: "number", required: true, placeholder: "0", row: 1 },
   { name: "rentalsOwned", label: "Rental properties owned", kind: "number", required: true, placeholder: "0", row: 1 },
