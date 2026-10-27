@@ -200,14 +200,24 @@ export default function LoanProductsPage() {
             </div>
             <Quote className="mt-8" />
           </div>
-          <Image
-            src="/images/Jasmine-Conventus.jpg"
-            alt="Jasmine Brown, Conventus relationship manager"
-            width={819}
-            height={771}
-            sizes="(min-width: 1024px) 420px, 90vw"
-            className="w-full self-start rounded-2xl"
-          />
+          <div className="space-y-3 self-start">
+            <Image
+              src="/images/Jasmine-Conventus.jpg"
+              alt="Jasmine Brown, Conventus relationship manager"
+              width={819}
+              height={771}
+              sizes="(min-width: 1024px) 420px, 90vw"
+              className="w-full rounded-2xl"
+            />
+            <Image
+              src="/images/Jasmine-Investor-Group.jpg"
+              alt="Jasmine Brown with real estate investors at a networking event"
+              width={506}
+              height={355}
+              sizes="(min-width: 1024px) 420px, 90vw"
+              className="w-full rounded-2xl"
+            />
+          </div>
         </div>
       </section>
 
