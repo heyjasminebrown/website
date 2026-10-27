@@ -105,9 +105,8 @@ const propertyTypes = [
   "Duplex",
   "Triplex",
   "Fourplex",
-  "Townhomes",
+  "Townhouse or Condo",
   "Apartment Building",
-  "Mixed-Use",
 ];
 
 const propertyType: QuoteField = {
@@ -116,6 +115,14 @@ const propertyType: QuoteField = {
   kind: "select",
   options: propertyTypes,
   required: true,
+};
+// Asked after the property type when it's an apartment building.
+const totalUnits: QuoteField = {
+  name: "totalUnits",
+  label: "How many total units?",
+  kind: "number",
+  required: true,
+  showIf: { field: "propertyType", equals: "Apartment Building" },
 };
 
 const comps: QuoteField = {
@@ -138,7 +145,7 @@ const yesNo = ["Yes", "No"];
 const purchaseTypes = ["Purchase", "Delayed Finance"];
 const refiTypes = ["Refi - Rate/Term", "Refi - Cash Out"];
 const portfolios = ["2-10 Properties (Portfolio)", "11-20 Properties (Portfolio)"];
-const oneUnitTypes = ["Single-Family, 1 unit"];
+const oneUnitTypes = ["Single-Family, 1 unit", "Townhouse or Condo"];
 // Highest LTV Conventus allows by transaction type.
 const maxLtv: Record<string, number> = { "Delayed Finance": 80, "Refi - Rate/Term": 80, "Refi - Cash Out": 75 };
 // For a portfolio, income and expense questions cover all the properties together.
@@ -148,6 +155,7 @@ const combined = (label: string) => (a: Answers) =>
 const dscr: QuoteField[] = [
   address,
   propertyType,
+  totalUnits,
   {
     name: "transactionType",
     label: "Transaction Type",
@@ -240,7 +248,6 @@ const dscr: QuoteField[] = [
     required: true,
     labelFor: combined("Gross Monthly Rent"),
   },
-  { name: "section8", label: "Are any units Section 8 / LIHTC?", kind: "radio", options: ["No", "Yes"] },
   {
     name: "occupiedAtClosing",
     label: "Will the property be occupied at closing?",
@@ -255,7 +262,6 @@ const dscr: QuoteField[] = [
     kind: "number",
     required: true,
     placeholder: "e.g. 1",
-    hint: "Out of total units — used to check occupancy minimums.",
     showIf: { field: "propertyType", oneOf: propertyTypes.filter((t) => !oneUnitTypes.includes(t)) },
   },
   {
@@ -280,6 +286,7 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
   "Fix and Flip": [
     address,
     propertyType,
+    totalUnits,
     { name: "purchasePrice", label: "Purchase price", kind: "money", required: true },
     { name: "rehabCost", label: "Rehab cost", kind: "money", required: true, row: 3 },
     { name: "arv", label: "ARV (after repair value)", kind: "money", required: true, row: 3 },
@@ -381,14 +388,6 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
       options: propertyTypes,
       required: true,
       section: "Construction Plan",
-    },
-    {
-      name: "buildTypeDescription",
-      label: "Briefly describe the property",
-      kind: "text",
-      required: true,
-      placeholder: "e.g. 2 retail units on the ground floor with 6 apartments above",
-      showIf: { field: "buildType", equals: "Mixed-Use" },
     },
     { name: "totalUnits", label: "How many total units are you building?", kind: "number", required: true },
     {
