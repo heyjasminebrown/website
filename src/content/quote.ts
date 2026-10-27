@@ -16,6 +16,8 @@ export type QuoteField = {
   row?: number;
   // Only digits can be typed, up to this many (e.g. 3 for a credit score).
   digits?: number;
+  // Shown as a lighter sub-label under a bold question (the experience counts).
+  sub?: boolean;
 };
 
 export const isShown = (f: QuoteField, answers: Record<string, string | undefined>) =>
@@ -30,9 +32,17 @@ export const borrowerExperience: QuoteField[] = [
     placeholder: "e.g. 726",
     digits: 3,
   },
-  { name: "flipsCompleted", label: "Flips completed", kind: "number", required: true, placeholder: "0", row: 1 },
-  { name: "constructionCompleted", label: "New construction completed", kind: "number", required: true, placeholder: "0", row: 1 },
-  { name: "rentalsOwned", label: "Rental properties owned", kind: "number", required: true, placeholder: "0", row: 1 },
+  { name: "flipsCompleted", label: "Flips Completed", kind: "number", required: true, placeholder: "0", row: 1, sub: true },
+  {
+    name: "constructionCompleted",
+    label: "Ground Up Builds Completed",
+    kind: "number",
+    required: true,
+    placeholder: "0",
+    row: 1,
+    sub: true,
+  },
+  { name: "rentalsOwned", label: "Rentals Owned", kind: "number", required: true, placeholder: "0", row: 1, sub: true },
 ];
 export const experienceNote =
   "In the past 3 years, how many projects have you completed? And how many rentals do you own today? Only count properties where you or your entity were on title.";

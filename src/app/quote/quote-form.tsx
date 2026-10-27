@@ -9,9 +9,19 @@ const initialState: QuoteState = { status: "idle", message: "" };
 const field =
   "mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 outline-none focus:border-accent focus:ring-2 focus:ring-accent/30";
 
-function Label({ htmlFor, children, optional }: { htmlFor?: string; children: React.ReactNode; optional?: boolean }) {
+function Label({
+  htmlFor,
+  children,
+  optional,
+  sub,
+}: {
+  htmlFor?: string;
+  children: React.ReactNode;
+  optional?: boolean;
+  sub?: boolean;
+}) {
   return (
-    <label htmlFor={htmlFor} className="text-sm font-medium">
+    <label htmlFor={htmlFor} className={sub ? "text-sm text-muted" : "text-sm font-medium"}>
       {children} {optional && <span className="font-normal text-muted">(optional)</span>}
     </label>
   );
@@ -94,7 +104,7 @@ function Fields({ fields, values }: { fields: QuoteField[]; values: Record<strin
             </fieldset>
           ) : (
             <>
-              <Label htmlFor={f.name} optional={!f.required}>
+              <Label htmlFor={f.name} optional={!f.required} sub={f.sub}>
                 {f.label}
               </Label>
               <Input f={f} value={values[f.name]} />
@@ -153,36 +163,37 @@ export function QuoteForm() {
         <legend className="sr-only">Borrower experience</legend>
         <p className="font-display text-2xl">Borrower experience</p>
         <Fields fields={borrowerExperience.slice(0, 1)} values={v} />
-        <p className="text-sm text-muted">{experienceNote}</p>
+        <p className="text-sm font-semibold">{experienceNote}</p>
         <Fields fields={borrowerExperience.slice(1)} values={v} />
       </fieldset>
 
-      <div className="border-t border-border pt-6">
-        <Label htmlFor="loanType">Loan type</Label>
-        <select
-          id="loanType"
-          name="loanType"
-          required
-          value={loanType}
-          onChange={(e) => setLoanType(e.target.value)}
-          className={field}
-        >
-          <option value="" disabled>
-            Choose a loan type
-          </option>
-          {Object.keys(quoteLoanTypes).map((t) => (
-            <option key={t}>{t}</option>
-          ))}
-        </select>
-      </div>
-
-      {fields.length > 0 && (
-        <fieldset key={loanType} className="space-y-5 border-t border-border pt-6">
-          <legend className="sr-only">{loanType} property information</legend>
-          <p className="font-display text-2xl">Property information</p>
-          <Fields fields={fields} values={v.loanType === loanType ? v : {}} />
-        </fieldset>
-      )}
+      <fieldset className="space-y-5 border-t border-border pt-6">
+        <legend className="sr-only">Project information</legend>
+        <p className="font-display text-2xl">Project information</p>
+        <div>
+          <Label htmlFor="loanType">Loan type</Label>
+          <select
+            id="loanType"
+            name="loanType"
+            required
+            value={loanType}
+            onChange={(e) => setLoanType(e.target.value)}
+            className={field}
+          >
+            <option value="" disabled>
+              Choose a loan type
+            </option>
+            {Object.keys(quoteLoanTypes).map((t) => (
+              <option key={t}>{t}</option>
+            ))}
+          </select>
+        </div>
+        {fields.length > 0 && (
+          <div key={loanType} className="space-y-5">
+            <Fields fields={fields} values={v.loanType === loanType ? v : {}} />
+          </div>
+        )}
+      </fieldset>
 
       <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
       <p aria-live="polite" className="text-sm text-red-600">
