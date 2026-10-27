@@ -17,7 +17,7 @@ async function TopicForm({ searchParams }: { searchParams: PageProps<"/contact">
 
 export default function ContactPage({ searchParams }: PageProps<"/contact">) {
   return (
-    <Section eyebrow="Contact" title="Let's talk">
+    <Section main eyebrow="Contact" title="Let's talk">
       <p className="mb-8 max-w-xl text-muted">
         Fill in the form, or email{" "}
         <a href={`mailto:${site.email}`} className="font-medium text-accent underline underline-offset-4">

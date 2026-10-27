@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function SubscribePage() {
   return (
-    <Section eyebrow={newsletter.tagline} title={`${newsletter.name} Newsletter`}>
+    <Section main eyebrow={newsletter.tagline} title={`${newsletter.name} Newsletter`}>
       <p className="mb-8 max-w-xl text-lg text-muted">{newsletter.intro}</p>
       <ContactForm topic="Newsletter" signup submitLabel="Subscribe" />
     </Section>

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function EventsPage() {
   return (
-    <Section eyebrow="Events" title="Connect & Grow">
+    <Section main eyebrow="Events" title="Connect & Grow">
       <ul className="space-y-6">
         {events.map((e) => (
           <li key={e.title} className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-6 sm:flex-row sm:items-center sm:justify-between">
