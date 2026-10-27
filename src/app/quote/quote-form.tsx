@@ -2,10 +2,8 @@
 
 import { useActionState, useState } from "react";
 import {
-  autoValue,
   borrowerExperience,
   experienceNote,
-  isRequired,
   quoteLoanTypes,
   resolveFields,
   type Answers,
@@ -37,11 +35,10 @@ function Label({
 }
 
 function Input({ f, value, live }: { f: QuoteField; value?: string; live: Answers }) {
-  const required = isRequired(f, live);
   const common = {
     id: f.name,
     name: f.name,
-    required,
+    required: f.required,
     defaultValue: value,
     placeholder: f.placeholder,
     className: field,
@@ -55,7 +52,7 @@ function Input({ f, value, live }: { f: QuoteField; value?: string; live: Answer
             key={o}
             className="flex cursor-pointer items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 text-sm has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-accent-foreground"
           >
-            <input type="radio" name={f.name} value={o} required={required} defaultChecked={value === o} className="sr-only" />
+            <input type="radio" name={f.name} value={o} required={f.required} defaultChecked={value === o} className="sr-only" />
             {o}
           </label>
         ))}
@@ -77,22 +74,17 @@ function Input({ f, value, live }: { f: QuoteField; value?: string; live: Answer
         <input inputMode="decimal" {...common} className={`${field} pl-7`} />
       </span>
     );
-  if (f.kind === "percent")
+  if (f.kind === "date") return <input type="date" {...common} />;
+  if (f.compute)
+    // Calculated from other answers, so it's shown but can't be typed in.
     return (
       <span className="relative block">
-        <input inputMode="decimal" {...common} className={`${field} pr-8`} />
-        <span className="pointer-events-none absolute inset-y-0 right-3 top-1 flex items-center text-muted">%</span>
+        <input {...common} defaultValue={undefined} value={f.compute(live) ?? ""} readOnly className={`${field} bg-background pr-8 text-muted`} />
+        {f.kind === "percent" && (
+          <span className="pointer-events-none absolute inset-y-0 right-3 top-1 flex items-center text-muted">%</span>
+        )}
       </span>
     );
-  if (f.kind === "date") return <input type="date" {...common} />;
-  if (f.auto) {
-    // Locked to the number the property type implies; typed in by hand for the others (e.g. 5+ units).
-    const auto = autoValue(f, live);
-    if (auto !== undefined) return <input key="auto" {...common} defaultValue={undefined} value={auto} readOnly className={`${field} bg-background text-muted`} />;
-    return <input key="manual" type="number" min={1} {...common} defaultValue={live[f.name]} />;
-  }
-  if (f.maxOf)
-    return <input type="number" min={0} max={live[f.maxOf]} inputMode="numeric" {...common} />;
   if (f.digits)
     return (
       <input
@@ -119,7 +111,7 @@ function Fields({
   fields: QuoteField[];
   // Answers sent back after an error, to refill the form.
   values: Answers;
-  // The answers as they stand while typing, for rules like "required if any unit is vacant".
+  // The answers as they stand while typing, for calculated fields like LTV.
   live?: Answers;
 }) {
   const groups: QuoteField[][] = [];
@@ -142,7 +134,7 @@ function Fields({
             </fieldset>
           ) : (
             <>
-              <Label htmlFor={f.name} optional={!isRequired(f, live)} sub={f.sub}>
+              <Label htmlFor={f.name} optional={!f.required && !f.compute} sub={f.sub}>
                 {f.label}
               </Label>
               <Input f={f} value={values[f.name]} live={live} />
