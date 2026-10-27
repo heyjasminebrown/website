@@ -14,7 +14,7 @@ export function ReferralForm() {
   const v = state.values ?? {};
 
   if (state.status === "success") {
-    return <p className="rounded-lg border border-border bg-surface p-6 text-lg">{state.message}</p>;
+    return <p className="rounded-lg bg-background p-6 text-lg">{state.message}</p>;
   }
 
   return (
