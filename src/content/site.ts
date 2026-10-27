@@ -21,7 +21,7 @@ export const site = {
 export const nav = [
   { label: "Home", href: "/" },
   { label: "Fund Your Deal", href: "/quote" },
-  { label: "Loan Products", href: "/loan-products" },
+  { label: "Loan Products", href: "/conventus" },
   { label: "Referral", href: "/referral" },
   { label: "Calculator", href: "/calculator" },
   { label: "Events", href: "/events" },

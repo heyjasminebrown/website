@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
       { source: "/services", destination: "/", permanent: true },
       { source: "/contact", destination: "/quote", permanent: true },
       { source: "/loan", destination: "/quote", permanent: true },
-      { source: "/conventus", destination: "/loan-products", permanent: true },
+      { source: "/loan-products", destination: "/conventus", permanent: true },
     ];
   },
   turbopack: {

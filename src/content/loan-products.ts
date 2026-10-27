@@ -1,4 +1,4 @@
-// Loan products (/loan-products), from Jasmine's Conventus "Lending Products" sheet and relationship-manager flyer.
+// Loan products (/conventus), from Jasmine's Conventus "Lending Products" sheet and relationship-manager flyer.
 // Conventus is named and branded on this page only. Update terms here when they change; rates are intentionally not shown.
 
 export const lender = {

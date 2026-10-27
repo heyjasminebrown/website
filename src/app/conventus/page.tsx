@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Loan Products",
   description:
     "Bridge, bridge + rehab, ground-up construction and DSCR loans through Conventus, a direct lender with $10B+ funded. Terms, leverage and credit requirements.",
-  alternates: { canonical: "/loan-products" },
+  alternates: { canonical: "/conventus" },
 };
 
 function Quote({ light = false, className = "" }: { light?: boolean; className?: string }) {
