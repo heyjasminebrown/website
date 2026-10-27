@@ -213,7 +213,7 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
         "Mixed-Use",
       ],
       required: true,
-      section: "Proposed Construction",
+      section: "Construction Plan",
     },
     {
       name: "buildTypeDescription",
