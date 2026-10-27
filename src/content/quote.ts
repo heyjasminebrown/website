@@ -91,11 +91,22 @@ export const experienceNote =
 
 const address: QuoteField = { name: "propertyAddress", label: "Property Address", kind: "text", required: true };
 
+// Matches the Conventus loan sizer's list; used by every loan type.
+const propertyTypes = [
+  "SFR (1 Unit)",
+  "2-4 Unit",
+  "5-9 Units",
+  "10+ Units",
+  "Mixed-Use",
+  "Condo (Warrantable)",
+  "Condo (Non-Warrantable)",
+];
+
 const propertyType: QuoteField = {
   name: "propertyType",
-  label: "Property type",
+  label: "Property Type",
   kind: "select",
-  options: ["Single Family - 1 unit", "Duplex", "Triplex", "Quad", "5+ units"],
+  options: propertyTypes,
   required: true,
 };
 
@@ -118,21 +129,7 @@ const yesNo = ["Yes", "No"];
 // The questions Conventus's DSCR loan sizer needs.
 const dscr: QuoteField[] = [
   address,
-  {
-    name: "propertyType",
-    label: "Property Type",
-    kind: "select",
-    options: [
-      "SFR (1 Unit)",
-      "2-4 Unit",
-      "5-9 Units",
-      "10+ Units",
-      "Mixed-Use",
-      "Condo (Warrantable)",
-      "Condo (Non-Warrantable)",
-    ],
-    required: true,
-  },
+  propertyType,
   {
     name: "transactionType",
     label: "Transaction Type",
@@ -297,15 +294,7 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
       name: "buildType",
       label: "What type of property are you building?",
       kind: "select",
-      options: [
-        "Single-Family Home",
-        "Duplex",
-        "Triplex",
-        "Fourplex",
-        "Townhomes",
-        "Multifamily Apartments",
-        "Mixed-Use",
-      ],
+      options: propertyTypes,
       required: true,
       section: "Construction Plan",
     },
