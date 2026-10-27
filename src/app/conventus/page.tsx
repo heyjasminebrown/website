@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import { Mrs_Saint_Delafield } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { ConventusTheme } from "@/components/conventus-theme";
 import { lender, productRows, products, relationshipManager } from "@/content/loan-products";
+
+// Signature script, matched to the "Hey" in Jasmine's logo.
+const signatureFont = Mrs_Saint_Delafield({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Loan Products",
@@ -203,7 +207,9 @@ export default function LoanProductsPage() {
               ))}
             </div>
             <p className="mt-8">{relationshipManager.signoff}</p>
-            <p className="font-display text-2xl text-cv-green">{relationshipManager.signature}</p>
+            <p className={`${signatureFont.className} mt-1 text-5xl leading-tight text-cv-green`}>
+              {relationshipManager.signature}
+            </p>
             <div className="mt-6 space-y-1">
               <a href={`mailto:${lender.contact.email}`} className="block text-cv-teal underline underline-offset-4">
                 {lender.contact.email}

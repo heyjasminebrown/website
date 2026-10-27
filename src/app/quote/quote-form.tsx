@@ -164,7 +164,7 @@ export function QuoteForm() {
       </div>
       <div>
         <Label htmlFor="referredBy" optional>
-          Did someone refer you? Enter their name
+          Did someone refer you? If so, please share their name.
         </Label>
         <input id="referredBy" name="referredBy" defaultValue={v.referredBy} className={field} />
       </div>
