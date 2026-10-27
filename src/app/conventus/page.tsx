@@ -52,21 +52,34 @@ export default function LoanProductsPage() {
   return (
     <div className={`${inter.variable} cv-page`}>
       <section className="bg-cv-dark px-4 py-16 text-white sm:px-6 sm:py-20">
-        <div className="mx-auto max-w-6xl">
-          <p className="text-sm uppercase tracking-[0.3em] text-cv-mint">{lender.name} · Direct lender</p>
-          <h1 className="mt-3 text-5xl leading-tight sm:text-7xl">Loan Products</h1>
-          <p className="mt-6 max-w-2xl text-lg text-cv-mint-light">
-            Bridge, rehab, ground-up construction and DSCR loans for real estate investors, funded directly through{" "}
-            {lender.name}.
-          </p>
-          <div className="mt-10 flex flex-wrap items-end gap-10">
-            {lender.stats.map((s) => (
-              <div key={s.label}>
-                <p className="font-display text-5xl text-cv-mint sm:text-6xl">{s.value}</p>
-                <p className="mt-1 text-sm uppercase tracking-wider text-cv-mint-light">{s.label}</p>
-              </div>
-            ))}
-            <Quote light className="ml-auto" />
+        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.3fr_1fr]">
+          <div>
+            <p className="text-sm uppercase tracking-[0.3em] text-cv-mint">{lender.name} · Direct lender</p>
+            <h1 className="mt-3 text-5xl leading-tight sm:text-7xl">Loan Products</h1>
+            <p className="mt-6 max-w-2xl text-lg text-cv-mint-light">
+              Bridge, rehab, ground-up construction and DSCR loans for real estate investors, funded directly through{" "}
+              {lender.name}.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-10">
+              {lender.stats.map((s) => (
+                <div key={s.label}>
+                  <p className="font-display text-5xl text-cv-mint sm:text-6xl">{s.value}</p>
+                  <p className="mt-1 text-sm uppercase tracking-wider text-cv-mint-light">{s.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="mx-auto w-full max-w-sm text-center">
+            <Image
+              src="/images/Jasmine-Conventus.jpg"
+              alt="Jasmine Brown, Conventus relationship manager"
+              width={819}
+              height={771}
+              priority
+              sizes="(min-width: 1024px) 384px, 90vw"
+              className="w-full rounded-3xl"
+            />
+            <Quote light className="mt-6" />
           </div>
         </div>
       </section>
