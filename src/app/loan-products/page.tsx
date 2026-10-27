@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { conventus, productRows, products, relationshipManager } from "@/content/conventus";
+import { lender, productRows, products, relationshipManager } from "@/content/loan-products";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Conventus Lending Products",
+  title: "Loan Products",
   description:
-    "Bridge, bridge + rehab, ground-up construction and DSCR loans through Conventus, a direct lender with $10B+ funded. Rates, terms, leverage and credit requirements.",
-  alternates: { canonical: "/conventus" },
+    "Bridge, bridge + rehab, ground-up construction and DSCR loans from a direct lender with $10B+ funded. Rates, terms, leverage and credit requirements.",
+  alternates: { canonical: "/loan-products" },
 };
 
 function Quote({ light = false, className = "" }: { light?: boolean; className?: string }) {
@@ -44,19 +44,19 @@ const HouseIcon = () => (
   </svg>
 );
 
-export default function ConventusPage() {
+export default function LoanProductsPage() {
   return (
     <>
       <section className="bg-accent px-4 py-16 text-blush sm:px-6 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <p className="text-sm uppercase tracking-[0.3em] opacity-80">{conventus.name} · Direct lender</p>
-          <h1 className="mt-3 text-5xl leading-tight sm:text-7xl">Lending Products</h1>
+          <p className="text-sm uppercase tracking-[0.3em] opacity-80">Direct lender</p>
+          <h1 className="mt-3 text-5xl leading-tight sm:text-7xl">Loan Products</h1>
           <p className="mt-6 max-w-2xl text-lg">
-            Bridge, rehab, ground-up construction and DSCR loans for real estate investors, funded directly through{" "}
-            {conventus.name}.
+            Bridge, rehab, ground-up construction and DSCR loans for real estate investors, straight from a direct
+            lender.
           </p>
           <div className="mt-10 flex flex-wrap items-end gap-10">
-            {conventus.stats.map((s) => (
+            {lender.stats.map((s) => (
               <div key={s.label}>
                 <p className="font-display text-5xl sm:text-6xl">{s.value}</p>
                 <p className="mt-1 text-sm uppercase tracking-wider opacity-80">{s.label}</p>
@@ -137,7 +137,7 @@ export default function ConventusPage() {
           <div className="rounded-3xl bg-surface p-8">
             <h2 className="text-3xl">Credit requirements</h2>
             <ul className="mt-6 space-y-3">
-              {conventus.credit.map((c) => (
+              {lender.credit.map((c) => (
                 <li key={c} className="flex gap-3">
                   <span aria-hidden className="text-accent">✓</span>
                   {c}
@@ -148,11 +148,11 @@ export default function ConventusPage() {
           <div className="rounded-3xl bg-surface p-8">
             <h2 className="text-3xl">Where we lend</h2>
             <p className="mt-6 text-lg">
-              Nationwide, in every state except {conventus.statesNotServed.slice(0, -1).join(", ")} and{" "}
-              {conventus.statesNotServed.at(-1)}.
+              Nationwide, in every state except {lender.statesNotServed.slice(0, -1).join(", ")} and{" "}
+              {lender.statesNotServed.at(-1)}.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
-              {conventus.statesNotServed.map((s) => (
+              {lender.statesNotServed.map((s) => (
                 <span key={s} className="rounded-full border border-border px-3 py-1 text-sm text-muted">
                   Not available: {s}
                 </span>
@@ -178,11 +178,11 @@ export default function ConventusPage() {
             <p className="mt-8">{relationshipManager.signoff}</p>
             <p className="font-display text-2xl">{relationshipManager.signature}</p>
             <div className="mt-6 space-y-1">
-              <a href={`mailto:${conventus.contact.email}`} className="block text-accent underline underline-offset-4">
-                {conventus.contact.email}
+              <a href={`mailto:${lender.contact.email}`} className="block text-accent underline underline-offset-4">
+                {lender.contact.email}
               </a>
-              <a href={`tel:${conventus.contact.phone.replace(/\D/g, "")}`} className="block text-accent underline underline-offset-4">
-                {conventus.contact.phone}
+              <a href={`tel:${lender.contact.phone.replace(/\D/g, "")}`} className="block text-accent underline underline-offset-4">
+                {lender.contact.phone}
               </a>
               <p className="text-muted">
                 Connect with me:{" "}
@@ -215,8 +215,8 @@ export default function ConventusPage() {
       <section className="border-t border-border px-4 py-10 sm:px-6">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 text-xs text-muted sm:flex-row sm:items-center">
           <div className="flex-1 space-y-2">
-            <p>{conventus.disclaimer}</p>
-            <p>{conventus.license}</p>
+            <p>{lender.disclaimer}</p>
+            <p>{lender.license}</p>
           </div>
           <div className="flex shrink-0 items-center gap-2 text-foreground">
             <HouseIcon />

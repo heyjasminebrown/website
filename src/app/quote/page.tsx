@@ -18,7 +18,7 @@ export default function QuotePage() {
           <p className="text-sm uppercase tracking-wider opacity-80">{quote.eyebrow}</p>
           <h1 className="mt-3 text-5xl leading-tight sm:text-6xl">{quote.heading}</h1>
           <p className="mt-6 text-lg sm:text-xl">{quote.intro}</p>
-          <Link href="/conventus" className="mt-6 inline-block underline underline-offset-4 hover:opacity-80">
+          <Link href="/loan-products" className="mt-6 inline-block underline underline-offset-4 hover:opacity-80">
             Learn more about our loan products →
           </Link>
         </div>

@@ -1,13 +1,12 @@
-// Conventus lending products, from Jasmine's Conventus "Lending Products" sheet and relationship-manager flyer.
-// Update rates and terms here when Conventus changes them.
+// Loan products (/loan-products), from Jasmine's "Lending Products" sheet and relationship-manager flyer.
+// The lender's company name is intentionally left off the site. Update rates and terms here when they change.
 
-export const conventus = {
-  name: "Conventus",
+export const lender = {
   stats: [
     { value: "$10B+", label: "Loans funded" },
     { value: "4,600+", label: "Clients nationwide" },
   ],
-  // From the Conventus lending map: every state except these.
+  // From the lending map: every state except these.
   statesNotServed: ["Iowa", "Minnesota", "Nevada", "North Dakota", "South Dakota", "Vermont"],
   credit: [
     "Minimum FICO score of 660",
@@ -16,8 +15,8 @@ export const conventus = {
     "No late credit card payments in the last year",
   ],
   disclaimer:
-    "This is a summary of our terms and requirements and may be more expansive. Please speak with your Conventus contact for details. Information in this summary reflects current requirements and may be modified or supplemented at any time.",
-  license: "Conventus LLC California Finance Lenders License 60DBO-43745",
+    "This is a summary of our terms and requirements and may be more expansive. Please contact me for details. Information in this summary reflects current requirements and may be modified or supplemented at any time.",
+  license: "California Finance Lenders License 60DBO-43745",
   contact: { name: "Jasmine Brown", email: "jbrown@cvlending.com", phone: "404.789.5791" },
 };
 
