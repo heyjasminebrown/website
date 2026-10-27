@@ -1,0 +1,95 @@
+// Conventus lending products, from Jasmine's Conventus "Lending Products" sheet and relationship-manager flyer.
+// Update rates and terms here when Conventus changes them.
+
+export const conventus = {
+  name: "Conventus",
+  stats: [
+    { value: "$10B+", label: "Loans funded" },
+    { value: "4,600+", label: "Clients nationwide" },
+  ],
+  // From the Conventus lending map: every state except these.
+  statesNotServed: ["Iowa", "Minnesota", "Nevada", "North Dakota", "South Dakota", "Vermont"],
+  credit: [
+    "Minimum FICO score of 660",
+    "No foreclosure or bankruptcy within the past 48 months",
+    "Primary residence mortgage must be current",
+    "No late credit card payments in the last year",
+  ],
+  disclaimer:
+    "This is a summary of our terms and requirements and may be more expansive. Please speak with your Conventus contact for details. Information in this summary reflects current requirements and may be modified or supplemented at any time.",
+  license: "Conventus LLC California Finance Lenders License 60DBO-43745",
+  contact: { name: "Jasmine Brown", email: "jbrown@cvlending.com", phone: "404.789.5791" },
+};
+
+const mixedUse = "Mixed use (50% of square feet must be residential, 60% of rental income must be residential)";
+
+export const productRows = [
+  "Property types",
+  "Loan amounts",
+  "Types",
+  "Available terms",
+  "Starting rates",
+  "Purposes",
+  "Max leverage",
+] as const;
+
+export type Product = { name: string } & Record<(typeof productRows)[number], string[]>;
+
+export const products: Product[] = [
+  {
+    name: "Bridge",
+    "Property types": ["1–4 units (includes townhomes, condos, PUDs, ADUs)", "5–15 multifamily", mixedUse],
+    "Loan amounts": ["1–4 units: $100,000 – $10,000,000", "Multifamily / mixed use: $100,000 – $10,000,000"],
+    Types: ["Purchase", "Refinance (rate/term or cash out)"],
+    "Available terms": ["6–18 months"],
+    "Starting rates": ["7.75%"],
+    Purposes: ["Short-term acquisitions and refinances"],
+    "Max leverage": ["90% for purchase", "75% loan to value for rate/term refi", "70% loan to value for cash out"],
+  },
+  {
+    name: "Bridge + Rehab",
+    "Property types": ["1–4 units (includes townhomes, condos, PUDs, ADUs)", "5–15 multifamily", mixedUse],
+    "Loan amounts": ["1–4 units: $100,000 – $10,000,000", "Multifamily or mixed use: $100,000 – $10,000,000"],
+    Types: ["Purchase", "Fix & flip", "Refinance (rate/term or cash out)"],
+    "Available terms": ["6–24 months"],
+    "Starting rates": ["7.75%"],
+    Purposes: ["Cosmetic to heavy rehab"],
+    "Max leverage": ["90% for purchase", "80% loan to value", "100% of rehab costs"],
+  },
+  {
+    name: "Ground-Up Construction",
+    "Property types": [
+      "1–4 units (includes townhomes, condos, PUDs)",
+      "5–15 unit multifamily",
+      "Mixed use (50% of square feet must be residential, 60% of rental income must be from residential)",
+    ],
+    "Loan amounts": ["Up to $10,000,000"],
+    Types: ["Purchase", "Fix & flip", "Refinance (rate/term or cash out)"],
+    "Available terms": ["6–24 months"],
+    "Starting rates": ["8.99%"],
+    Purposes: ["Land", "Entitled land / design stage", "Entitled & permitted (shovel-ready)", "Mid construction"],
+    "Max leverage": ["85% loan to cost", "65% LTARV"],
+  },
+  {
+    name: "DSCR",
+    "Property types": ["1–4 units (includes townhomes, condos, PUDs, ADUs)"],
+    "Loan amounts": ["$100,000 – $3,000,000"],
+    Types: ["Purchase", "Refinance (rate/term or cash out)"],
+    "Available terms": ["30-year fixed rate term loans", "5, 7 & 10 year ARMs (interest only available)"],
+    "Starting rates": ["5.75%"],
+    Purposes: ["Long-term rentals", "Short-term rentals"],
+    "Max leverage": ["80% for purchase or rate/term refi", "75% for cash out", "65% for short-term rentals"],
+  },
+];
+
+export const relationshipManager = {
+  greeting: "Hey, there. I’m Jasmine.",
+  paragraphs: [
+    "I’m a private lender and real estate investor focused on helping operators fund real estate projects.",
+    "My background in financial services, risk management, and operations allows me to quickly assess opportunities, communicate clearly, and help investors navigate the lending process with confidence.",
+    "As an active investor, I bring a lending perspective grounded in real-world experience, allowing me to align capital with operators to support successful outcomes. In addition to funding deals, I create spaces for investors to connect and grow through local meetups and national events, cultivating relationships that extend beyond a single transaction.",
+    "I invite you to explore our loan programs and referral opportunities. As a direct lender, we also consider deals outside of the box. If you or someone in your network is looking for a lending partner, I’d love to be a resource.",
+  ],
+  signoff: "Your partner in growth,",
+  signature: "Jasmine T. Brown",
+};
