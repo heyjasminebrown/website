@@ -138,13 +138,17 @@ export default function LoanProductsPage() {
           ))}
         </div>
 
-        <div className="mt-10 hidden text-center lg:block">
+        <p className="mt-10 text-center text-lg text-cv-green">
+          We lend in every state except {lender.statesNotServed.slice(0, -1).join(", ")} and{" "}
+          {lender.statesNotServed.at(-1)}.
+        </p>
+        <div className="mt-6 hidden text-center lg:block">
           <Quote />
         </div>
       </section>
 
       <section className="bg-cv-green px-4 py-16 sm:px-6">
-        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+        <div className="mx-auto max-w-3xl">
           <div className="rounded-3xl bg-surface p-8">
             <h2 className="text-3xl text-cv-green">Credit requirements</h2>
             <ul className="mt-6 space-y-3">
@@ -155,20 +159,6 @@ export default function LoanProductsPage() {
                 </li>
               ))}
             </ul>
-          </div>
-          <div className="rounded-3xl bg-surface p-8">
-            <h2 className="text-3xl text-cv-green">Where we lend</h2>
-            <p className="mt-6 text-lg">
-              Nationwide, in every state except {lender.statesNotServed.slice(0, -1).join(", ")} and{" "}
-              {lender.statesNotServed.at(-1)}.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {lender.statesNotServed.map((s) => (
-                <span key={s} className="rounded-full bg-cv-mint-light px-3 py-1 text-sm text-cv-green">
-                  Not available: {s}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
         <div className="mt-10 text-center">
