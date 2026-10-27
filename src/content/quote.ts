@@ -1,26 +1,124 @@
-// The Get a Quote form (/quote). Each loan type has its own follow-up questions, shown once it's picked.
-// To change a loan type's questions, edit its list below; the form and the lead email update automatically.
+// The Get a Quote form (/quote). Everyone answers the borrower-experience questions; each loan type then has
+// its own property questions, shown once it's picked. Edit the lists below and the form, validation and lead
+// email all update automatically.
 
 export type QuoteField = {
   name: string;
   label: string;
-  kind: "text" | "money" | "number" | "select" | "textarea";
+  kind: "text" | "money" | "number" | "date" | "select" | "radio" | "textarea";
   options?: string[];
   required?: boolean;
+  placeholder?: string;
+  hint?: string;
+  // Only shown (and only required) when another answer matches, e.g. { field: "ownLand", equals: "Yes" }.
+  showIf?: { field: string; equals: string };
+  // Fields with the same row number sit side by side on wider screens.
+  row?: number;
 };
 
-// TODO: placeholder questions until Jasmine sends the real fields for each loan type.
-const placeholder: QuoteField[] = [
-  { name: "propertyLocation", label: "Property address or city", kind: "text", required: true },
+export const isShown = (f: QuoteField, answers: Record<string, string | undefined>) =>
+  !f.showIf || answers[f.showIf.field] === f.showIf.equals;
+
+export const borrowerExperience: QuoteField[] = [
+  { name: "creditScore", label: "Estimated credit score", kind: "number", required: true, placeholder: "e.g. 726" },
+  { name: "flipsCompleted", label: "Flips completed", kind: "number", required: true, placeholder: "0", row: 1 },
+  { name: "constructionCompleted", label: "New construction completed", kind: "number", required: true, placeholder: "0", row: 1 },
+  { name: "rentalsOwned", label: "Rental properties owned", kind: "number", required: true, placeholder: "0", row: 1 },
+];
+export const experienceNote =
+  "How many projects have you completed where you were on title? This does not include your primary home.";
+
+const address: QuoteField = {
+  name: "propertyAddress",
+  label: "Project property address",
+  kind: "text",
+  required: true,
+  hint: "The property you want to finance, not your home address. No property yet? Enter the city and state.",
+};
+
+// Shared by Fix and Flip and New Construction.
+const projectDetails: QuoteField[] = [
+  { name: "rehabCost", label: "Rehab cost", kind: "money", required: true, row: 3 },
+  { name: "projectMonths", label: "Estimated project length (months)", kind: "number", required: true, row: 3 },
+  { name: "projectDescription", label: "Brief project description", kind: "textarea", required: true },
+  {
+    name: "currentProperty",
+    label: "Current property type, bed/bath/sq ft",
+    kind: "text",
+    required: true,
+    placeholder: "e.g. Single family, 3 bed / 2 bath, 1,450 sq ft",
+  },
+  {
+    name: "futureProperty",
+    label: "Future property type, bed/bath/sq ft",
+    kind: "text",
+    required: true,
+    placeholder: "e.g. Single family, 4 bed / 3 bath, 2,100 sq ft",
+  },
+  { name: "arv", label: "ARV (after repair value)", kind: "money", required: true },
+  {
+    name: "comps",
+    label: "2–3 comps",
+    kind: "textarea",
+    placeholder: "Addresses or links to 2–3 recent nearby sales",
+  },
+  { name: "exitStrategy", label: "Exit strategy", kind: "radio", options: ["Sell", "Rent"], required: true },
+];
+
+const yesNo = ["Yes", "No"];
+
+// TODO: placeholder questions until Jasmine sends the DSCR fields.
+const dscrPlaceholder: QuoteField[] = [
+  address,
   { name: "loanAmount", label: "Estimated loan amount", kind: "money" },
   { name: "dealNotes", label: "Anything else about your deal?", kind: "textarea" },
 ];
 
 export const quoteLoanTypes: Record<string, QuoteField[]> = {
-  "Fix and Flip": placeholder,
-  "New Construction": placeholder,
-  "DSCR Purchase": placeholder,
-  "DSCR Refinance": placeholder,
+  "Fix and Flip": [
+    address,
+    { name: "purchasePrice", label: "Purchase price", kind: "money", required: true },
+    ...projectDetails,
+  ],
+  "New Construction": [
+    address,
+    { name: "vacantLand", label: "Is the property currently vacant land?", kind: "radio", options: yesNo, required: true },
+    { name: "ownLand", label: "Do you own the land?", kind: "radio", options: yesNo, required: true },
+    {
+      name: "landPurchasePrice",
+      label: "Original purchase price",
+      kind: "money",
+      required: true,
+      showIf: { field: "ownLand", equals: "Yes" },
+      row: 2,
+    },
+    {
+      name: "landPurchaseDate",
+      label: "Date purchased",
+      kind: "date",
+      required: true,
+      showIf: { field: "ownLand", equals: "Yes" },
+      row: 2,
+    },
+    {
+      name: "purchasePrice",
+      label: "Purchase price",
+      kind: "money",
+      required: true,
+      showIf: { field: "ownLand", equals: "No" },
+    },
+    { name: "constructionStarted", label: "Have you started construction?", kind: "radio", options: yesNo, required: true },
+    {
+      name: "asIsCollateral",
+      label: "As-is collateral type",
+      kind: "radio",
+      options: ["Vacant land", "Building", "Other"],
+      required: true,
+    },
+    ...projectDetails,
+  ],
+  "DSCR Purchase": dscrPlaceholder,
+  "DSCR Refinance": dscrPlaceholder,
 };
 
 export const quote = {
