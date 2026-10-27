@@ -4,9 +4,7 @@ export const site = {
   name: "Hey Jasmine Brown",
   owner: "Jasmine Brown",
   tagline: "Finance & Real Estate",
-  // Home page: the small label above the big heading says plainly who this is for (people and search engines);
-  // the line under it is the personal tagline.
-  eyebrow: "Hard money loans for Atlanta investors",
+  // Home page: the line under the big heading.
   subtagline: "Money that helps move your wealth forward.",
   description:
     "Hard money loans for Atlanta real estate investors (fix & flip, new construction, DSCR and multifamily), plus money and real estate guidance from Jasmine Brown.",
