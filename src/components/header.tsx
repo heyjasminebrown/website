@@ -14,12 +14,6 @@ export function Header() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/contact"
-            className="rounded-full bg-accent px-4 py-2 font-medium text-accent-foreground hover:opacity-90"
-          >
-            Contact
-          </Link>
         </nav>
         <details className="relative lg:hidden">
           <summary className="cursor-pointer list-none rounded-md border border-border px-3 py-1.5 text-sm">
@@ -31,9 +25,6 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            <Link href="/contact" className="mt-1 rounded bg-accent px-3 py-2 text-sm text-accent-foreground hover:opacity-90">
-              Contact
-            </Link>
           </nav>
         </details>
       </div>

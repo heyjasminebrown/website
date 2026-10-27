@@ -29,33 +29,6 @@ export const nav = [
   { label: "Wealthy Notes", href: "/blog" },
 ];
 
-export const offerings = [
-  {
-    title: "Passive income",
-    summary: "Earn returns backed by real estate without managing properties yourself.",
-    href: "/passiveincome",
-    cta: "Learn about investing",
-  },
-  {
-    title: "Fund your deal",
-    summary: "Financing for fix & flips, ground-up construction, multifamily and rentals.",
-    href: "/loan",
-    cta: "Get funding",
-  },
-  {
-    title: "Money makeover",
-    summary: "Get your finances organized and build a plan to start growing your wealth.",
-    href: "/contact?topic=Money%20Makeover",
-    cta: "Get your money makeover",
-  },
-  {
-    title: "Marketing & technology",
-    summary: "Help for small businesses to streamline operations and grow with data-driven marketing.",
-    href: "/contact?topic=Business%20consulting",
-    cta: "Work together",
-  },
-];
-
 export const about = {
   heading: "Hey there, I’m Jasmine.",
   paragraphs: [

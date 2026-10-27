@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     return [
       { source: "/qrcode", destination: "/", permanent: true },
       { source: "/services", destination: "/", permanent: true },
+      { source: "/contact", destination: "/loan", permanent: true },
     ];
   },
   turbopack: {
