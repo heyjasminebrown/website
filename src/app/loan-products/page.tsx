@@ -88,7 +88,7 @@ export default function LoanProductsPage() {
                 <tr key={row} className="border-t border-border align-top">
                   <th className="p-4 text-left font-display text-lg font-normal text-accent">{row}</th>
                   {products.map((p) => (
-                    <td key={p.name} className={`p-4 ${row === "Starting rates" ? "font-display text-2xl" : "text-muted"}`}>
+                    <td key={p.name} className="p-4 text-muted">
                       <List items={p[row]} />
                     </td>
                   ))}
@@ -102,16 +102,11 @@ export default function LoanProductsPage() {
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:hidden">
           {products.map((p) => (
             <article key={p.name} className="overflow-hidden rounded-3xl border border-border bg-surface">
-              <div className="flex items-baseline justify-between gap-4 bg-accent px-6 py-5 text-blush">
+              <div className="bg-accent px-6 py-5 text-blush">
                 <h3 className="text-2xl">{p.name}</h3>
-                <p className="shrink-0 text-sm">
-                  from <span className="font-display text-2xl">{p["Starting rates"][0]}</span>
-                </p>
               </div>
               <dl className="divide-y divide-border px-6 text-sm">
-                {productRows
-                  .filter((row) => row !== "Starting rates")
-                  .map((row) => (
+                {productRows.map((row) => (
                     <div key={row} className="py-4">
                       <dt className="font-display text-base text-accent">{row}</dt>
                       <dd className="mt-1 text-muted">

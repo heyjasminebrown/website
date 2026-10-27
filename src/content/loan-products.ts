@@ -1,5 +1,5 @@
 // Loan products (/loan-products), from Jasmine's "Lending Products" sheet and relationship-manager flyer.
-// The lender's company name is intentionally left off the site. Update rates and terms here when they change.
+// The lender's company name is intentionally left off the site. Update terms here when they change. Rates are intentionally not shown.
 
 export const lender = {
   stats: [
@@ -27,7 +27,6 @@ export const productRows = [
   "Loan amounts",
   "Types",
   "Available terms",
-  "Starting rates",
   "Purposes",
   "Max leverage",
 ] as const;
@@ -41,7 +40,6 @@ export const products: Product[] = [
     "Loan amounts": ["1–4 units: $100,000 – $10,000,000", "Multifamily / mixed use: $100,000 – $10,000,000"],
     Types: ["Purchase", "Refinance (rate/term or cash out)"],
     "Available terms": ["6–18 months"],
-    "Starting rates": ["7.75%"],
     Purposes: ["Short-term acquisitions and refinances"],
     "Max leverage": ["90% for purchase", "75% loan to value for rate/term refi", "70% loan to value for cash out"],
   },
@@ -51,7 +49,6 @@ export const products: Product[] = [
     "Loan amounts": ["1–4 units: $100,000 – $10,000,000", "Multifamily or mixed use: $100,000 – $10,000,000"],
     Types: ["Purchase", "Fix & flip", "Refinance (rate/term or cash out)"],
     "Available terms": ["6–24 months"],
-    "Starting rates": ["7.75%"],
     Purposes: ["Cosmetic to heavy rehab"],
     "Max leverage": ["90% for purchase", "80% loan to value", "100% of rehab costs"],
   },
@@ -65,7 +62,6 @@ export const products: Product[] = [
     "Loan amounts": ["Up to $10,000,000"],
     Types: ["Purchase", "Fix & flip", "Refinance (rate/term or cash out)"],
     "Available terms": ["6–24 months"],
-    "Starting rates": ["8.99%"],
     Purposes: ["Land", "Entitled land / design stage", "Entitled & permitted (shovel-ready)", "Mid construction"],
     "Max leverage": ["85% loan to cost", "65% LTARV"],
   },
@@ -75,7 +71,6 @@ export const products: Product[] = [
     "Loan amounts": ["$100,000 – $3,000,000"],
     Types: ["Purchase", "Refinance (rate/term or cash out)"],
     "Available terms": ["30-year fixed rate term loans", "5, 7 & 10 year ARMs (interest only available)"],
-    "Starting rates": ["5.75%"],
     Purposes: ["Long-term rentals", "Short-term rentals"],
     "Max leverage": ["80% for purchase or rate/term refi", "75% for cash out", "65% for short-term rentals"],
   },
