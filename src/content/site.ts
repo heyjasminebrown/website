@@ -5,7 +5,7 @@ export const site = {
   owner: "Jasmine Brown",
   tagline: "Finance & Real Estate",
   // Home page: the line under the big heading.
-  subtagline: "Money that helps move your wealth forward.",
+  subtagline: "Moving your wealth forward.",
   description:
     "Hard money loans for Atlanta real estate investors (fix & flip, new construction, DSCR and multifamily), plus money and real estate guidance from Jasmine Brown.",
   areaServed: "Atlanta, GA",
