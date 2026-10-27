@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Refer a Friend",
   alternates: { canonical: "/referral" },
   description:
-    "Earn up to $1,500 when you refer a fellow investor. Send them my way to earn a referral bonus up to $1,500 (based on final loan amount).",
+    "Earn up to $1,500 when you refer a fellow investor. Know someone working on a real estate deal? Earn a referral bonus when they complete a loan with us.",
 };
 
 const steps = [
@@ -22,11 +22,10 @@ export default function ReferralPage() {
       <section className="bg-accent px-4 py-16 text-blush sm:px-6 sm:py-20">
         <div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[1.2fr_1fr]">
           <div>
-            <p className="text-sm uppercase tracking-wider opacity-80">Referral program</p>
+            <p className="text-sm uppercase tracking-wider opacity-80">Loan Referral Program</p>
             <h1 className="mt-3 text-4xl leading-tight sm:text-6xl">Earn up to $1,500 when you refer a fellow investor!</h1>
             <p className="mt-6 max-w-xl text-lg">
-              Know someone working on a real estate deal? Send them my way to earn a referral bonus up to $1,500 (based on
-              final loan amount).
+              Know someone working on a real estate deal? Earn a referral bonus when they complete a loan with us*
             </p>
             <a
               href="#refer"
@@ -34,6 +33,7 @@ export default function ReferralPage() {
             >
               Refer an investor
             </a>
+            <p className="mt-6 text-sm opacity-80">*Referral bonus up to $1,500, based on final loan amount.</p>
           </div>
           <Image
             src="/images/Jasmine-Closing-2.jpg"
