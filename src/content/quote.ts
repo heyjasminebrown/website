@@ -10,8 +10,13 @@ export type QuoteField = {
   required?: boolean;
   placeholder?: string;
   hint?: string;
-  // Only shown (and only required) when another answer matches, e.g. { field: "ownLand", equals: "Yes" }.
-  showIf?: { field: string; equals: string };
+  // Only shown (and only required) when another answer matches: equals one value, is one of several,
+  // or has been answered with anything except a value.
+  showIf?: { field: string; equals?: string; oneOf?: string[]; notEquals?: string };
+  // Starts a new titled section within the loan type's questions.
+  section?: string;
+  // Ground Up total units: worked out from building type × count where possible, otherwise typed in.
+  units?: boolean;
   // Fields with the same row number sit side by side on wider screens.
   row?: number;
   // Only digits can be typed, up to this many (e.g. 3 for a credit score).
@@ -20,8 +25,46 @@ export type QuoteField = {
   sub?: boolean;
 };
 
-export const isShown = (f: QuoteField, answers: Record<string, string | undefined>) =>
-  !f.showIf || answers[f.showIf.field] === f.showIf.equals;
+export function isShown(f: QuoteField, answers: Record<string, string | undefined>) {
+  if (!f.showIf) return true;
+  const { field, equals, oneOf, notEquals } = f.showIf;
+  const answer = answers[field];
+  if (equals !== undefined) return answer === equals;
+  if (oneOf) return !!answer && oneOf.includes(answer);
+  if (notEquals !== undefined) return !!answer && answer !== notEquals;
+  return true;
+}
+
+/**
+ * The questions to show, in order. A follow-up is only shown if the question it depends on is shown too,
+ * so a stale answer to a hidden question can't keep its follow-ups visible.
+ */
+export function visibleFields(fields: QuoteField[], answers: Record<string, string | undefined>) {
+  const names = new Set(fields.map((f) => f.name));
+  const visible = new Set<string>();
+  return fields.filter((f) => {
+    const parentVisible = !f.showIf || !names.has(f.showIf.field) || visible.has(f.showIf.field);
+    const ok = parentVisible && isShown(f, answers);
+    if (ok) visible.add(f.name);
+    return ok;
+  });
+}
+
+// Ground Up Construction: units per building for property types where the total can be worked out.
+export const unitsPerBuilding: Record<string, number> = {
+  "Single-Family Homes": 1,
+  Duplexes: 2,
+  Triplexes: 3,
+  Fourplexes: 4,
+};
+
+/** Total units for building types where it's buildings × units per building; undefined when the borrower enters it. */
+export function calculatedUnits(answers: Record<string, string | undefined>) {
+  const perBuilding = unitsPerBuilding[answers.buildType ?? ""];
+  const buildings = Number(String(answers.buildingCount ?? "").replace(/,/g, ""));
+  if (!perBuilding || !Number.isInteger(buildings) || buildings < 1) return undefined;
+  return buildings * perBuilding;
+}
 
 export const borrowerExperience: QuoteField[] = [
   {
@@ -57,20 +100,19 @@ const propertyType: QuoteField = {
   required: true,
 };
 
-// Used by Ground Up Construction; Fix and Flip reuses some of these in its own order.
-const projectDetails: QuoteField[] = [
-  { name: "rehabCost", label: "Rehab cost", kind: "money", required: true, row: 3 },
-  { name: "projectMonths", label: "Estimated project length (months)", kind: "number", required: true, row: 3 },
-  { name: "projectDescription", label: "Brief project description", kind: "textarea", required: true },
-  { name: "arv", label: "ARV (after repair value)", kind: "money", required: true },
-  {
-    name: "comps",
-    label: "2–3 comps",
-    kind: "textarea",
-    placeholder: "Addresses or links to 2–3 recent nearby sales",
-  },
-  { name: "exitStrategy", label: "Exit strategy", kind: "radio", options: ["Sell", "Rent"], required: true },
-];
+const comps: QuoteField = {
+  name: "comps",
+  label: "2–3 comps",
+  kind: "textarea",
+  placeholder: "Addresses or links to 2–3 recent nearby sales",
+};
+const exitStrategy: QuoteField = {
+  name: "exitStrategy",
+  label: "Exit strategy",
+  kind: "radio",
+  options: ["Sell", "Rent"],
+  required: true,
+};
 
 const yesNo = ["Yes", "No"];
 
@@ -95,16 +137,24 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
       kind: "textarea",
       required: true,
     },
-    ...projectDetails.filter((f) => ["comps", "exitStrategy"].includes(f.name)),
+    comps,
+    exitStrategy,
   ],
   "Ground Up Construction": [
     address,
-    propertyType,
-    { name: "vacantLand", label: "Is the property currently vacant land?", kind: "radio", options: yesNo, required: true },
-    { name: "ownLand", label: "Do you own the land?", kind: "radio", options: yesNo, required: true },
+
+    // Section 1. If they don't own the land yet they may still be evaluating a lot, so no dates are required then.
+    {
+      name: "ownLand",
+      label: "Do you currently own the land?",
+      kind: "radio",
+      options: ["Yes", "Under Contract", "No"],
+      required: true,
+      section: "Land & Property Details",
+    },
     {
       name: "landPurchasePrice",
-      label: "Original purchase price",
+      label: "What was the original purchase price?",
       kind: "money",
       required: true,
       showIf: { field: "ownLand", equals: "Yes" },
@@ -112,28 +162,145 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
     },
     {
       name: "landPurchaseDate",
-      label: "Date purchased",
+      label: "When did you purchase the land?",
       kind: "date",
       required: true,
       showIf: { field: "ownLand", equals: "Yes" },
       row: 2,
     },
     {
-      name: "purchasePrice",
-      label: "Purchase price",
+      name: "contractPrice",
+      label: "What is the contract purchase price?",
       kind: "money",
       required: true,
+      showIf: { field: "ownLand", equals: "Under Contract" },
+      row: 4,
+    },
+    {
+      name: "closingDate",
+      label: "What is the anticipated closing date?",
+      kind: "date",
+      required: true,
+      showIf: { field: "ownLand", equals: "Under Contract" },
+      row: 4,
+    },
+    {
+      name: "estimatedLandPrice",
+      label: "What is the estimated land purchase price?",
+      kind: "money",
       showIf: { field: "ownLand", equals: "No" },
     },
-    { name: "constructionStarted", label: "Have you started construction?", kind: "radio", options: yesNo, required: true },
     {
-      name: "asIsCollateral",
-      label: "As-is collateral type",
+      name: "existingLoan",
+      label: "Is there an existing loan on the land?",
       kind: "radio",
-      options: ["Vacant land", "Building", "Other"],
+      options: yesNo,
+      required: true,
+      showIf: { field: "ownLand", equals: "Yes" },
+    },
+    {
+      name: "loanBalance",
+      label: "What is the current loan balance?",
+      kind: "money",
+      required: true,
+      showIf: { field: "existingLoan", equals: "Yes" },
+    },
+    {
+      name: "landCondition",
+      label: "What is the current condition of the land?",
+      kind: "radio",
+      options: ["Vacant Land", "Existing Structure Requires Demolition", "Demolition Completed"],
       required: true,
     },
-    ...projectDetails,
+
+    // Section 2: buildings and residential units are counted separately.
+    {
+      name: "buildType",
+      label: "What type of property are you building?",
+      kind: "select",
+      options: [
+        "Single-Family Homes",
+        "Duplexes",
+        "Triplexes",
+        "Fourplexes",
+        "Townhomes",
+        "Multifamily Apartments",
+        "Mixed-Use",
+        "Other",
+      ],
+      required: true,
+      section: "Proposed Construction",
+    },
+    {
+      name: "buildTypeDescription",
+      label: "Briefly describe the property",
+      kind: "text",
+      required: true,
+      placeholder: "e.g. 2 retail units on the ground floor with 6 apartments above",
+      showIf: { field: "buildType", oneOf: ["Mixed-Use", "Other"] },
+    },
+    { name: "buildingCount", label: "How many buildings are you constructing?", kind: "number", required: true, row: 5 },
+    {
+      name: "totalUnits",
+      label: "How many total residential units will the project have?",
+      kind: "number",
+      required: true,
+      units: true,
+      row: 5,
+    },
+    { name: "totalSqft", label: "What is the estimated total finished square footage?", kind: "number", required: true },
+    {
+      name: "bedBath",
+      label: "What is the proposed bedroom/bathroom configuration?",
+      kind: "text",
+      required: true,
+      placeholder: "e.g. 3 bed / 2.5 bath per unit",
+      hint: "Different layouts? Describe the unit mix, e.g. 4 units at 3 bed / 2 bath and 2 units at 2 bed / 1 bath.",
+    },
+
+    // Section 3
+    {
+      name: "permitStatus",
+      label: "What is the status of your plans and permits?",
+      kind: "select",
+      options: ["Not Started", "In Progress", "Submitted for Approval", "Approved"],
+      required: true,
+      section: "Plans, Permits & Construction Status",
+    },
+    {
+      name: "permitApprovalDate",
+      label: "What is the estimated permit approval date?",
+      kind: "date",
+      required: true,
+      showIf: { field: "permitStatus", notEquals: "Approved" },
+    },
+    {
+      name: "constructionStage",
+      label: "What is the current stage of construction?",
+      kind: "select",
+      options: [
+        "Not Started",
+        "Site Preparation or Demolition",
+        "Foundation",
+        "Framing",
+        "Rough-Ins",
+        "Interior Finishes",
+        "Near Completion",
+      ],
+      required: true,
+    },
+    {
+      name: "monthsToComplete",
+      label: "What is the estimated time to complete construction (months)?",
+      kind: "number",
+      required: true,
+    },
+    {
+      name: "projectDescription",
+      label: "Briefly describe your project and any remaining work.",
+      kind: "textarea",
+      required: true,
+    },
   ],
   "DSCR Purchase": dscrPlaceholder,
   "DSCR Refinance": dscrPlaceholder,

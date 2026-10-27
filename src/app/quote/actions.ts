@@ -1,6 +1,6 @@
 "use server";
 
-import { borrowerExperience, isShown, quoteLoanTypes, type QuoteField } from "@/content/quote";
+import { borrowerExperience, calculatedUnits, quoteLoanTypes, visibleFields, type QuoteField } from "@/content/quote";
 import { saveLead } from "@/lib/leads";
 import { sendEmail, sendFailureMessage } from "@/lib/send-email";
 
@@ -42,8 +42,12 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
     loanType,
     ...Object.fromEntries(allFields.map((f) => [f.name, get(f.name, f.kind === "textarea" ? 3000 : 300)])),
   };
+  // Where units are buildings × units per building, work them out here rather than trusting the browser.
+  const units = calculatedUnits(values);
+  if (allFields.some((f) => f.units) && units !== undefined) values.totalUnits = String(units);
   // Questions hidden by an earlier answer don't count.
-  const shown = allFields.filter((f) => isShown(f, values));
+  const shown = visibleFields(allFields, values);
+  const isVisible = new Set(shown.map((f) => f.name));
 
   if (!values.name || !values.phone || !values.email) {
     return { status: "error", values, message: "Please enter your name, phone and email." };
@@ -61,7 +65,12 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
   }
 
   const answered = (fields: QuoteField[]) =>
-    fields.filter((f) => isShown(f, values) && values[f.name]).map((f) => `${f.label}: ${values[f.name]}`);
+    fields
+      .filter((f) => isVisible.has(f.name) && (values[f.name] || f.section))
+      .flatMap((f) => [
+        ...(f.section ? ["", `-- ${f.section} --`] : []),
+        ...(values[f.name] ? [`${f.label}: ${values[f.name]}`] : []),
+      ]);
   const text = [
     `Name: ${values.name}`,
     `Phone: ${values.phone}`,
