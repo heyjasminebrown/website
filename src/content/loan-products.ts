@@ -1,7 +1,8 @@
-// Loan products (/loan-products), from Jasmine's "Lending Products" sheet and relationship-manager flyer.
-// The lender's company name is intentionally left off the site. Update terms here when they change. Rates are intentionally not shown.
+// Loan products (/loan-products), from Jasmine's Conventus "Lending Products" sheet and relationship-manager flyer.
+// Conventus is named and branded on this page only. Update terms here when they change; rates are intentionally not shown.
 
 export const lender = {
+  name: "Conventus",
   stats: [
     { value: "$10B+", label: "Loans funded" },
     { value: "4,600+", label: "Clients nationwide" },
@@ -15,8 +16,8 @@ export const lender = {
     "No late credit card payments in the last year",
   ],
   disclaimer:
-    "This is a summary of our terms and requirements and may be more expansive. Please contact me for details. Information in this summary reflects current requirements and may be modified or supplemented at any time.",
-  license: "California Finance Lenders License 60DBO-43745",
+    "This is a summary of our terms and requirements and may be more expansive. Please speak with your Conventus contact for details. Information in this summary reflects current requirements and may be modified or supplemented at any time.",
+  license: "Conventus LLC California Finance Lenders License 60DBO-43745",
   contact: { name: "Jasmine Brown", email: "jbrown@cvlending.com", phone: "404.789.5791" },
 };
 

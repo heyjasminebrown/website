@@ -23,6 +23,13 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-blush: var(--blush);
   --color-lavender: var(--lavender);
+  /* Conventus brand colours, used only on the Loan Products page. */
+  --color-cv-dark: #001914;
+  --color-cv-green: #004f42;
+  --color-cv-teal: #00967a;
+  --color-cv-mint: #00d09a;
+  --color-cv-mint-light: #bce2dc;
+  --color-cv-copper: #b27a4a;
   --font-sans: var(--font-body);
   --font-serif: var(--font-body);
   --font-display: var(--font-display);

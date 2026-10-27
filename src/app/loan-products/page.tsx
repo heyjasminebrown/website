@@ -7,7 +7,7 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: "Loan Products",
   description:
-    "Bridge, bridge + rehab, ground-up construction and DSCR loans from a direct lender with $10B+ funded. Rates, terms, leverage and credit requirements.",
+    "Bridge, bridge + rehab, ground-up construction and DSCR loans through Conventus, a direct lender with $10B+ funded. Terms, leverage and credit requirements.",
   alternates: { canonical: "/loan-products" },
 };
 
@@ -16,7 +16,7 @@ function Quote({ light = false, className = "" }: { light?: boolean; className?:
     <Link
       href="/quote"
       className={`inline-block rounded-full px-7 py-3 text-center transition-opacity hover:opacity-90 ${
-        light ? "bg-blush text-accent" : "bg-accent text-accent-foreground"
+        light ? "bg-cv-mint text-cv-dark" : "bg-cv-teal text-white"
       } ${className}`}
     >
       Get a Quote
@@ -47,19 +47,19 @@ const HouseIcon = () => (
 export default function LoanProductsPage() {
   return (
     <>
-      <section className="bg-accent px-4 py-16 text-blush sm:px-6 sm:py-20">
+      <section className="bg-cv-dark px-4 py-16 text-white sm:px-6 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <p className="text-sm uppercase tracking-[0.3em] opacity-80">Direct lender</p>
+          <p className="text-sm uppercase tracking-[0.3em] text-cv-mint">{lender.name} · Direct lender</p>
           <h1 className="mt-3 text-5xl leading-tight sm:text-7xl">Loan Products</h1>
-          <p className="mt-6 max-w-2xl text-lg">
-            Bridge, rehab, ground-up construction and DSCR loans for real estate investors, straight from a direct
-            lender.
+          <p className="mt-6 max-w-2xl text-lg text-cv-mint-light">
+            Bridge, rehab, ground-up construction and DSCR loans for real estate investors, funded directly through{" "}
+            {lender.name}.
           </p>
           <div className="mt-10 flex flex-wrap items-end gap-10">
             {lender.stats.map((s) => (
               <div key={s.label}>
-                <p className="font-display text-5xl sm:text-6xl">{s.value}</p>
-                <p className="mt-1 text-sm uppercase tracking-wider opacity-80">{s.label}</p>
+                <p className="font-display text-5xl text-cv-mint sm:text-6xl">{s.value}</p>
+                <p className="mt-1 text-sm uppercase tracking-wider text-cv-mint-light">{s.label}</p>
               </div>
             ))}
             <Quote light className="ml-auto" />
@@ -68,13 +68,13 @@ export default function LoanProductsPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <h2 className="text-center text-4xl">Loan programs</h2>
+        <h2 className="text-center text-4xl text-cv-green">Loan programs</h2>
 
         {/* Comparison table on larger screens */}
         <div className="mt-10 hidden overflow-hidden rounded-3xl border border-border bg-surface lg:block">
           <table className="w-full table-fixed border-collapse text-sm">
             <thead>
-              <tr className="bg-accent text-blush">
+              <tr className="bg-cv-teal text-white">
                 <th className="w-40 p-4" />
                 {products.map((p) => (
                   <th key={p.name} className="p-4 text-left font-display text-xl font-normal">
@@ -86,7 +86,7 @@ export default function LoanProductsPage() {
             <tbody>
               {productRows.map((row) => (
                 <tr key={row} className="border-t border-border align-top">
-                  <th className="p-4 text-left font-display text-lg font-normal text-accent">{row}</th>
+                  <th className="p-4 text-left font-display text-lg font-normal text-cv-copper">{row}</th>
                   {products.map((p) => (
                     <td key={p.name} className="p-4 text-muted">
                       <List items={p[row]} />
@@ -102,18 +102,18 @@ export default function LoanProductsPage() {
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:hidden">
           {products.map((p) => (
             <article key={p.name} className="overflow-hidden rounded-3xl border border-border bg-surface">
-              <div className="bg-accent px-6 py-5 text-blush">
+              <div className="bg-cv-teal px-6 py-5 text-white">
                 <h3 className="text-2xl">{p.name}</h3>
               </div>
               <dl className="divide-y divide-border px-6 text-sm">
                 {productRows.map((row) => (
-                    <div key={row} className="py-4">
-                      <dt className="font-display text-base text-accent">{row}</dt>
-                      <dd className="mt-1 text-muted">
-                        <List items={p[row]} />
-                      </dd>
-                    </div>
-                  ))}
+                  <div key={row} className="py-4">
+                    <dt className="font-display text-base text-cv-copper">{row}</dt>
+                    <dd className="mt-1 text-muted">
+                      <List items={p[row]} />
+                    </dd>
+                  </div>
+                ))}
               </dl>
               <div className="px-6 pb-6">
                 <Quote className="w-full" />
@@ -127,28 +127,28 @@ export default function LoanProductsPage() {
         </div>
       </section>
 
-      <section className="bg-lavender px-4 py-16 sm:px-6">
+      <section className="bg-cv-green px-4 py-16 sm:px-6">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
           <div className="rounded-3xl bg-surface p-8">
-            <h2 className="text-3xl">Credit requirements</h2>
+            <h2 className="text-3xl text-cv-green">Credit requirements</h2>
             <ul className="mt-6 space-y-3">
               {lender.credit.map((c) => (
                 <li key={c} className="flex gap-3">
-                  <span aria-hidden className="text-accent">✓</span>
+                  <span aria-hidden className="text-cv-teal">✓</span>
                   {c}
                 </li>
               ))}
             </ul>
           </div>
           <div className="rounded-3xl bg-surface p-8">
-            <h2 className="text-3xl">Where we lend</h2>
+            <h2 className="text-3xl text-cv-green">Where we lend</h2>
             <p className="mt-6 text-lg">
               Nationwide, in every state except {lender.statesNotServed.slice(0, -1).join(", ")} and{" "}
               {lender.statesNotServed.at(-1)}.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               {lender.statesNotServed.map((s) => (
-                <span key={s} className="rounded-full border border-border px-3 py-1 text-sm text-muted">
+                <span key={s} className="rounded-full bg-cv-mint-light px-3 py-1 text-sm text-cv-green">
                   Not available: {s}
                 </span>
               ))}
@@ -156,32 +156,34 @@ export default function LoanProductsPage() {
           </div>
         </div>
         <div className="mt-10 text-center">
-          <Quote />
+          <Quote light />
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <p className="text-sm uppercase tracking-wider text-muted">About your relationship manager</p>
+        <p className="inline-block bg-cv-teal px-3 py-1 text-sm uppercase tracking-wider text-white">
+          About your relationship manager
+        </p>
         <div className="mt-4 grid gap-10 lg:grid-cols-[1.4fr_1fr]">
           <div>
-            <h2 className="text-4xl">{relationshipManager.greeting}</h2>
+            <h2 className="text-4xl text-cv-copper">{relationshipManager.greeting}</h2>
             <div className="mt-6 space-y-4 text-lg text-muted">
               {relationshipManager.paragraphs.map((p) => (
                 <p key={p}>{p}</p>
               ))}
             </div>
             <p className="mt-8">{relationshipManager.signoff}</p>
-            <p className="font-display text-2xl">{relationshipManager.signature}</p>
+            <p className="font-display text-2xl text-cv-green">{relationshipManager.signature}</p>
             <div className="mt-6 space-y-1">
-              <a href={`mailto:${lender.contact.email}`} className="block text-accent underline underline-offset-4">
+              <a href={`mailto:${lender.contact.email}`} className="block text-cv-teal underline underline-offset-4">
                 {lender.contact.email}
               </a>
-              <a href={`tel:${lender.contact.phone.replace(/\D/g, "")}`} className="block text-accent underline underline-offset-4">
+              <a href={`tel:${lender.contact.phone.replace(/\D/g, "")}`} className="block text-cv-teal underline underline-offset-4">
                 {lender.contact.phone}
               </a>
               <p className="text-muted">
                 Connect with me:{" "}
-                <a href={site.social[0].href} target="_blank" rel="noreferrer" className="text-accent underline underline-offset-4">
+                <a href={site.social[0].href} target="_blank" rel="noreferrer" className="text-cv-teal underline underline-offset-4">
                   @heyjasminebrown
                 </a>
               </p>
@@ -213,7 +215,7 @@ export default function LoanProductsPage() {
             <p>{lender.disclaimer}</p>
             <p>{lender.license}</p>
           </div>
-          <div className="flex shrink-0 items-center gap-2 text-foreground">
+          <div className="flex shrink-0 items-center gap-2 text-cv-green">
             <HouseIcon />
             <span className="text-sm uppercase leading-tight tracking-wider">
               Equal Housing
