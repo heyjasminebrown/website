@@ -178,8 +178,8 @@ export function QuoteForm() {
       </fieldset>
 
       <fieldset className="space-y-5 border-t border-border pt-6">
-        <legend className="sr-only">Project information</legend>
-        <p className="font-display text-2xl">Project information</p>
+        <legend className="sr-only">Project details</legend>
+        <p className="font-display text-2xl">Project Details</p>
         <div>
           <Label htmlFor="loanType">Loan type</Label>
           <select

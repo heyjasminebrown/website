@@ -74,7 +74,7 @@ export const borrowerExperience: QuoteField[] = [
 export const experienceNote =
   "In the past 3 years, how many projects have you completed? And how many rentals do you own today? Only count properties where you or your entity were on title.";
 
-const address: QuoteField = { name: "propertyAddress", label: "Address", kind: "text", required: true };
+const address: QuoteField = { name: "propertyAddress", label: "Property Address", kind: "text", required: true };
 
 const propertyType: QuoteField = {
   name: "propertyType",
@@ -268,9 +268,10 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
       ],
       required: true,
     },
+    { ...exitStrategy, label: "What is your exit strategy?" },
     {
       name: "monthsToComplete",
-      label: "What is the estimated time to complete construction (months)?",
+      label: "What is the estimated time to complete the project (months)?",
       kind: "number",
       required: true,
     },

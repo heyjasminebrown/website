@@ -77,7 +77,7 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
     "BORROWER EXPERIENCE",
     ...answered(borrowerExperience),
     "",
-    `PROJECT INFORMATION (${loanType})`,
+    `PROJECT DETAILS (${loanType})`,
     ...answered(quoteLoanTypes[loanType]),
   ].join("\n");
 
