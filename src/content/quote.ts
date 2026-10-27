@@ -105,7 +105,8 @@ const propertyTypes = [
   "Duplex",
   "Triplex",
   "Fourplex",
-  "Townhouse or Condo",
+  "Townhouse or Condo - 1 unit",
+  "Multiple Townhouses",
   "Apartment Building",
 ];
 
@@ -145,7 +146,7 @@ const yesNo = ["Yes", "No"];
 const purchaseTypes = ["Purchase", "Delayed Finance"];
 const refiTypes = ["Refi - Rate/Term", "Refi - Cash Out"];
 const portfolios = ["2-10 Properties (Portfolio)", "11-20 Properties (Portfolio)"];
-const oneUnitTypes = ["Single-Family, 1 unit", "Townhouse or Condo"];
+const oneUnitTypes = ["Single-Family, 1 unit", "Townhouse or Condo - 1 unit"];
 // Highest LTV Conventus allows by transaction type.
 const maxLtv: Record<string, number> = { "Delayed Finance": 80, "Refi - Rate/Term": 80, "Refi - Cash Out": 75 };
 // For a portfolio, income and expense questions cover all the properties together.
