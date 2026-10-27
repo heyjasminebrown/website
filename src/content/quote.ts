@@ -267,7 +267,13 @@ const dscr: QuoteField[] = [
     labelFor: combined("Property Tax"),
   },
   { name: "insurance", label: "Insurance", kind: "money", row: 8, labelFor: combined("Insurance") },
-  { name: "hoaDues", label: "HOA / Condo Dues (Annual)", kind: "money", placeholder: "0" },
+  {
+    name: "hoaDues",
+    label: "HOA / Condo Dues (Annual)",
+    kind: "money",
+    placeholder: "0",
+    labelFor: combined("HOA / Condo Dues (Annual)"),
+  },
 ];
 
 export const quoteLoanTypes: Record<string, QuoteField[]> = {
