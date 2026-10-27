@@ -31,4 +31,4 @@ If the profit doesn't leave room for surprises, like a longer hold or a rehab th
 
 ## Try it on your next deal
 
-My [free fix & flip calculator](/calculator) does all of this for you, and you can get the full analysis emailed to you. When the numbers work, [let's talk about funding it](/loan).
+My [free fix & flip calculator](/calculator) does all of this for you, and you can get the full analysis emailed to you. When the numbers work, [let's talk about funding it](/quote).

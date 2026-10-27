@@ -26,6 +26,7 @@ async function Message({ searchParams }: { searchParams: PageProps<"/referral/th
       <p className="mx-auto mt-6 max-w-xl text-lg sm:text-xl">
         I&apos;ll reach out to {referral || "them"} within 24 hours.
       </p>
+      <p className="mt-3 font-display text-xl">You&apos;re on your way to a bonus!</p>
     </>
   );
 }
@@ -65,7 +66,6 @@ export default function ReferralThanksPage({ searchParams }: PageProps<"/referra
         >
           Refer another friend
         </Link>
-        <p className="mt-6 font-display text-xl">You&apos;re on your way to a bonus!</p>
       </div>
     </section>
   );

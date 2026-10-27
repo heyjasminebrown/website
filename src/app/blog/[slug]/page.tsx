@@ -89,7 +89,7 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
             <p className="mt-1 text-sm text-muted">
               Jasmine specializes in financing flips, new construction, DSCR, and multifamily nationwide. As an investor, she
               brings first-hand experience and strategic insights to her clients.{" "}
-              <Link href="/loan" className="text-accent underline underline-offset-4">
+              <Link href="/quote" className="text-accent underline underline-offset-4">
                 Fund your next deal
               </Link>
             </p>

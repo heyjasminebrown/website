@@ -47,4 +47,4 @@ Yes. Georgia requires a licensed attorney to conduct real estate closings, which
 
 They vary by price, lender and county, but investors should plan for attorney and title fees, lender points and fees, recording fees, and prorated taxes and insurance. Running the deal through a calculator before you make an offer helps you avoid surprises.
 
-This post is general information, not legal or tax advice. Your closing attorney can confirm the exact costs for your deal. Ready to fund a purchase? [Send me your deal](/loan).
+This post is general information, not legal or tax advice. Your closing attorney can confirm the exact costs for your deal. Ready to fund a purchase? [Send me your deal](/quote).

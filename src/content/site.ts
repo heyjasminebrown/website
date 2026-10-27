@@ -22,7 +22,7 @@ export const site = {
 
 export const nav = [
   { label: "Home", href: "/" },
-  { label: "Fund Your Deal", href: "/loan" },
+  { label: "Fund Your Deal", href: "/quote" },
   { label: "Conventus", href: "/conventus" },
   { label: "Referral", href: "/referral" },
   { label: "Calculator", href: "/calculator" },
@@ -41,7 +41,7 @@ export const about = {
 
 // The buttons beside your photo on the home page.
 export const homeLinks = [
-  { label: "Fund Your Deal", href: "/loan" },
+  { label: "Fund Your Deal", href: "/quote" },
   { label: "Refer a Friend", href: "/referral" },
   { label: "Fix & Flip Calculator", href: "/calculator" },
   { label: "Upcoming Events", href: "/events" },
@@ -68,17 +68,6 @@ export const passiveIncome = {
   ],
   disclaimer:
     "Investing involves risk, including loss of principal. Past performance does not guarantee future results. This is not an offer to sell securities.",
-};
-
-export const loans = {
-  heading: "Fund your deal",
-  intro: "Financing for real estate investors. Tell me about your project and I'll help you find the right loan.",
-  types: [
-    { title: "Fix & Flip", body: "Short-term funding to buy and renovate properties for resale." },
-    { title: "Ground Up Construction", body: "Financing for new builds, from lot to finished property." },
-    { title: "Multifamily", body: "Loans for apartment buildings and multi-unit properties." },
-    { title: "Rentals", body: "Long-term financing for buy-and-hold rental properties." },
-  ],
 };
 
 // The loan options on the referral page (/referral).

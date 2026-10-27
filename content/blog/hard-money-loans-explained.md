@@ -42,4 +42,4 @@ Three things make up the cost of the money:
 
 Before you make an offer, plug the deal into my [free fix & flip calculator](/calculator). It shows your loan amount, monthly payment, total costs and projected profit, so you know whether the deal works before you're under contract.
 
-Have a deal you want funded? [Tell me about it](/loan).
+Have a deal you want funded? [Tell me about it](/quote).

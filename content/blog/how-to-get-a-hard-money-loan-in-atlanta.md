@@ -69,4 +69,4 @@ It depends on how much of the purchase and rehab the lender funds. If a lender f
 
 Yes. Many lenders work with first-time flippers, especially when you have a solid deal, a realistic rehab budget and an experienced contractor or partner on your team.
 
-Have a deal in Atlanta that needs funding? [Tell me about it](/loan).
+Have a deal in Atlanta that needs funding? [Tell me about it](/quote).

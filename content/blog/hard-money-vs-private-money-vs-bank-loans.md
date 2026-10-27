@@ -59,4 +59,4 @@ Hard money lenders take on properties that need work, close quickly and lend for
 
 Yes. A common strategy is to buy and renovate with hard money, then refinance into a long-term loan, such as a DSCR rental loan, once the property is renovated and rented.
 
-Not sure which fits your deal? [Let's talk](/loan).
+Not sure which fits your deal? [Let's talk](/quote).

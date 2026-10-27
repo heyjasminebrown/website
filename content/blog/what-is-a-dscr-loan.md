@@ -56,4 +56,4 @@ Yes. Many investors buy and renovate with a short-term loan, rent the property o
 
 Yes, most DSCR loans can close in an LLC or other business entity, which many investors prefer for their rentals.
 
-Thinking about a rental or a refinance? [Tell me about your property](/loan).
+Thinking about a rental or a refinance? [Tell me about your property](/quote).

@@ -46,4 +46,4 @@ It's harder, but possible if you work with an experienced general contractor or 
 
 Construction funds are released in stages after inspections confirm each phase of work is complete, similar to rehab draws on a fix and flip. Read [how rehab draws work](/blog/how-rehab-draws-work) for the details.
 
-Planning a build in metro Atlanta? [Tell me about your project](/loan).
+Planning a build in metro Atlanta? [Tell me about your project](/quote).

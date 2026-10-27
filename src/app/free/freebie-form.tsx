@@ -51,7 +51,7 @@ export function FreebieForm({
               ))}
             </ul>
             <Link
-              href="/loan"
+              href="/quote"
               className="mt-8 inline-block rounded-full bg-accent px-6 py-3 font-medium text-accent-foreground hover:opacity-90"
             >
               Talk to me about funding

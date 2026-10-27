@@ -47,4 +47,4 @@ It depends on the loan. Some lenders charge interest only on funds that have bee
 
 The lender typically funds only the approved budget, so overruns usually come out of your pocket. That's why a contingency of 10% to 15% is so important. Use my [Rehab Budget Worksheet](/free/rehab-budget) to build one in.
 
-Planning a renovation? [Let's talk about funding it](/loan).
+Planning a renovation? [Let's talk about funding it](/quote).

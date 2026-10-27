@@ -20,7 +20,7 @@ export default function AboutPage() {
           ))}
         </div>
         <Link
-          href="/loan"
+          href="/quote"
           className="mt-10 inline-block rounded-full bg-blush px-8 py-4 text-accent hover:opacity-90"
         >
           Work with me

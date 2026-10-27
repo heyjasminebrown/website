@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 function Quote({ light = false, className = "" }: { light?: boolean; className?: string }) {
   return (
     <Link
-      href="/loan"
+      href="/quote"
       className={`inline-block rounded-full px-7 py-3 text-center transition-opacity hover:opacity-90 ${
         light ? "bg-blush text-accent" : "bg-accent text-accent-foreground"
       } ${className}`}

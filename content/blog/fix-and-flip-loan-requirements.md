@@ -59,4 +59,4 @@ Not always. Many lenders fund first-time flippers, especially with a strong deal
 
 Most fix and flip lenders require the loan to be in an LLC or other business entity, because these are business-purpose loans for investment properties.
 
-Not sure where you stand? [Take the Loan-Ready quiz](/free/loan-ready) or [send me your deal](/loan).
+Not sure where you stand? [Take the Loan-Ready quiz](/free/loan-ready) or [send me your deal](/quote).
