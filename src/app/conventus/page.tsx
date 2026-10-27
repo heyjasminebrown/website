@@ -209,6 +209,14 @@ export default function LoanProductsPage() {
           </div>
           <div className="grid grid-cols-2 gap-3 self-start">
             <Image
+              src="/images/Jasmine-Conventus.jpg"
+              alt="Jasmine Brown, Conventus relationship manager"
+              width={819}
+              height={771}
+              sizes="(min-width: 1024px) 420px, 90vw"
+              className="col-span-2 w-full rounded-2xl"
+            />
+            <Image
               src="/images/Jasmine-Closing-1.jpg"
               alt="Jasmine Brown signing closing documents"
               width={376}
