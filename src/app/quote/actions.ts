@@ -3,8 +3,10 @@
 import {
   amount,
   borrowerExperience,
+  labelOf,
   quoteLoanTypes,
   resolveFields,
+  type Answers,
   type QuoteField,
 } from "@/content/quote";
 import { saveLead } from "@/lib/leads";
@@ -17,22 +19,31 @@ export type QuoteState = {
 };
 
 /** Returns an error message for a field's answer, or nothing if it's fine. */
-function check(f: QuoteField, value: string): string | undefined {
-  if (!value) return f.required ? `Please fill in "${f.label}".` : undefined;
+function check(f: QuoteField, value: string, answers: Answers): string | undefined {
+  const label = labelOf(f, answers);
+  if (!value) return f.required ? `Please fill in "${label}".` : undefined;
   if (f.digits && !new RegExp(`^\\d{${f.digits}}$`).test(value)) {
-    return `"${f.label}" should be ${f.digits} digits, e.g. 726.`;
+    return `"${label}" should be ${f.digits} digits, e.g. 726.`;
   }
   if (f.kind === "number") {
     const n = Number(value.replace(/,/g, ""));
-    if (!Number.isFinite(n) || n < 0) return `"${f.label}" should be a number.`;
+    if (!Number.isFinite(n) || n < 0) return `"${label}" should be a number.`;
     if (f.name === "creditScore" && (n < 300 || n > 850)) return "Please enter a credit score between 300 and 850.";
   }
   if (f.kind === "money") {
     const n = amount(value);
-    if (!Number.isFinite(n) || n < 0) return `"${f.label}" should be a dollar amount.`;
+    if (!Number.isFinite(n) || n < 0) return `"${label}" should be a dollar amount.`;
+  }
+  if (f.kind === "percent") {
+    const n = amount(value);
+    const max = f.max?.(answers) ?? 100;
+    if (!Number.isFinite(n) || n <= 0) return `"${label}" should be a percentage, e.g. 75.`;
+    if (n > max) {
+      return `"${label}" can be up to ${max}%${answers.transactionType ? ` for ${answers.transactionType}` : ""}.`;
+    }
   }
   if ((f.kind === "radio" || f.kind === "select") && f.options && !f.options.includes(value)) {
-    return `Please choose an option for "${f.label}".`;
+    return `Please choose an option for "${label}".`;
   }
 }
 
@@ -69,7 +80,7 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
   }
   if (!quoteLoanTypes[loanType]) return { status: "error", values, message: "Please choose a loan type." };
   for (const f of shown) {
-    const problem = check(f, values[f.name]);
+    const problem = check(f, values[f.name], resolved.values);
     if (problem) return { status: "error", values, message: problem };
   }
 
@@ -78,7 +89,7 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
       .filter((f) => isVisible.has(f.name) && (values[f.name] || f.section))
       .flatMap((f) => [
         ...(f.section ? ["", `-- ${f.section} --`] : []),
-        ...(values[f.name] ? [`${f.label}: ${values[f.name]}`] : []),
+        ...(values[f.name] ? [`${labelOf(f, resolved.values)}: ${values[f.name]}`] : []),
       ]);
   const text = [
     `Name: ${values.name}`,

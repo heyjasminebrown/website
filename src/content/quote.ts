@@ -15,8 +15,12 @@ export type QuoteField = {
   // Only shown (and only required) when another answer matches: equals one value, is one of several,
   // or has been answered with anything except a value.
   showIf?: { field: string; equals?: string; oneOf?: string[]; notEquals?: string };
-  // Worked out from other answers (e.g. LTV from loan amount and price) and shown locked, not typed.
+  // Worked out from other answers (e.g. loan amount from LTV and price) and shown locked, not typed.
   compute?: (answers: Answers) => string | undefined;
+  // A different wording when the other answers call for it (e.g. "Combined ..." for a portfolio).
+  labelFor?: (answers: Answers) => string | undefined;
+  // The highest number allowed, which can depend on other answers (e.g. LTV by transaction type).
+  max?: (answers: Answers) => number;
   // Starts a new titled section within the loan type's questions.
   section?: string;
   // A bold question shown above this field's row (used with sub-labelled boxes, e.g. beds/baths/sq ft).
@@ -33,6 +37,10 @@ export type QuoteField = {
 export function amount(value: string | undefined) {
   const cleaned = (value ?? "").replace(/[$,%\s]/g, "");
   return cleaned ? Number(cleaned) : NaN;
+}
+
+export function labelOf(f: QuoteField, answers: Answers) {
+  return f.labelFor?.(answers) ?? f.label;
 }
 
 export function isShown(f: QuoteField, answers: Answers) {
@@ -127,6 +135,16 @@ const exitStrategy: QuoteField = {
 const yesNo = ["Yes", "No"];
 
 // The questions Conventus's DSCR loan sizer needs.
+const purchaseTypes = ["Purchase", "Delayed Finance"];
+const refiTypes = ["Refi - Rate/Term", "Refi - Cash Out"];
+const portfolios = ["2-10 Properties (Portfolio)", "11-20 Properties (Portfolio)"];
+const oneUnitTypes = ["SFR (1 Unit)", "Condo (Warrantable)", "Condo (Non-Warrantable)"];
+// Highest LTV Conventus allows by transaction type.
+const maxLtv: Record<string, number> = { "Refi - Rate/Term": 80, "Refi - Cash Out": 75 };
+// For a portfolio, income and expense questions cover all the properties together.
+const combined = (label: string) => (a: Answers) =>
+  a.propertiesInLoan && portfolios.includes(a.propertiesInLoan) ? `Combined ${label}` : undefined;
+
 const dscr: QuoteField[] = [
   address,
   propertyType,
@@ -134,19 +152,41 @@ const dscr: QuoteField[] = [
     name: "transactionType",
     label: "Transaction Type",
     kind: "select",
-    options: ["Purchase", "Refi - Rate/Term", "Refi - Cash Out", "Delayed Finance"],
+    options: [...purchaseTypes, ...refiTypes],
     required: true,
   },
-  { name: "purchasePrice", label: "Purchase Price", kind: "money", required: true },
-  { name: "loanAmount", label: "Loan Amount", kind: "money", required: true, row: 7 },
+  {
+    name: "purchasePrice",
+    label: "Purchase Price",
+    kind: "money",
+    required: true,
+    showIf: { field: "transactionType", oneOf: purchaseTypes },
+  },
+  {
+    name: "propertyValue",
+    label: "Property Value",
+    kind: "money",
+    required: true,
+    showIf: { field: "transactionType", oneOf: refiTypes },
+  },
   {
     name: "ltv",
     label: "LTV %",
     kind: "percent",
+    required: true,
+    placeholder: "e.g. 75",
     row: 7,
+    max: (a) => maxLtv[a.transactionType ?? ""] ?? 100,
+  },
+  {
+    name: "loanAmount",
+    label: "Loan Amount",
+    kind: "money",
+    row: 7,
+    // LTV % of the purchase price or property value.
     compute: (a) => {
-      const ltv = (amount(a.loanAmount) / amount(a.purchasePrice)) * 100;
-      return Number.isFinite(ltv) && ltv > 0 ? ltv.toFixed(2) : undefined;
+      const loan = (amount(a.ltv) / 100) * amount(a.purchasePrice ?? a.propertyValue);
+      return Number.isFinite(loan) && loan > 0 ? Math.round(loan).toLocaleString("en-US") : undefined;
     },
   },
   {
@@ -155,6 +195,7 @@ const dscr: QuoteField[] = [
     kind: "money",
     placeholder: "0",
     hint: "Enter $0 if free & clear.",
+    showIf: { field: "transactionType", oneOf: refiTypes },
   },
   {
     name: "amortization",
@@ -167,8 +208,15 @@ const dscr: QuoteField[] = [
     name: "propertiesInLoan",
     label: "Properties in this Loan",
     kind: "select",
-    options: ["1 Property (Single Asset)", "2-10 Properties (Portfolio)", "11-20 Properties (Portfolio)"],
+    options: ["1 Property (Single Asset)", ...portfolios],
     required: true,
+  },
+  {
+    name: "propertyCount",
+    label: "Exact Number of Properties",
+    kind: "number",
+    required: true,
+    showIf: { field: "propertiesInLoan", oneOf: portfolios },
   },
   {
     name: "prepayment",
@@ -177,18 +225,41 @@ const dscr: QuoteField[] = [
     options: ["3 years", "5 years", "7 years"],
     required: true,
   },
-  { name: "grossMonthlyRent", label: "Gross Monthly Rent", kind: "money", required: true, section: "Income" },
+  {
+    name: "grossMonthlyRent",
+    label: "Gross Monthly Rent",
+    kind: "money",
+    required: true,
+    section: "Income",
+    labelFor: combined("Gross Monthly Rent"),
+  },
   { name: "section8", label: "Are any units Section 8 / LIHTC?", kind: "radio", options: ["No", "Yes"] },
   {
+    name: "occupiedAtClosing",
+    label: "Will the property be occupied at closing?",
+    kind: "radio",
+    options: yesNo,
+    required: true,
+    showIf: { field: "propertyType", oneOf: oneUnitTypes },
+  },
+  {
     name: "occupiedUnits",
-    label: "# Occupied Units",
+    label: "How many units will be occupied at closing?",
     kind: "number",
     required: true,
     placeholder: "e.g. 1",
     hint: "Out of total units — used to check occupancy minimums.",
+    showIf: { field: "propertyType", oneOf: propertyTypes.filter((t) => !oneUnitTypes.includes(t)) },
   },
-  { name: "propertyTax", label: "Property Tax", kind: "money", row: 8, section: "Annual Expenses" },
-  { name: "insurance", label: "Insurance", kind: "money", row: 8 },
+  {
+    name: "propertyTax",
+    label: "Property Tax",
+    kind: "money",
+    row: 8,
+    section: "Annual Expenses",
+    labelFor: combined("Property Tax"),
+  },
+  { name: "insurance", label: "Insurance", kind: "money", row: 8, labelFor: combined("Insurance") },
   { name: "hoaDues", label: "HOA / Condo Dues (Annual)", kind: "money", placeholder: "0" },
 ];
 

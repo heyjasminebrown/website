@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import {
   borrowerExperience,
   experienceNote,
+  labelOf,
   quoteLoanTypes,
   resolveFields,
   type Answers,
@@ -43,6 +44,27 @@ function Input({ f, value, live }: { f: QuoteField; value?: string; live: Answer
     placeholder: f.placeholder,
     className: field,
   };
+  const prefix = f.kind === "money" && (
+    <span className="pointer-events-none absolute inset-y-0 left-3 top-1 flex items-center text-muted">$</span>
+  );
+  const suffix = f.kind === "percent" && (
+    <span className="pointer-events-none absolute inset-y-0 right-3 top-1 flex items-center text-muted">%</span>
+  );
+  if (f.compute)
+    // Calculated from other answers, so it's shown but can't be typed in.
+    return (
+      <span className="relative block">
+        {prefix}
+        <input
+          {...common}
+          defaultValue={undefined}
+          value={f.compute(live) ?? ""}
+          readOnly
+          className={`${field} bg-background pl-7 pr-8 text-muted`}
+        />
+        {suffix}
+      </span>
+    );
   if (f.kind === "textarea") return <textarea rows={3} {...common} />;
   if (f.kind === "radio")
     return (
@@ -70,21 +92,18 @@ function Input({ f, value, live }: { f: QuoteField; value?: string; live: Answer
   if (f.kind === "money")
     return (
       <span className="relative block">
-        <span className="pointer-events-none absolute inset-y-0 left-3 top-1 flex items-center text-muted">$</span>
+        {prefix}
         <input inputMode="decimal" {...common} className={`${field} pl-7`} />
       </span>
     );
-  if (f.kind === "date") return <input type="date" {...common} />;
-  if (f.compute)
-    // Calculated from other answers, so it's shown but can't be typed in.
+  if (f.kind === "percent")
     return (
       <span className="relative block">
-        <input {...common} defaultValue={undefined} value={f.compute(live) ?? ""} readOnly className={`${field} bg-background pr-8 text-muted`} />
-        {f.kind === "percent" && (
-          <span className="pointer-events-none absolute inset-y-0 right-3 top-1 flex items-center text-muted">%</span>
-        )}
+        <input type="number" min={0.01} max={f.max?.(live)} step="any" {...common} className={`${field} pr-8`} />
+        {suffix}
       </span>
     );
+  if (f.kind === "date") return <input type="date" {...common} />;
   if (f.digits)
     return (
       <input
@@ -129,13 +148,13 @@ function Fields({
         <div key={f.name} className={f.kind === "radio" ? "" : "flex flex-col justify-end"}>
           {f.kind === "radio" ? (
             <fieldset>
-              <legend className="text-sm font-medium">{f.label}</legend>
+              <legend className="text-sm font-medium">{labelOf(f, live)}</legend>
               <Input f={f} value={values[f.name]} live={live} />
             </fieldset>
           ) : (
             <>
               <Label htmlFor={f.name} optional={!f.required && !f.compute} sub={f.sub}>
-                {f.label}
+                {labelOf(f, live)}
               </Label>
               <Input f={f} value={values[f.name]} live={live} />
             </>
