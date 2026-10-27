@@ -35,7 +35,7 @@ export const borrowerExperience: QuoteField[] = [
   { name: "rentalsOwned", label: "Rental properties owned", kind: "number", required: true, placeholder: "0", row: 1 },
 ];
 export const experienceNote =
-  "How many projects have you completed in the past 36 months? Only include projects where you or your entity were on title.";
+  "In the past 3 years, how many projects have you completed? And how many rentals do you own today? Only count properties where you or your entity were on title.";
 
 const address: QuoteField = {
   name: "propertyAddress",
