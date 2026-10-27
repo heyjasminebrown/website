@@ -115,3 +115,31 @@ h3 {
   padding: 0.5em 0.25em;
   text-align: left;
 }
+
+/* Falling confetti on the referral thank-you banner. */
+.confetti {
+  position: absolute;
+  top: -20px;
+  opacity: 0.9;
+  animation: confetti-fall linear infinite;
+}
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(110vh) rotate(540deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    animation: none;
+    top: auto;
+  }
+  .confetti:nth-child(odd) {
+    top: 12%;
+  }
+  .confetti:nth-child(even) {
+    bottom: 10%;
+  }
+}
