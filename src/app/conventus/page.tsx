@@ -200,30 +200,14 @@ export default function LoanProductsPage() {
             </div>
             <Quote className="mt-8" />
           </div>
-          <div className="grid grid-cols-2 gap-3 self-start">
-            <Image
-              src="/images/Jasmine-Conventus.jpg"
-              alt="Jasmine Brown, Conventus relationship manager"
-              width={819}
-              height={771}
-              sizes="(min-width: 1024px) 420px, 90vw"
-              className="col-span-2 w-full rounded-2xl"
-            />
-            <Image
-              src="/images/Jasmine-Closing-1.jpg"
-              alt="Jasmine Brown signing closing documents"
-              width={376}
-              height={376}
-              className="aspect-[3/4] w-full rounded-2xl object-cover"
-            />
-            <Image
-              src="/images/Jasmine-Closing-3.jpg"
-              alt="Jasmine Brown in front of an investment property"
-              width={645}
-              height={646}
-              className="aspect-[3/4] w-full rounded-2xl object-cover object-left"
-            />
-          </div>
+          <Image
+            src="/images/Jasmine-Conventus.jpg"
+            alt="Jasmine Brown, Conventus relationship manager"
+            width={819}
+            height={771}
+            sizes="(min-width: 1024px) 420px, 90vw"
+            className="w-full self-start rounded-2xl"
+          />
         </div>
       </section>
 
