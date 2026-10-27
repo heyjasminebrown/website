@@ -37,13 +37,13 @@ export default function ReferralPage() {
             <p className="mt-6 text-sm text-cv-mint-light">*Referral bonus up to $1,500, based on final loan amount.</p>
           </div>
           <Image
-            src="/images/Jasmine-Closing-2.jpg"
-            alt="Jasmine Brown smiling while signing closing paperwork"
-            width={768}
-            height={1023}
+            src="/images/Jasmine-Investor-Group.jpg"
+            alt="Jasmine Brown with real estate investors at a networking event"
+            width={1640}
+            height={924}
             priority
-            sizes="(min-width: 768px) 40vw, 100vw"
-            className="mx-auto aspect-[4/5] w-full max-w-sm rounded-3xl object-cover object-top"
+            sizes="(min-width: 768px) 45vw, 100vw"
+            className="w-full rounded-3xl"
           />
         </div>
       </section>

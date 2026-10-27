@@ -168,8 +168,8 @@ export default function LoanProductsPage() {
           <Image
             src="/images/Jasmine-Investor-Group.jpg"
             alt="Jasmine Brown with real estate investors at a networking event"
-            width={506}
-            height={355}
+            width={1640}
+            height={924}
             sizes="(min-width: 1024px) 520px, 90vw"
             className="w-full rounded-3xl"
           />
