@@ -166,6 +166,33 @@ export default function LoanProductsPage() {
         </div>
       </section>
 
+      <section className="bg-cv-mint-light px-4 py-16 sm:px-6">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1fr_1.1fr]">
+          <Image
+            src="/images/Jasmine-Investor-Group.jpg"
+            alt="Jasmine Brown with real estate investors at a networking event"
+            width={506}
+            height={355}
+            sizes="(min-width: 1024px) 520px, 90vw"
+            className="w-full rounded-3xl"
+          />
+          <div className="text-cv-green">
+            <p className="text-sm uppercase tracking-[0.3em] text-cv-teal">Loan Referral Program</p>
+            <h2 className="mt-3 text-4xl leading-tight">Earn up to $1,500 when you refer a fellow investor!</h2>
+            <p className="mt-5 text-lg">
+              Know someone working on a real estate deal? Earn a referral bonus when they complete a loan with us*
+            </p>
+            <Link
+              href="/referral"
+              className="mt-8 inline-block rounded-full bg-cv-teal px-7 py-3 text-white transition-opacity hover:opacity-90"
+            >
+              Refer an investor
+            </Link>
+            <p className="mt-5 text-sm opacity-80">*Referral bonus up to $1,500, based on final loan amount.</p>
+          </div>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <p className="inline-block bg-cv-teal px-3 py-1 text-sm uppercase tracking-wider text-white">
           About your relationship manager
@@ -190,24 +217,14 @@ export default function LoanProductsPage() {
             </div>
             <Quote className="mt-8" />
           </div>
-          <div className="space-y-3 self-start">
-            <Image
-              src="/images/Jasmine-Conventus.jpg"
-              alt="Jasmine Brown, Conventus relationship manager"
-              width={819}
-              height={771}
-              sizes="(min-width: 1024px) 420px, 90vw"
-              className="w-full rounded-2xl"
-            />
-            <Image
-              src="/images/Jasmine-Investor-Group.jpg"
-              alt="Jasmine Brown with real estate investors at a networking event"
-              width={506}
-              height={355}
-              sizes="(min-width: 1024px) 420px, 90vw"
-              className="w-full rounded-2xl"
-            />
-          </div>
+          <Image
+            src="/images/Jasmine-Conventus.jpg"
+            alt="Jasmine Brown, Conventus relationship manager"
+            width={819}
+            height={771}
+            sizes="(min-width: 1024px) 420px, 90vw"
+            className="w-full self-start rounded-2xl"
+          />
         </div>
       </section>
 
