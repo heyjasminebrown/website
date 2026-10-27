@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { lender, productRows, products, relationshipManager } from "@/content/loan-products";
-import { site } from "@/content/site";
 
 // Conventus body font; headings use the Helvetica/Arial bold from their materials (see .cv-page in globals.css).
 const inter = Inter({ subsets: ["latin"], variable: "--font-cv-body" });
@@ -198,12 +197,6 @@ export default function LoanProductsPage() {
               <a href={`tel:${lender.contact.phone.replace(/\D/g, "")}`} className="block text-cv-teal underline underline-offset-4">
                 {lender.contact.phone}
               </a>
-              <p className="text-muted">
-                Connect with me:{" "}
-                <a href={site.social[0].href} target="_blank" rel="noreferrer" className="text-cv-teal underline underline-offset-4">
-                  @heyjasminebrown
-                </a>
-              </p>
             </div>
             <Quote className="mt-8" />
           </div>
