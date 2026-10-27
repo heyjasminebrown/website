@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { nav, site } from "@/content/site";
 
@@ -6,8 +7,10 @@ export function Footer() {
     <footer className="mt-auto border-t border-border">
       <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-10 text-sm text-muted sm:flex-row sm:justify-between sm:px-6">
         <div>
-          <p className="font-medium text-foreground">{site.name}</p>
-          <a href={`mailto:${site.email}`} className="hover:text-foreground">
+          <Link href="/" className="inline-block">
+            <Image src="/images/logo.png" alt={site.name} width={1200} height={258} sizes="200px" className="h-9 w-auto" />
+          </Link>
+          <a href={`mailto:${site.email}`} className="mt-3 block hover:text-foreground">
             {site.email}
           </a>
         </div>
