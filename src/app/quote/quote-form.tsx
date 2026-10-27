@@ -2,10 +2,13 @@
 
 import { useActionState, useState } from "react";
 import {
+  autoValue,
   borrowerExperience,
   experienceNote,
-  visibleFields,
+  isRequired,
   quoteLoanTypes,
+  resolveFields,
+  type Answers,
   type QuoteField,
 } from "@/content/quote";
 import { sendQuote, type QuoteState } from "./actions";
@@ -33,11 +36,12 @@ function Label({
   );
 }
 
-function Input({ f, value }: { f: QuoteField; value?: string }) {
+function Input({ f, value, live }: { f: QuoteField; value?: string; live: Answers }) {
+  const required = isRequired(f, live);
   const common = {
     id: f.name,
     name: f.name,
-    required: f.required,
+    required,
     defaultValue: value,
     placeholder: f.placeholder,
     className: field,
@@ -51,7 +55,7 @@ function Input({ f, value }: { f: QuoteField; value?: string }) {
             key={o}
             className="flex cursor-pointer items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 text-sm has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-accent-foreground"
           >
-            <input type="radio" name={f.name} value={o} required={f.required} defaultChecked={value === o} className="sr-only" />
+            <input type="radio" name={f.name} value={o} required={required} defaultChecked={value === o} className="sr-only" />
             {o}
           </label>
         ))}
@@ -73,7 +77,22 @@ function Input({ f, value }: { f: QuoteField; value?: string }) {
         <input inputMode="decimal" {...common} className={`${field} pl-7`} />
       </span>
     );
+  if (f.kind === "percent")
+    return (
+      <span className="relative block">
+        <input inputMode="decimal" {...common} className={`${field} pr-8`} />
+        <span className="pointer-events-none absolute inset-y-0 right-3 top-1 flex items-center text-muted">%</span>
+      </span>
+    );
   if (f.kind === "date") return <input type="date" {...common} />;
+  if (f.auto) {
+    // Locked to the number the property type implies; typed in by hand for the others (e.g. 5+ units).
+    const auto = autoValue(f, live);
+    if (auto !== undefined) return <input key="auto" {...common} defaultValue={undefined} value={auto} readOnly className={`${field} bg-background text-muted`} />;
+    return <input key="manual" type="number" min={1} {...common} defaultValue={live[f.name]} />;
+  }
+  if (f.maxOf)
+    return <input type="number" min={0} max={live[f.maxOf]} inputMode="numeric" {...common} />;
   if (f.digits)
     return (
       <input
@@ -92,7 +111,17 @@ function Input({ f, value }: { f: QuoteField; value?: string }) {
 const COLUMNS: Record<number, string> = { 2: "sm:grid-cols-2", 3: "sm:grid-cols-3" };
 
 /** Renders questions in order, putting fields that share a row number side by side and starting titled sections. */
-function Fields({ fields, values }: { fields: QuoteField[]; values: Record<string, string | undefined> }) {
+function Fields({
+  fields,
+  values,
+  live = values,
+}: {
+  fields: QuoteField[];
+  // Answers sent back after an error, to refill the form.
+  values: Answers;
+  // The answers as they stand while typing, for rules like "required if any unit is vacant".
+  live?: Answers;
+}) {
   const groups: QuoteField[][] = [];
   for (const f of fields) {
     const last = groups.at(-1);
@@ -109,14 +138,14 @@ function Fields({ fields, values }: { fields: QuoteField[]; values: Record<strin
           {f.kind === "radio" ? (
             <fieldset>
               <legend className="text-sm font-medium">{f.label}</legend>
-              <Input f={f} value={values[f.name]} />
+              <Input f={f} value={values[f.name]} live={live} />
             </fieldset>
           ) : (
             <>
-              <Label htmlFor={f.name} optional={!f.required} sub={f.sub}>
+              <Label htmlFor={f.name} optional={!isRequired(f, live)} sub={f.sub}>
                 {f.label}
               </Label>
-              <Input f={f} value={values[f.name]} />
+              <Input f={f} value={values[f.name]} live={live} />
             </>
           )}
           {f.hint && <p className="mt-1 text-xs text-muted">{f.hint}</p>}
@@ -133,7 +162,7 @@ export function QuoteForm() {
   const [loanType, setLoanType] = useState(v.loanType ?? "");
   // Live answers, so questions that depend on an earlier answer can appear and disappear.
   const [answers, setAnswers] = useState<Record<string, string>>(v);
-  const fields = visibleFields(quoteLoanTypes[loanType] ?? [], answers);
+  const { shown: fields, values: live } = resolveFields(quoteLoanTypes[loanType] ?? [], answers);
 
   if (state.status === "success") {
     return <p className="rounded-lg bg-background p-6 text-lg">{state.message}</p>;
@@ -200,7 +229,7 @@ export function QuoteForm() {
         </div>
         {fields.length > 0 && (
           <div key={loanType} className="space-y-5">
-            <Fields fields={fields} values={v.loanType === loanType ? v : {}} />
+            <Fields fields={fields} values={v.loanType === loanType ? v : {}} live={live} />
           </div>
         )}
       </fieldset>

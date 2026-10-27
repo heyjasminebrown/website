@@ -1,6 +1,15 @@
 "use server";
 
-import { borrowerExperience, quoteLoanTypes, visibleFields, type QuoteField } from "@/content/quote";
+import {
+  amount,
+  borrowerExperience,
+  isRequired,
+  quoteCalculations,
+  quoteLoanTypes,
+  resolveFields,
+  type Answers,
+  type QuoteField,
+} from "@/content/quote";
 import { saveLead } from "@/lib/leads";
 import { sendEmail, sendFailureMessage } from "@/lib/send-email";
 
@@ -11,8 +20,8 @@ export type QuoteState = {
 };
 
 /** Returns an error message for a field's answer, or nothing if it's fine. */
-function check(f: QuoteField, value: string): string | undefined {
-  if (!value) return f.required ? `Please fill in "${f.label}".` : undefined;
+function check(f: QuoteField, value: string, answers: Answers): string | undefined {
+  if (!value) return isRequired(f, answers) ? `Please fill in "${f.label}".` : undefined;
   if (f.digits && !new RegExp(`^\\d{${f.digits}}$`).test(value)) {
     return `"${f.label}" should be ${f.digits} digits, e.g. 726.`;
   }
@@ -20,6 +29,13 @@ function check(f: QuoteField, value: string): string | undefined {
     const n = Number(value.replace(/,/g, ""));
     if (!Number.isFinite(n) || n < 0) return `"${f.label}" should be a number.`;
     if (f.name === "creditScore" && (n < 300 || n > 850)) return "Please enter a credit score between 300 and 850.";
+    const max = f.maxOf ? amount(answers[f.maxOf]) : NaN;
+    if (n > max) return `"${f.label}" can't be more than the property's ${max} units.`;
+  }
+  if (f.kind === "money" || f.kind === "percent") {
+    const n = amount(value);
+    if (!Number.isFinite(n) || n < 0) return `"${f.label}" should be a number.`;
+    if (f.kind === "percent" && n > 100) return `"${f.label}" should be a percentage, e.g. 7.25.`;
   }
   if ((f.kind === "radio" || f.kind === "select") && f.options && !f.options.includes(value)) {
     return `Please choose an option for "${f.label}".`;
@@ -42,8 +58,10 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
     loanType,
     ...Object.fromEntries(allFields.map((f) => [f.name, get(f.name, f.kind === "textarea" ? 3000 : 300)])),
   };
-  // Questions hidden by an earlier answer don't count.
-  const shown = visibleFields(allFields, values);
+  // Questions hidden by an earlier answer don't count, and auto-filled answers (e.g. units) replace what was sent.
+  const resolved = resolveFields(allFields, values);
+  const shown = resolved.shown;
+  Object.assign(values, resolved.values);
   const isVisible = new Set(shown.map((f) => f.name));
 
   if (!values.name || !values.phone || !values.email) {
@@ -57,7 +75,7 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
   }
   if (!quoteLoanTypes[loanType]) return { status: "error", values, message: "Please choose a loan type." };
   for (const f of shown) {
-    const problem = check(f, values[f.name]);
+    const problem = check(f, values[f.name], resolved.values);
     if (problem) return { status: "error", values, message: problem };
   }
 
@@ -66,8 +84,9 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
       .filter((f) => isVisible.has(f.name) && (values[f.name] || f.section))
       .flatMap((f) => [
         ...(f.section ? ["", `-- ${f.section} --`] : []),
-        ...(values[f.name] ? [`${f.label}: ${values[f.name]}`] : []),
+        ...(values[f.name] ? [`${f.label}: ${values[f.name]}${f.kind === "percent" ? "%" : ""}`] : []),
       ]);
+  const calculated = quoteCalculations[loanType]?.(resolved.values) ?? [];
   const text = [
     `Name: ${values.name}`,
     `Phone: ${values.phone}`,
@@ -79,6 +98,7 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
     "",
     `PROJECT DETAILS (${loanType})`,
     ...answered(quoteLoanTypes[loanType]),
+    ...(calculated.length ? ["", "CALCULATED", ...calculated.map(([label, value]) => `${label}: ${value}`)] : []),
   ].join("\n");
 
   const [saved, result] = await Promise.all([
@@ -91,6 +111,7 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
         loanType,
         ...(values.referredBy && { referredBy: values.referredBy }),
         ...Object.fromEntries(shown.filter((f) => values[f.name]).map((f) => [f.name, values[f.name]])),
+        ...(calculated.length && { calculated: Object.fromEntries(calculated) }),
       },
     }),
     sendEmail({
