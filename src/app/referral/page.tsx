@@ -68,7 +68,7 @@ export default function ReferralPage() {
       <section id="refer" className="scroll-mt-6 bg-lavender px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-2xl rounded-3xl bg-surface p-6 shadow-sm sm:p-10">
           <h2 className="text-3xl">Send your referral</h2>
-          <p className="mb-8 mt-2 text-muted">It only takes a minute. All fields are required.</p>
+          <p className="mb-8 mt-2 text-muted">It only takes a minute.</p>
           <ReferralForm />
         </div>
       </section>

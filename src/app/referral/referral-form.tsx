@@ -37,8 +37,10 @@ export function ReferralForm() {
           </div>
         </div>
         <div>
-          <label htmlFor="email" className="text-sm font-medium">Email</label>
-          <input id="email" name="email" type="email" required autoComplete="off" defaultValue={v.email} className={field} />
+          <label htmlFor="email" className="text-sm font-medium">
+            Email <span className="font-normal text-muted">(optional)</span>
+          </label>
+          <input id="email" name="email" type="email" autoComplete="off" defaultValue={v.email} className={field} />
         </div>
         <div>
           <label htmlFor="phone" className="text-sm font-medium">Phone</label>
@@ -54,6 +56,12 @@ export function ReferralForm() {
               <option key={t}>{t}</option>
             ))}
           </select>
+        </div>
+        <div>
+          <label htmlFor="notes" className="text-sm font-medium">
+            Anything you want me to know about their deal? <span className="font-normal text-muted">(optional)</span>
+          </label>
+          <textarea id="notes" name="notes" rows={4} defaultValue={v.notes} className={field} />
         </div>
       </fieldset>
 
