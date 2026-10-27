@@ -59,6 +59,20 @@ h3 {
   }
 }
 
+/* Loan Products page: Conventus typography (Inter body, bold Helvetica/Arial headings). */
+.cv-page {
+  font-family: var(--font-cv-body), "Helvetica Neue", Arial, sans-serif;
+}
+.cv-page h1,
+.cv-page h2,
+.cv-page h3,
+.cv-page th,
+.cv-page .font-display {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
 /* Wealthy Notes blog post body (Markdown rendered to HTML). */
 .prose {
   font-size: 1.125rem;
