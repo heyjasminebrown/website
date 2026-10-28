@@ -67,6 +67,7 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
         sections,
       }),
       replyTo: values.email,
+      to: site.loanLeadsEmail,
     }),
   ]);
   if (result === "logged") return { status: "success", message: "Dev mode: report logged to the server console." };

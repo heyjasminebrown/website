@@ -11,6 +11,8 @@ export const site = {
   areaServed: "Atlanta, GA",
   url: "https://heyjasminebrown.com",
   email: "jasmine@heyjasminebrown.com",
+  // Where loan leads (Get a Quote, Refer a Friend, Calculator) are emailed.
+  loanLeadsEmail: "jbrown@cvlending.com",
   social: [
     { label: "Instagram", href: "https://instagram.com/heyjasminebrown" },
     // TODO: add your LinkedIn profile URL; the icon is hidden until it's set.

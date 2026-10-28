@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { saveLead } from "@/lib/leads";
 import { sendEmail, sendFailureMessage } from "@/lib/send-email";
-import { referralLoanTypes } from "@/content/site";
+import { referralLoanTypes, site } from "@/content/site";
 
 export type ReferralState = {
   status: "idle" | "success" | "error";
@@ -61,6 +61,7 @@ export async function sendReferral(_prev: ReferralState, formData: FormData): Pr
       subject: `Loan referral: ${firstName} ${lastName} (from ${referrerName})`,
       text,
       replyTo: email || undefined,
+      to: site.loanLeadsEmail,
     }),
   ]);
   // The lead counts as received if it reached either the database or the inbox.

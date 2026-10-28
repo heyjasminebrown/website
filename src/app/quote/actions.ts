@@ -9,6 +9,7 @@ import {
   type Answers,
   type QuoteField,
 } from "@/content/quote";
+import { site } from "@/content/site";
 import { saveLead } from "@/lib/leads";
 import { sendEmail, sendFailureMessage } from "@/lib/send-email";
 
@@ -120,6 +121,7 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
       subject: `Quote request (${loanType}): ${values.name}${values.referredBy ? ` · referred by ${values.referredBy}` : ""}`,
       text,
       replyTo: values.email,
+      to: site.loanLeadsEmail,
     }),
   ]);
   if (result === "logged") return { status: "success", message: "Dev mode: quote request logged to the server console." };
