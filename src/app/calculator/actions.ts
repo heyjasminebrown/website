@@ -77,7 +77,7 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
   // The lead's copy is a nice-to-have: Jasmine already has their details if this fails.
   await sendEmail({
     to: values.email,
-    replyTo: site.email,
+    replyTo: site.loanLeadsEmail,
     subject: "Your fix & flip deal analysis",
     text: [
       `Hi ${firstName},`,
@@ -105,7 +105,7 @@ export async function sendReport(_prev: ReportState, formData: FormData): Promis
       sections,
       cta: {
         label: "Let's talk about funding",
-        href: `mailto:${site.email}?subject=${encodeURIComponent("Funding my fix & flip")}`,
+        href: `mailto:${site.loanLeadsEmail}?subject=${encodeURIComponent("Funding my fix & flip")}`,
       },
     }),
   });
