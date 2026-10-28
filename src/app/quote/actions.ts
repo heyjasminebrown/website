@@ -93,12 +93,11 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
         ...(values[f.name] ? [`${labelOf(f, resolved.values)}: ${values[f.name]}`] : []),
       ]);
   const text = [
+    "BORROWER INFORMATION",
     `Name: ${values.name}`,
     `Phone: ${values.phone}`,
     `Email: ${values.email}`,
     `Referred by: ${values.referredBy || "(no one)"}`,
-    "",
-    "BORROWER EXPERIENCE",
     ...answered(borrowerExperience),
     "",
     `PROJECT DETAILS (${loanType})`,

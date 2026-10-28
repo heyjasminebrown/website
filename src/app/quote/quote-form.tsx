@@ -188,30 +188,29 @@ export function QuoteForm() {
       }}
       className="space-y-5"
     >
-      <div>
-        <Label htmlFor="name">Name</Label>
-        <input id="name" name="name" required autoComplete="name" defaultValue={v.name} className={field} />
-      </div>
-      <div className="grid gap-5 sm:grid-cols-2">
+      <fieldset className="space-y-5">
+        <legend className="sr-only">Borrower information</legend>
+        <p className="font-display text-2xl">Borrower Information</p>
         <div>
-          <Label htmlFor="phone">Phone</Label>
-          <input id="phone" name="phone" type="tel" required autoComplete="tel" defaultValue={v.phone} className={field} />
+          <Label htmlFor="name">Name</Label>
+          <input id="name" name="name" required autoComplete="name" defaultValue={v.name} className={field} />
+        </div>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <Label htmlFor="phone">Phone</Label>
+            <input id="phone" name="phone" type="tel" required autoComplete="tel" defaultValue={v.phone} className={field} />
+          </div>
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <input id="email" name="email" type="email" required autoComplete="email" defaultValue={v.email} className={field} />
+          </div>
         </div>
         <div>
-          <Label htmlFor="email">Email</Label>
-          <input id="email" name="email" type="email" required autoComplete="email" defaultValue={v.email} className={field} />
+          <Label htmlFor="referredBy" optional>
+            Did someone refer you? If so, please share their name.
+          </Label>
+          <input id="referredBy" name="referredBy" defaultValue={v.referredBy} className={field} />
         </div>
-      </div>
-      <div>
-        <Label htmlFor="referredBy" optional>
-          Did someone refer you? If so, please share their name.
-        </Label>
-        <input id="referredBy" name="referredBy" defaultValue={v.referredBy} className={field} />
-      </div>
-
-      <fieldset className="space-y-5 border-t border-border pt-6">
-        <legend className="sr-only">Borrower experience</legend>
-        <p className="font-display text-2xl">Borrower experience</p>
         <Fields fields={borrowerExperience.slice(0, 1)} values={v} />
         <p className="text-sm font-semibold">{experienceNote}</p>
         <Fields fields={borrowerExperience.slice(1)} values={v} />
