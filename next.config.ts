@@ -14,6 +14,13 @@ const nextConfig: NextConfig = {
       { source: "/loan-products", destination: "/conventus", permanent: true },
     ];
   },
+  // PostHog analytics are sent through this site so ad blockers don't drop them (see instrumentation-client.ts).
+  async rewrites() {
+    return [
+      { source: "/ingest/static/:path*", destination: "https://us-assets.i.posthog.com/static/:path*" },
+      { source: "/ingest/:path*", destination: "https://us.i.posthog.com/:path*" },
+    ];
+  },
   turbopack: {
     rules: {
       "*.css": {
