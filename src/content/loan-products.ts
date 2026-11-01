@@ -18,7 +18,7 @@ export const lender = {
   disclaimer:
     "This is a summary of our terms and requirements and may be more expansive. Please speak with your Conventus contact for details. Information in this summary reflects current requirements and may be modified or supplemented at any time.",
   license: "Conventus LLC California Finance Lenders License 60DBO-43745",
-  contact: { name: "Jasmine Brown", email: "jbrown@cvlending.com", phone: "404.789.5791" },
+  contact: { name: "Jasmine Brown", email: "jbrown@cvlending.com", phone: "(404) 383-5256" },
 };
 
 const mixedUse = "Mixed use (50% of square feet must be residential, 60% of rental income must be residential)";
