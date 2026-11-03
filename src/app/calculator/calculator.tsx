@@ -27,8 +27,8 @@ const sections: { title: string; note?: string; showPayment?: boolean; fields: [
     ],
   },
   {
-    title: "Second loan",
-    note: "Enter the amount of any additional financing being used toward the project.",
+    title: "Additional Investment",
+    note: "Use this section if you have a partner bringing additional capital to your project. Please keep in mind that we do not allow second liens.",
     fields: [
       ["partnerAmount", "Investment amount", "$"],
       ["secondRate", "Interest rate", "%"],
@@ -143,7 +143,7 @@ export function Calculator() {
           {[
             ["Purchase + rehab", money(r.projectCost)],
             ["Loan amount", money(r.first.amount)],
-            [inputs.partnerAmount > 0 ? "Financing (points + second loan interest)" : "Financing (origination points)", money(r.financingCost)],
+            [inputs.partnerAmount > 0 ? "Financing (points + additional investment interest)" : "Financing (origination points)", money(r.financingCost)],
             [`Carrying costs (${money(r.monthlyHolding)}/mo × ${inputs.holdMonths})`, money(r.holdingCost)],
             ["Acquisition costs", money(r.costToBuy)],
             ["Selling costs", money(r.costToSell)],

@@ -31,7 +31,7 @@ export function dealSections(i: FlipInputs, r: FlipResult): Section[] {
         ...(i.partnerAmount > 0
           ? [
               {
-                label: "Second loan",
+                label: "Additional investment",
                 value: money(i.partnerAmount),
                 note: `${i.secondRate}% · ${money(r.second.interest)} interest over the hold`,
               },
