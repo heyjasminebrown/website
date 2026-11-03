@@ -28,15 +28,6 @@ export function dealSections(i: FlipInputs, r: FlipResult): Section[] {
         },
         { label: "Interest rate", value: `${i.firstRate}%`, note: `${money(r.first.monthlyPayment)}/mo interest only` },
         { label: "Origination", value: money(r.first.pointsCost), note: points(i.firstPoints) },
-        ...(i.partnerAmount > 0
-          ? [
-              {
-                label: "Additional investment",
-                value: money(i.partnerAmount),
-                note: `${i.secondRate}% · ${money(r.second.interest)} interest over the hold`,
-              },
-            ]
-          : []),
       ],
     },
     {
