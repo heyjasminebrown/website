@@ -82,7 +82,20 @@ export const borrowerExperience: QuoteField[] = [
     placeholder: "e.g. 726",
     digits: 3,
   },
-  { name: "flipsCompleted", label: "Flips Completed", kind: "number", required: true, placeholder: "0", row: 1, sub: true },
+];
+
+// Fix and Flip and Ground Up only: how much they've done (DSCR doesn't ask).
+const experience: QuoteField[] = [
+  {
+    name: "flipsCompleted",
+    label: "Flips Completed",
+    kind: "number",
+    required: true,
+    placeholder: "0",
+    row: 1,
+    sub: true,
+    lead: "In the past 3 years, how many real estate projects have you completed?",
+  },
   {
     name: "constructionCompleted",
     label: "Ground Up Builds Completed",
@@ -94,8 +107,6 @@ export const borrowerExperience: QuoteField[] = [
   },
   { name: "rentalsOwned", label: "Rentals Owned", kind: "number", required: true, placeholder: "0", row: 1, sub: true },
 ];
-export const experienceNote =
-  "In the past 3 years, how many real estate projects have you completed?";
 
 const address: QuoteField = { name: "propertyAddress", label: "Property Address", kind: "text", required: true };
 
@@ -285,6 +296,7 @@ const dscr: QuoteField[] = [
 
 export const quoteLoanTypes: Record<string, QuoteField[]> = {
   "Fix and Flip": [
+    ...experience,
     address,
     propertyType,
     totalUnits,
@@ -301,6 +313,7 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
     exitStrategy,
   ],
   "Ground Up Construction": [
+    ...experience,
     address,
 
     // Section 1. If they don't own the land yet they may still be evaluating a lot, so no dates are asked then.

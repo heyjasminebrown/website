@@ -3,7 +3,6 @@
 import { useActionState, useState } from "react";
 import {
   borrowerExperience,
-  experienceNote,
   labelOf,
   quoteLoanTypes,
   resolveFields,
@@ -211,9 +210,7 @@ export function QuoteForm() {
           </Label>
           <input id="referredBy" name="referredBy" defaultValue={v.referredBy} className={field} />
         </div>
-        <Fields fields={borrowerExperience.slice(0, 1)} values={v} />
-        <p className="text-sm font-semibold">{experienceNote}</p>
-        <Fields fields={borrowerExperience.slice(1)} values={v} />
+        <Fields fields={borrowerExperience} values={v} />
       </fieldset>
 
       <fieldset className="space-y-5 border-t border-border pt-6">
