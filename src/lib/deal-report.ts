@@ -57,7 +57,7 @@ export function dealSections(i: FlipInputs, r: FlipResult): Section[] {
           value: money(r.costToSell),
           note: `${i.realtorPct}% realtor fees + ${i.sellClosingPct}% closing costs`,
         },
-        { label: "Financing costs", value: money(r.financingCost) },
+        { label: "Financing fees", value: money(r.financingCost) },
         { label: "Total all-in cost", value: money(r.totalCost), total: true },
       ],
     },

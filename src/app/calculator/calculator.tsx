@@ -144,7 +144,7 @@ export function Calculator() {
           {[
             ["Purchase + rehab", money(r.projectCost)],
             ["Loan amount", money(r.first.amount)],
-            [inputs.partnerAmount > 0 ? "Financing (points + additional investment interest)" : "Financing (origination points)", money(r.financingCost)],
+            ["Financing fees", money(r.financingCost)],
             [`Carrying costs (${money(r.monthlyHolding)}/mo × ${inputs.holdMonths})`, money(r.holdingCost)],
             ["Acquisition costs", money(r.costToBuy)],
             ["Selling costs", money(r.costToSell)],
