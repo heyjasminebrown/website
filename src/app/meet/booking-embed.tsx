@@ -1,21 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 // Jasmine's CRM, which hosts the booking calendar.
 const CRM_ORIGIN = "https://www.calljasminebrown.com";
 
+/** The booking page to embed: /meet -> main calendar; /meet/<calendar> -> that calendar. */
+function bookingSrc() {
+  const calendar = window.location.pathname.replace(/^\/meet\/?/, "").split("/")[0];
+  const params = new URLSearchParams({ embed: "1" });
+  if (calendar) params.set("calendar", calendar.toLowerCase());
+  return `${CRM_ORIGIN}/book?${params.toString()}`;
+}
+
+// The address never changes while the page is open, so there's nothing to subscribe to.
+const subscribe = () => () => {};
+
 export function BookingEmbed() {
-  const [src, setSrc] = useState<string | null>(null);
+  // Read from the address in the browser; null while the page is prerendered, which shows the placeholder.
+  const src = useSyncExternalStore(subscribe, bookingSrc, () => null);
   const [height, setHeight] = useState(900);
 
   useEffect(() => {
-    // /meet -> main calendar; /meet/<calendar> -> that calendar.
-    const calendar = window.location.pathname.replace(/^\/meet\/?/, "").split("/")[0];
-    const params = new URLSearchParams({ embed: "1" });
-    if (calendar) params.set("calendar", calendar.toLowerCase());
-    setSrc(`${CRM_ORIGIN}/book?${params.toString()}`);
-
     // The booking page reports its height so the frame never scrolls inside.
     function onMessage(event: MessageEvent) {
       if (event.origin !== CRM_ORIGIN) return;
