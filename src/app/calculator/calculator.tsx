@@ -93,7 +93,7 @@ export function Calculator() {
             <div className="grid gap-4 sm:grid-cols-2">
               {s.showPayment && (
                 <div className="text-sm sm:col-span-2">
-                  <span className="mb-1 block">Interest-only payment (from the loan above)</span>
+                  <span className="mb-1 block">Interest-only payment (based on total loan amount)</span>
                   <output className={`${field} block bg-transparent pl-3 tabular-nums`}>{r.first.monthlyPayment ? money(r.first.monthlyPayment) : "\u00a0"}</output>
                 </div>
               )}
