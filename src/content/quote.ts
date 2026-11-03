@@ -296,7 +296,6 @@ const dscr: QuoteField[] = [
 
 export const quoteLoanTypes: Record<string, QuoteField[]> = {
   "Fix and Flip": [
-    ...experience,
     address,
     propertyType,
     totalUnits,
@@ -311,9 +310,9 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
     },
     comps,
     exitStrategy,
+    ...experience,
   ],
   "Ground Up Construction": [
-    ...experience,
     address,
 
     // Section 1. If they don't own the land yet they may still be evaluating a lot, so no dates are asked then.
@@ -455,6 +454,7 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
       kind: "number",
       required: true,
     },
+    ...experience,
   ],
   DSCR: dscr,
 };
