@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useActionState, useEffect, useMemo, useState, useSyncExternalStore, useTransition } from "react";
 import { BOOKING_TIMEZONE, type Availability, type Slot } from "@/lib/booking";
 import { bookCall, loadTimes, type BookState, type Guest } from "./actions";
@@ -113,7 +112,7 @@ function DatePicker({
     "grid h-9 w-9 place-items-center rounded-full text-2xl text-accent hover:bg-lavender/40 disabled:cursor-default disabled:opacity-25 disabled:hover:bg-transparent";
 
   return (
-    <div className="grid gap-8 md:grid-cols-[1fr_12rem]">
+    <div className="grid gap-8 md:grid-cols-[22rem_1fr] md:gap-10">
       <div>
         <div className="flex items-center justify-center gap-6">
           <button type="button" aria-label="Previous month" disabled={month <= first} onClick={() => setMonth(shiftMonth(month, -1))} className={arrow}>
@@ -126,9 +125,9 @@ function DatePicker({
             ›
           </button>
         </div>
-        <div className="mt-4 grid grid-cols-7 gap-y-2 text-center">
+        <div className="mt-3 grid grid-cols-7 gap-y-1 text-center">
           {WEEKDAYS.map((w) => (
-            <p key={w} className="pb-2 text-xs font-medium uppercase tracking-wide text-muted">
+            <p key={w} className="pb-1 text-xs font-medium uppercase tracking-wide text-muted">
               {w}
             </p>
           ))}
@@ -147,7 +146,7 @@ function DatePicker({
                   aria-pressed={open ? picked : undefined}
                   aria-label={open ? label : `${label}, no open times`}
                   onClick={() => onDay(key)}
-                  className={`grid h-11 w-11 place-items-center rounded-full text-base sm:h-12 sm:w-12 ${
+                  className={`grid h-10 w-10 place-items-center rounded-full ${
                     picked
                       ? "bg-accent font-semibold text-accent-foreground"
                       : open
@@ -165,8 +164,11 @@ function DatePicker({
       </div>
 
       <div>
-        <p className="font-display text-lg">{times[0] && format(times[0].startAt, { weekday: "long", month: "long", day: "numeric" })}</p>
-        <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-1">
+        <p className="whitespace-nowrap font-display text-lg">
+          {times[0] && format(times[0].startAt, { weekday: "long", month: "long", day: "numeric" })}
+        </p>
+        {/* A full day of short calls scrolls within the calendar's height instead of stretching the page. */}
+        <div className="mt-3 grid grid-cols-3 gap-2 md:max-h-80 md:overflow-y-auto md:pr-1">
           {times.map((s) => {
             const picked = s.startAt === startsAt;
             return (
@@ -175,7 +177,7 @@ function DatePicker({
                 type="button"
                 aria-pressed={picked}
                 onClick={() => onTime(s.startAt)}
-                className={`rounded-lg border py-3 text-center font-semibold ${
+                className={`rounded-lg border py-2 text-center text-sm font-semibold ${
                   picked ? "border-accent bg-accent text-accent-foreground" : "border-accent/40 text-accent hover:border-accent"
                 }`}
               >
@@ -234,28 +236,13 @@ export function BookingForm({ initial, link }: { initial: Availability; link?: s
     return <p className="rounded-2xl border border-border bg-surface p-6 text-lg sm:p-10">{availability.error}</p>;
   }
 
-  const { calendar, calendars, slots } = availability;
+  const { calendar, slots } = availability;
   const days = new Map(byDay(slots));
   const selectedDay = day && days.has(day) ? day : days.keys().next().value;
   const v = state.status === "error" ? state.values : (returning ?? {});
 
   return (
     <div className="rounded-2xl border border-border bg-surface p-6 sm:p-10">
-      {/* /meet offers every calendar when there's more than one. */}
-      {!link && calendars.length > 1 && (
-        <nav aria-label="Type of call" className="mb-8 flex flex-wrap gap-3">
-          {calendars.map((c) => (
-            <Link
-              key={c.slug}
-              href={`/meet/${c.slug}`}
-              aria-current={c.slug === calendar.slug ? "page" : undefined}
-              className="rounded-full border border-border px-4 py-2 text-sm hover:border-accent aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-foreground"
-            >
-              {c.name}
-            </Link>
-          ))}
-        </nav>
-      )}
 
       <h2 className="text-2xl">{calendar.name}</h2>
       <p className="mt-1 text-muted">

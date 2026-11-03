@@ -13,7 +13,7 @@ export const BOOKING_TIMEZONE = "America/New_York";
 export type BookingCalendar = { slug: string; name: string; description: string | null; durationMinutes: number };
 export type Slot = { startAt: string; endAt: string };
 export type Availability =
-  | { ok: true; calendar: BookingCalendar; calendars: BookingCalendar[]; slots: Slot[] }
+  | { ok: true; calendar: BookingCalendar; slots: Slot[] }
   | { ok: false; error: string };
 
 export type BookingRequest = {
@@ -35,7 +35,7 @@ export async function getAvailability(calendar?: string): Promise<Availability> 
   try {
     const res = await fetch(`${crm()}/api/booking/availability${query}`, { cache: "no-store" });
     const data = await res.json().catch(() => null);
-    if (data?.ok) return { ok: true, calendar: data.calendar, calendars: data.calendars ?? [], slots: data.slots ?? [] };
+    if (data?.ok) return { ok: true, calendar: data.calendar, slots: data.slots ?? [] };
     console.error("[booking] Availability error", res.status, data);
     return { ok: false, error: data?.error ?? unreachable };
   } catch (err) {
