@@ -22,7 +22,6 @@ export type BookingRequest = {
   name: string;
   phone: string;
   email: string;
-  topic?: string;
 };
 export type BookingResult =
   | { ok: true; confirmed: boolean; meetLink?: string | null; startsAt: string; endsAt?: string }

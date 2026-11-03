@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import { Section } from "@/components/section";
 import { getAvailability } from "@/lib/booking";
@@ -19,6 +20,8 @@ async function Booking({ params }: { params: PageProps<"/meet/[[...calendar]]">[
   const { calendar } = await params;
   if (calendar && calendar.length > 1) notFound();
   const link = calendar?.[0]?.toLowerCase();
+  // Open times are always fetched for the visitor, never while the page is prebuilt.
+  await connection();
   // A paused or unknown calendar shows the CRM's message instead of the times.
   const availability = await getAvailability(link);
   return <BookingForm key={link ?? ""} initial={availability} link={link} />;
