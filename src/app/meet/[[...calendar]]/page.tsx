@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { Suspense } from "react";
-import { Section } from "@/components/section";
 import { getAvailability } from "@/lib/booking";
 import { BookingForm } from "../booking-form";
 
@@ -29,21 +28,18 @@ async function Booking({ params }: { params: PageProps<"/meet/[[...calendar]]">[
 
 export default function MeetPage({ params }: PageProps<"/meet/[[...calendar]]">) {
   return (
-    <Section main eyebrow="Book a Call" title="Let's talk">
-      <p className="-mt-4 max-w-2xl text-lg text-muted">
-        Pick a time that works for you, and I&apos;ll give you a call at our scheduled time.
-      </p>
-      <div className="mt-8">
-        <Suspense
-          fallback={
-            <p className="rounded-2xl border border-border bg-surface p-6 text-muted sm:p-10" aria-busy="true">
-              Loading open times…
-            </p>
-          }
-        >
-          <Booking params={params} />
-        </Suspense>
-      </div>
-    </Section>
+    <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+      {/* The form says it all, so the page's main heading is only for search engines and screen readers. */}
+      <h1 className="sr-only">Book a Call with Jasmine Brown</h1>
+      <Suspense
+        fallback={
+          <p className="rounded-2xl border border-border bg-surface p-6 text-muted sm:p-10" aria-busy="true">
+            Loading open times…
+          </p>
+        }
+      >
+        <Booking params={params} />
+      </Suspense>
+    </section>
   );
 }
