@@ -108,6 +108,13 @@ const experience: QuoteField[] = [
   { name: "rentalsOwned", label: "Rentals Owned", kind: "number", required: true, placeholder: "0", row: 1, sub: true },
 ];
 
+// The last question on every quote form.
+const additionalInfo: QuoteField = {
+  name: "additionalInfo",
+  label: "Any additional information you want to provide or questions you want to talk about?",
+  kind: "textarea",
+};
+
 const address: QuoteField = { name: "propertyAddress", label: "Property Address", kind: "text", required: true };
 
 // Used by every loan type.
@@ -311,6 +318,7 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
     comps,
     exitStrategy,
     ...experience,
+    additionalInfo,
   ],
   "Ground Up Construction": [
     address,
@@ -455,8 +463,9 @@ export const quoteLoanTypes: Record<string, QuoteField[]> = {
       required: true,
     },
     ...experience,
+    additionalInfo,
   ],
-  DSCR: dscr,
+  DSCR: [...dscr, additionalInfo],
 };
 
 export const quote = {
