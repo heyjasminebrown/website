@@ -50,7 +50,7 @@ export function dealSections(i: FlipInputs, r: FlipResult): Section[] {
         {
           label: "Acquisition costs",
           value: money(r.costToBuy),
-          note: `${i.buyClosingPct}% closing costs, taxes & insurance`,
+          note: `${i.buyRealtorPct}% realtor fees, ${i.buyClosingPct}% closing costs, taxes & insurance`,
         },
         {
           label: "Selling costs",

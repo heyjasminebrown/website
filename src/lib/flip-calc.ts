@@ -20,6 +20,7 @@ export type FlipInputs = {
   propertyTaxes: number;
   insurance: number;
   buyClosingPct: number;
+  buyRealtorPct: number;
   sellClosingPct: number;
   realtorPct: number;
 };
@@ -41,6 +42,7 @@ export const defaultInputs: FlipInputs = {
   propertyTaxes: 0,
   insurance: 0,
   buyClosingPct: 1,
+  buyRealtorPct: 3,
   sellClosingPct: 1,
   realtorPct: 3,
 };
@@ -67,7 +69,8 @@ export function underwrite(i: FlipInputs) {
 
   // Closing costs cover title and attorney fees together.
   const buyClosing = (i.purchasePrice * i.buyClosingPct) / 100;
-  const costToBuy = buyClosing + i.propertyTaxes + i.insurance;
+  const buyRealtorFees = (i.purchasePrice * i.buyRealtorPct) / 100;
+  const costToBuy = buyClosing + buyRealtorFees + i.propertyTaxes + i.insurance;
 
   const sellClosing = (i.resaleValue * i.sellClosingPct) / 100;
   const realtorFees = (i.resaleValue * i.realtorPct) / 100;
@@ -86,6 +89,7 @@ export function underwrite(i: FlipInputs) {
     monthlyHolding,
     holdingCost,
     buyClosing,
+    buyRealtorFees,
     costToBuy,
     sellClosing,
     realtorFees,

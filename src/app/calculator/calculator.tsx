@@ -45,6 +45,7 @@ const sections: { title: string; note?: string; showPayment?: boolean; fields: [
   {
     title: "Acquisition costs",
     fields: [
+      ["buyRealtorPct", "Realtor fees (% of purchase price)", "%"],
       ["buyClosingPct", "Closing costs", "%"],
       ["propertyTaxes", "Property taxes", "$"],
       ["insurance", "Insurance", "$"],
