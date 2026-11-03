@@ -7,7 +7,7 @@ export type Guest = { firstName: string; lastName: string; phone: string; email:
 
 export type BookState =
   | { status: "idle" }
-  | { status: "booked"; confirmed: boolean; startsAt: string; guest: Guest; meetLink?: string | null }
+  | { status: "booked"; confirmed: boolean; startsAt: string; guest: Guest }
   | { status: "error"; message: string; taken?: boolean; values: Record<string, string> };
 
 /** Fresh open times, e.g. after someone else took the time a visitor picked. */
@@ -49,6 +49,5 @@ export async function bookCall(_prev: BookState, formData: FormData): Promise<Bo
     confirmed: result.confirmed,
     startsAt: result.startsAt,
     guest,
-    meetLink: result.meetLink,
   };
 }

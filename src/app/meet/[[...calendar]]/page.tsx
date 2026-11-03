@@ -9,7 +9,7 @@ import { BookingForm } from "../booking-form";
 export const metadata: Metadata = {
   title: "Book a Call with Jasmine Brown",
   description:
-    "Book a call with Jasmine Brown, real estate investor and private lending relationship manager. Pick a time that works for you and get a calendar invite with a video link right away.",
+    "Book a call with Jasmine Brown, real estate investor and private lending relationship manager. Pick a time that works for you and get a calendar invite right away.",
   // Every calendar link shares one address for search engines.
   alternates: { canonical: "/meet" },
 };
@@ -31,7 +31,7 @@ export default function MeetPage({ params }: PageProps<"/meet/[[...calendar]]">)
   return (
     <Section main eyebrow="Book a Call" title="Let's talk">
       <p className="-mt-4 max-w-2xl text-lg text-muted">
-        Pick a time that works for you. You&apos;ll get a calendar invite with a video link right away.
+        Pick a time that works for you. You&apos;ll get a calendar invite right away.
       </p>
       <div className="mt-8">
         <Suspense

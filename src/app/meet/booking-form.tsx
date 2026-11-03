@@ -219,18 +219,13 @@ export function BookingForm({ initial, link }: { initial: Availability; link?: s
   if (state.status === "booked") {
     return (
       <div className="rounded-2xl border border-border bg-surface p-6 sm:p-10">
-        <p className="font-display text-3xl">{state.confirmed ? "You're booked!" : "Request received"}</p>
+        <p className="font-display text-3xl">{state.confirmed ? "I look forward to connecting!" : "Request received"}</p>
         {state.startsAt && <p className="mt-3 text-lg">{fullLabel(state.startsAt)}</p>}
         <p className="mt-3 text-muted">
           {state.confirmed
-            ? `A calendar invite with a video link is on its way to ${state.guest.email}, and you'll get a text confirmation.`
+            ? "I've sent you a calendar invite and text confirmation. I'll give you a call at our scheduled time. Chat soon!"
             : "Jasmine will confirm your time shortly."}
         </p>
-        {state.meetLink && (
-          <a href={state.meetLink} className="mt-6 inline-block text-accent underline underline-offset-4">
-            Video link for our call
-          </a>
-        )}
       </div>
     );
   }
@@ -264,7 +259,7 @@ export function BookingForm({ initial, link }: { initial: Availability; link?: s
 
       <h2 className="text-2xl">{calendar.name}</h2>
       <p className="mt-1 text-muted">
-        {calendar.durationMinutes} minutes · Video call · All times Eastern (ET)
+        {calendar.durationMinutes} minutes · Phone call · All times Eastern (ET)
       </p>
       {calendar.description && <p className="mt-3">{calendar.description}</p>}
 

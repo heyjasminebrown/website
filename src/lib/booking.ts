@@ -24,7 +24,7 @@ export type BookingRequest = {
   email: string;
 };
 export type BookingResult =
-  | { ok: true; confirmed: boolean; meetLink?: string | null; startsAt: string; endsAt?: string }
+  | { ok: true; confirmed: boolean; startsAt: string; endsAt?: string }
   | { ok: false; error: string; taken?: boolean };
 
 const unreachable = "The calendar is unavailable right now. Please try again in a few minutes.";
@@ -59,7 +59,6 @@ export async function bookTime(request: BookingRequest): Promise<BookingResult> 
       return {
         ok: true,
         confirmed: data.confirmed === true,
-        meetLink: data.meetLink,
         startsAt: data.startsAt ?? request.startsAt,
         endsAt: data.endsAt,
       };
