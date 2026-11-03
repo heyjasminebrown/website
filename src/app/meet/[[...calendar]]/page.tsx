@@ -1,0 +1,46 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { Section } from "@/components/section";
+import { getAvailability } from "@/lib/booking";
+import { BookingForm } from "../booking-form";
+
+export const metadata: Metadata = {
+  title: "Book a Call with Jasmine Brown",
+  description:
+    "Book a call with Jasmine Brown, real estate investor and private lending relationship manager. Pick a time that works for you and get a calendar invite with a video link right away.",
+  // Every calendar link shares one address for search engines.
+  alternates: { canonical: "/meet" },
+};
+
+// /meet shows her main calendar; /meet/<link> shows that calendar. Open times come from her CRM
+// (see src/lib/booking.ts) fresh on every visit.
+async function Booking({ params }: { params: PageProps<"/meet/[[...calendar]]">["params"] }) {
+  const { calendar } = await params;
+  if (calendar && calendar.length > 1) notFound();
+  const link = calendar?.[0]?.toLowerCase();
+  // A paused or unknown calendar shows the CRM's message instead of the times.
+  const availability = await getAvailability(link);
+  return <BookingForm key={link ?? ""} initial={availability} link={link} />;
+}
+
+export default function MeetPage({ params }: PageProps<"/meet/[[...calendar]]">) {
+  return (
+    <Section main eyebrow="Book a Call" title="Let's talk">
+      <p className="-mt-4 max-w-2xl text-lg text-muted">
+        Pick a time that works for you. You&apos;ll get a calendar invite with a video link right away.
+      </p>
+      <div className="mt-8">
+        <Suspense
+          fallback={
+            <p className="rounded-2xl border border-border bg-surface p-6 text-muted sm:p-10" aria-busy="true">
+              Loading open times…
+            </p>
+          }
+        >
+          <Booking params={params} />
+        </Suspense>
+      </div>
+    </Section>
+  );
+}

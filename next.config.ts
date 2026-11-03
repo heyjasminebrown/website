@@ -17,8 +17,6 @@ const nextConfig: NextConfig = {
   // PostHog analytics are sent through this site so ad blockers don't drop them (see instrumentation-client.ts).
   async rewrites() {
     return [
-      // Each booking calendar has its own link: /meet/<calendar>.
-      { source: "/meet/:calendar", destination: "/meet" },
       { source: "/ingest/static/:path*", destination: "https://us-assets.i.posthog.com/static/:path*" },
       { source: "/ingest/:path*", destination: "https://us.i.posthog.com/:path*" },
     ];
