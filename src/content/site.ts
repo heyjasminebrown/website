@@ -22,9 +22,9 @@ export const site = {
 
 export const nav = [
   { label: "Home", href: "/" },
-  { label: "Loan Products", href: "/conventus" },
+  { label: "Loan Programs", href: "/conventus" },
   { label: "Get a Quote", href: "/quote" },
-  { label: "Refer a Friend", href: "/referral" },
+  { label: "Referral Program", href: "/referral" },
   { label: "Calculator", href: "/calculator" },
   { label: "Events", href: "/events" },
   { label: "Wealthy Notes", href: "/blog" },

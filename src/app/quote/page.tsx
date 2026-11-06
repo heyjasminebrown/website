@@ -20,7 +20,7 @@ export default function QuotePage() {
           <h1 className="mt-3 text-5xl leading-tight sm:text-6xl">{quote.heading}</h1>
           <p className="mt-6 text-lg text-cv-mint-light sm:text-xl">{quote.intro}</p>
           <Link href="/conventus" className="mt-6 inline-block text-cv-mint underline underline-offset-4 hover:opacity-80">
-            Learn more about our loan products →
+            Learn more about our loan programs →
           </Link>
         </div>
       </section>

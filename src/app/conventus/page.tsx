@@ -9,7 +9,7 @@ import { lender, productRows, products, relationshipManager } from "@/content/lo
 const signatureFont = Mrs_Saint_Delafield({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Loan Products",
+  title: "Loan Programs",
   description:
     "Bridge, bridge + rehab, ground-up construction and DSCR loans through Conventus, a direct lender with $10B+ funded. Terms, leverage and credit requirements.",
   alternates: { canonical: "/conventus" },
@@ -55,9 +55,9 @@ export default function LoanProductsPage() {
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.3fr_1fr]">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-cv-mint">{lender.name} · Direct lender</p>
-            <h1 className="mt-3 text-5xl leading-tight sm:text-7xl">Loan Products</h1>
+            <h1 className="mt-3 text-5xl leading-tight sm:text-7xl">Loan Programs</h1>
             <p className="mt-6 max-w-2xl text-lg text-cv-mint-light">
-              Bridge, rehab, ground-up construction and DSCR loans for real estate investors, funded directly through{" "}
+              Bridge, ground-up construction and DSCR loans for real estate investors, funded directly through{" "}
               {lender.name}.
             </p>
             <div className="mt-10 flex flex-wrap gap-10">
