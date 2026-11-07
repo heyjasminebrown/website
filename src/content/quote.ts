@@ -171,7 +171,7 @@ export const brokerInfo: QuoteField[] = [
     required: true,
     initial: "1",
   },
-  { name: "brokerFees", label: "Do you plan to charge any additional fees?", kind: "radio", options: yesNo, required: true },
+  { name: "brokerFees", label: "Do you plan to charge any additional fees?", kind: "text", required: true },
 ];
 
 // The questions Conventus's DSCR loan sizer needs.
