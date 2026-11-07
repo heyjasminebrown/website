@@ -492,6 +492,5 @@ export const quote = {
 export const brokerQuote = {
   eyebrow: "Brokers",
   heading: "Fund your borrower's deal",
-  intro:
-    "Tell me about your borrower's deal and get a quote. Once the loan is approved, we can fund the deal in as little as 10–14 days.",
+  intro: "Tell me about your borrower's deal and get a quote.",
 };
