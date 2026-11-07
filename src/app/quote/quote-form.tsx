@@ -3,13 +3,14 @@
 import { useActionState, useState } from "react";
 import {
   borrowerExperience,
+  brokerInfo,
   labelOf,
   quoteLoanTypes,
   resolveFields,
   type Answers,
   type QuoteField,
 } from "@/content/quote";
-import { sendQuote, type QuoteState } from "./actions";
+import { sendBrokerQuote, sendQuote, type QuoteState } from "./actions";
 
 const initialState: QuoteState = { status: "idle", message: "" };
 
@@ -39,7 +40,7 @@ function Input({ f, value, live }: { f: QuoteField; value?: string; live: Answer
     id: f.name,
     name: f.name,
     required: f.required,
-    defaultValue: value,
+    defaultValue: value ?? f.initial,
     placeholder: f.placeholder,
     className: field,
   };
@@ -166,8 +167,31 @@ function Fields({
   ));
 }
 
-export function QuoteForm() {
-  const [state, formAction, pending] = useActionState(sendQuote, initialState);
+/** Name, then phone and email side by side. */
+function Contact({ v }: { v: Record<string, string> }) {
+  return (
+    <>
+      <div>
+        <Label htmlFor="name">Name</Label>
+        <input id="name" name="name" required autoComplete="name" defaultValue={v.name} className={field} />
+      </div>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <Label htmlFor="phone">Phone</Label>
+          <input id="phone" name="phone" type="tel" required autoComplete="tel" defaultValue={v.phone} className={field} />
+        </div>
+        <div>
+          <Label htmlFor="email">Email</Label>
+          <input id="email" name="email" type="email" required autoComplete="email" defaultValue={v.email} className={field} />
+        </div>
+      </div>
+    </>
+  );
+}
+
+/** The Get a Quote form, or with `broker` the broker version (/broker), which starts with the broker's details. */
+export function QuoteForm({ broker = false }: { broker?: boolean }) {
+  const [state, formAction, pending] = useActionState(broker ? sendBrokerQuote : sendQuote, initialState);
   const v = state.values ?? {};
   const [loanType, setLoanType] = useState(v.loanType ?? "");
   // Live answers, so questions that depend on an earlier answer can appear and disappear.
@@ -187,31 +211,34 @@ export function QuoteForm() {
       }}
       className="space-y-5"
     >
-      <fieldset className="space-y-5">
-        <legend className="sr-only">Borrower information</legend>
-        <p className="font-display text-2xl">Borrower Information</p>
-        <div>
-          <Label htmlFor="name">Name</Label>
-          <input id="name" name="name" required autoComplete="name" defaultValue={v.name} className={field} />
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2">
+      {broker ? (
+        <>
+          <fieldset className="space-y-5">
+            <legend className="sr-only">Broker information</legend>
+            <p className="font-display text-2xl">Broker Information</p>
+            <Contact v={v} />
+            <Fields fields={brokerInfo} values={v} />
+          </fieldset>
+          <fieldset className="space-y-5 border-t border-border pt-6">
+            <legend className="sr-only">Borrower information</legend>
+            <p className="font-display text-2xl">Borrower Information</p>
+            <Fields fields={borrowerExperience} values={v} />
+          </fieldset>
+        </>
+      ) : (
+        <fieldset className="space-y-5">
+          <legend className="sr-only">Borrower information</legend>
+          <p className="font-display text-2xl">Borrower Information</p>
+          <Contact v={v} />
           <div>
-            <Label htmlFor="phone">Phone</Label>
-            <input id="phone" name="phone" type="tel" required autoComplete="tel" defaultValue={v.phone} className={field} />
+            <Label htmlFor="referredBy" optional>
+              Did someone refer you? If so, please share their name.
+            </Label>
+            <input id="referredBy" name="referredBy" defaultValue={v.referredBy} className={field} />
           </div>
-          <div>
-            <Label htmlFor="email">Email</Label>
-            <input id="email" name="email" type="email" required autoComplete="email" defaultValue={v.email} className={field} />
-          </div>
-        </div>
-        <div>
-          <Label htmlFor="referredBy" optional>
-            Did someone refer you? If so, please share their name.
-          </Label>
-          <input id="referredBy" name="referredBy" defaultValue={v.referredBy} className={field} />
-        </div>
-        <Fields fields={borrowerExperience} values={v} />
-      </fieldset>
+          <Fields fields={borrowerExperience} values={v} />
+        </fieldset>
+      )}
 
       <fieldset className="space-y-5 border-t border-border pt-6">
         <legend className="sr-only">Project details</legend>

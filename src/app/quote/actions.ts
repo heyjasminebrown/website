@@ -3,6 +3,7 @@
 import {
   amount,
   borrowerExperience,
+  brokerInfo,
   labelOf,
   quoteLoanTypes,
   resolveFields,
@@ -49,18 +50,28 @@ function check(f: QuoteField, value: string, answers: Answers): string | undefin
 }
 
 export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<QuoteState> {
+  return submitQuote(formData, false);
+}
+
+/** The broker version (/broker): name, email and phone are the broker's, and the borrower only gives a credit score. */
+export async function sendBrokerQuote(_prev: QuoteState, formData: FormData): Promise<QuoteState> {
+  return submitQuote(formData, true);
+}
+
+async function submitQuote(formData: FormData, broker: boolean): Promise<QuoteState> {
   // Honeypot: bots fill in every field, people never see this one.
   if (formData.get("company")) return { status: "success", message: "Thanks! I'll be in touch soon." };
 
   const get = (key: string, max = 300) => String(formData.get(key) ?? "").trim().slice(0, max);
   const loanType = get("loanType");
   // Only accept questions that belong to the chosen loan type.
-  const allFields = [...borrowerExperience, ...(quoteLoanTypes[loanType] ?? [])];
+  const contactFields = broker ? [...brokerInfo, ...borrowerExperience] : borrowerExperience;
+  const allFields = [...contactFields, ...(quoteLoanTypes[loanType] ?? [])];
   const values: Record<string, string> = {
     name: get("name"),
     phone: get("phone"),
     email: get("email"),
-    referredBy: get("referredBy"),
+    referredBy: broker ? "" : get("referredBy"),
     loanType,
     ...Object.fromEntries(allFields.map((f) => [f.name, get(f.name, f.kind === "textarea" ? 3000 : 300)])),
   };
@@ -92,12 +103,11 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
         ...(f.section ? ["", `-- ${f.section} --`] : []),
         ...(values[f.name] ? [`${labelOf(f, resolved.values)}: ${values[f.name]}`] : []),
       ]);
+  const contact = [`Name: ${values.name}`, `Phone: ${values.phone}`, `Email: ${values.email}`];
   const text = [
-    "BORROWER INFORMATION",
-    `Name: ${values.name}`,
-    `Phone: ${values.phone}`,
-    `Email: ${values.email}`,
-    `Referred by: ${values.referredBy || "(no one)"}`,
+    ...(broker
+      ? ["BROKER INFORMATION", ...contact, ...answered(brokerInfo), "", "BORROWER INFORMATION"]
+      : ["BORROWER INFORMATION", ...contact, `Referred by: ${values.referredBy || "(no one)"}`]),
     ...answered(borrowerExperience),
     "",
     `PROJECT DETAILS (${loanType})`,
@@ -106,7 +116,7 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
 
   const [saved, result] = await Promise.all([
     saveLead({
-      source: `Quote: ${loanType}`,
+      source: `${broker ? "Broker" : "Quote"}: ${loanType}`,
       name: values.name,
       email: values.email,
       phone: values.phone,
@@ -117,7 +127,7 @@ export async function sendQuote(_prev: QuoteState, formData: FormData): Promise<
       },
     }),
     sendEmail({
-      subject: `Quote request (${loanType}): ${values.name}${values.referredBy ? ` · referred by ${values.referredBy}` : ""}`,
+      subject: `${broker ? "Broker quote" : "Quote"} request (${loanType}): ${values.name}${values.referredBy ? ` · referred by ${values.referredBy}` : ""}`,
       text,
       replyTo: values.email,
       to: site.loanLeadsEmail,

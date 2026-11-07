@@ -31,6 +31,8 @@ export type QuoteField = {
   digits?: number;
   // Shown as a lighter sub-label under a bold question (the experience counts).
   sub?: boolean;
+  // Filled in to start with (e.g. 1 point); the visitor can change it.
+  initial?: string;
 };
 
 /** Reads a typed amount like "$250,000" or "7.5" as a number (NaN if it isn't one). */
@@ -159,6 +161,18 @@ const exitStrategy: QuoteField = {
 };
 
 const yesNo = ["Yes", "No"];
+
+// The broker form (/broker) asks these after the broker's name, email and phone.
+export const brokerInfo: QuoteField[] = [
+  {
+    name: "brokerPoints",
+    label: "How many points are you looking to charge?",
+    kind: "number",
+    required: true,
+    initial: "1",
+  },
+  { name: "brokerFees", label: "Do you plan to charge any additional fees?", kind: "radio", options: yesNo, required: true },
+];
 
 // The questions Conventus's DSCR loan sizer needs.
 const purchaseTypes = ["Purchase", "Delayed Finance"];
@@ -473,4 +487,11 @@ export const quote = {
   heading: "Fund your deal",
   intro:
     "Tell me about your deal and get your quote. Once your loan is approved, we can fund your deal in as little as 10–14 days.",
+};
+
+export const brokerQuote = {
+  eyebrow: "Brokers",
+  heading: "Fund your borrower's deal",
+  intro:
+    "Tell me about your borrower's deal and get a quote. Once the loan is approved, we can fund the deal in as little as 10–14 days.",
 };

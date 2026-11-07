@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     ...nav.map((item) => item.href).filter((href) => href !== "/"),
     "/about",
+    "/broker",
     "/meet",
     "/passiveincome",
     "/referral",
