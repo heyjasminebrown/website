@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...nav.map((item) => item.href).filter((href) => href !== "/"),
     "/about",
     "/broker",
+    "/conference",
     "/meet",
     "/passiveincome",
     "/referral",

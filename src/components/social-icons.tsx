@@ -1,6 +1,6 @@
 import { site } from "@/content/site";
 
-const icons: Record<string, React.ReactNode> = {
+export const socialIcons: Record<string, React.ReactNode> = {
   Instagram: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6" aria-hidden>
       <rect x="3" y="3" width="18" height="18" rx="5" />
@@ -29,7 +29,7 @@ export function SocialIcons() {
             aria-label={s.label}
             className="grid h-14 w-14 place-items-center rounded-full bg-accent text-background hover:opacity-90"
           >
-            {icons[s.label]}
+            {socialIcons[s.label]}
           </a>
         ))}
     </div>
