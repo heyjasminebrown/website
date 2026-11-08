@@ -42,7 +42,7 @@ export function ConferenceForm() {
         disabled={pending}
         className="w-full rounded-full bg-accent px-7 py-4 text-accent-foreground hover:opacity-90 disabled:opacity-60"
       >
-        {pending ? "Sending…" : "Send me more info"}
+        {pending ? "Sending…" : "Sign Up"}
       </button>
     </form>
   );
