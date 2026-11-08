@@ -22,6 +22,7 @@ export default function ConferencePage() {
         className="mx-auto w-48 rounded-full sm:w-56"
       />
       <h1 className="mt-8 text-5xl leading-tight sm:text-7xl">Meet Me at the Closing Table</h1>
+      <p className="mt-4 font-display text-2xl sm:text-3xl">Free Webinar Series</p>
       <p className="mx-auto mt-6 max-w-xl text-lg text-muted sm:text-xl">
         Join my free webinar where we&apos;ll underwrite deals together and answer investing questions.
       </p>
