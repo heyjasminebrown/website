@@ -21,13 +21,13 @@ export default function ConferencePage() {
     <>
       <section className="mx-auto max-w-2xl px-4 pb-20 pt-10 text-center sm:px-6">
         <Image
-          src="/images/Jasmine-Conventus.jpg"
+          src="/images/Jasmine-Headshot.jpg"
           alt="Jasmine Brown"
-          width={819}
-          height={771}
+          width={800}
+          height={800}
           priority
           sizes="224px"
-          className="mx-auto aspect-square w-48 rounded-full object-cover object-[56%_40%] sm:w-56"
+          className="mx-auto w-48 rounded-full sm:w-56"
         />
         <h1 className="mt-8 text-5xl leading-tight sm:text-7xl">Meet Me at the Closing Table</h1>
         <p className="mx-auto mt-6 max-w-xl text-lg text-muted sm:text-xl">
