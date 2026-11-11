@@ -28,11 +28,19 @@ export function ConferenceForm() {
           <input id="lastName" name="lastName" required autoComplete="family-name" defaultValue={v.lastName} className={field} />
         </div>
       </div>
-      <div>
-        <label htmlFor="email" className="text-sm font-medium">
-          Email
-        </label>
-        <input id="email" name="email" type="email" required autoComplete="email" defaultValue={v.email} className={field} />
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label htmlFor="email" className="text-sm font-medium">
+            Email
+          </label>
+          <input id="email" name="email" type="email" required autoComplete="email" defaultValue={v.email} className={field} />
+        </div>
+        <div>
+          <label htmlFor="phone" className="text-sm font-medium">
+            Phone <span className="font-normal text-muted">(optional)</span>
+          </label>
+          <input id="phone" name="phone" type="tel" autoComplete="tel" defaultValue={v.phone} className={field} />
+        </div>
       </div>
       <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
       <p aria-live="polite" className="text-sm text-red-600">

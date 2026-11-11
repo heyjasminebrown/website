@@ -12,20 +12,36 @@ export async function joinConference(_prev: ConferenceState, formData: FormData)
   if (formData.get("company")) redirect("/conference/thanks");
 
   const get = (key: string) => String(formData.get(key) ?? "").trim().slice(0, 200);
-  const values = { firstName: get("firstName"), lastName: get("lastName"), email: get("email") };
+  const values = { firstName: get("firstName"), lastName: get("lastName"), email: get("email"), phone: get("phone") };
   if (!values.firstName || !values.lastName) {
     return { status: "error", values, message: "Please enter your first and last name." };
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
     return { status: "error", values, message: "Please enter a valid email." };
   }
+  if (values.phone && values.phone.replace(/\D/g, "").length < 10) {
+    return { status: "error", values, message: "Please enter a full phone number, or leave it blank." };
+  }
 
   const name = `${values.firstName} ${values.lastName}`;
   const [saved, result] = await Promise.all([
-    saveLead({ source: "Conference", name, email: values.email, details: { firstName: values.firstName, lastName: values.lastName } }),
+    saveLead({
+      source: "Conference",
+      name,
+      email: values.email,
+      phone: values.phone || undefined,
+      details: { firstName: values.firstName, lastName: values.lastName },
+    }),
     sendEmail({
       subject: `Webinar sign-up: ${name}`,
-      text: [`First name: ${values.firstName}`, `Last name: ${values.lastName}`, `Email: ${values.email}`, "", "From heyjasminebrown.com/conference"].join("\n"),
+      text: [
+        `First name: ${values.firstName}`,
+        `Last name: ${values.lastName}`,
+        `Email: ${values.email}`,
+        `Phone: ${values.phone || "(not given)"}`,
+        "",
+        "From heyjasminebrown.com/conference",
+      ].join("\n"),
       replyTo: values.email,
       // Webinar sign-ups go to Jasmine's own inbox, not the loan leads inbox.
       to: site.email,
