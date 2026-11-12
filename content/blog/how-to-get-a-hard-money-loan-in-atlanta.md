@@ -16,7 +16,7 @@ Lenders fund deals, not dreams. Before you reach out, know these four numbers:
 - **ARV (after repair value):** what it should sell for once it's done, based on recent sold comps nearby.
 - **Hold time:** how many months from closing to selling.
 
-Plug them into my [free fix & flip calculator](/calculator) to see your loan amount, monthly payment and projected profit. If the deal doesn't work on paper, it won't get better at the closing table.
+Plug them into my [free fix & flip calculator](/calculator-flip) to see your loan amount, monthly payment and projected profit. If the deal doesn't work on paper, it won't get better at the closing table.
 
 ## Step 2: Gather what the lender will ask for
 
@@ -63,7 +63,7 @@ Hard money lenders focus mainly on the deal itself, meaning the purchase price, 
 
 ### How much down payment do I need for a hard money loan?
 
-It depends on how much of the purchase and rehab the lender funds. If a lender funds 80% of the purchase and 100% of the rehab, you'd bring the other 20% of the purchase price plus closing costs. Use the [calculator](/calculator) to see your numbers.
+It depends on how much of the purchase and rehab the lender funds. If a lender funds 80% of the purchase and 100% of the rehab, you'd bring the other 20% of the purchase price plus closing costs. Use the [calculator](/calculator-flip) to see your numbers.
 
 ### Can I get a hard money loan for my first flip?
 

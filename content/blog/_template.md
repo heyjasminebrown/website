@@ -15,7 +15,7 @@ Change `draft: true` to `draft: false` when it's ready to go live.
 
 Write normally. Leave a blank line between paragraphs.
 
-**Bold text** and *italic text* work, and so do [links](https://heyjasminebrown.com/calculator).
+**Bold text** and *italic text* work, and so do [links](https://heyjasminebrown.com/calculator-flip).
 
 - Bullet points
 - start with a dash

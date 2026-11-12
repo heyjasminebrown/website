@@ -56,4 +56,4 @@ Three to five recent, nearby, similar sold properties is a good target. Quality 
 
 Ideally comps should be from the last three to six months. In a fast-changing market, the most recent sales matter most.
 
-Once you have your ARV, [run the full deal through my calculator](/calculator) to see your profit.
+Once you have your ARV, [run the full deal through my calculator](/calculator-flip) to see your profit.

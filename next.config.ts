@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
       { source: "/contact", destination: "/quote", permanent: true },
       { source: "/loan", destination: "/quote", permanent: true },
       { source: "/loan-products", destination: "/conventus", permanent: true },
+      { source: "/calculator", destination: "/calculator-flip", permanent: true },
+      { source: "/calculator/interest-only", destination: "/calculator-interest-only", permanent: true },
     ];
   },
   // PostHog analytics are sent through this site so ad blockers don't drop them (see instrumentation-client.ts).

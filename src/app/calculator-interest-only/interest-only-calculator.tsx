@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { money } from "@/lib/flip-calc";
 
 type Key = "loanAmount" | "rate";
 
@@ -57,15 +56,10 @@ export function InterestOnlyCalculator() {
       <aside className="rounded-2xl bg-accent p-6 text-blush lg:sticky lg:top-6 lg:self-start">
         <p className="text-sm uppercase tracking-wider opacity-80">Monthly interest-only payment</p>
         {payment > 0 ? (
-          <>
-            <p className="mt-1 font-display text-5xl">
-              {cents(payment)}
-              <span className="text-2xl">/mo</span>
-            </p>
-            <p className="mt-3 text-sm opacity-80">
-              {money(loanAmount)} × {rate}% ÷ 12 months
-            </p>
-          </>
+          <p className="mt-1 font-display text-5xl">
+            {cents(payment)}
+            <span className="text-2xl">/mo</span>
+          </p>
         ) : (
           <p className="mt-2 text-lg">Enter your loan amount and interest rate to see your monthly payment.</p>
         )}

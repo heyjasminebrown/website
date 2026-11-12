@@ -42,7 +42,7 @@ Most lenders lend to an **LLC** or other business entity rather than to you pers
 
 - Use a [rehab budget worksheet](/free/rehab-budget) with line-item costs and contractor quotes
 - Include three to five solid comps for your ARV
-- Run the deal through a [fix & flip calculator](/calculator) and bring the numbers
+- Run the deal through a [fix & flip calculator](/calculator-flip) and bring the numbers
 - Keep your bank statements ready as proof of funds
 
 ## Frequently asked questions

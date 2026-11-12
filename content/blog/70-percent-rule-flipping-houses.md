@@ -36,7 +36,7 @@ On a lower-priced property, those fixed costs eat a bigger share of the 30%, so 
 
 ## Use the rule to screen, then underwrite properly
 
-Use the 70% rule to quickly filter deals. When one passes, run it through a full analysis that includes every cost. My [fix & flip calculator](/calculator) does this for you and shows your real projected profit and ROI.
+Use the 70% rule to quickly filter deals. When one passes, run it through a full analysis that includes every cost. My [fix & flip calculator](/calculator-flip) does this for you and shows your real projected profit and ROI.
 
 ## Frequently asked questions
 
@@ -52,4 +52,4 @@ In competitive markets, many investors pay 75% or more of ARV and still profit, 
 
 ARV is based on recent sold comparable properties nearby that match your property's size, condition and features after renovation. See my guide on [how to calculate ARV](/blog/how-to-calculate-arv).
 
-Ready to check a deal? [Run it through the calculator](/calculator).
+Ready to check a deal? [Run it through the calculator](/calculator-flip).

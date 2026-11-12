@@ -32,8 +32,8 @@ export const nav: NavItem[] = [
   {
     label: "Calculators",
     children: [
-      { label: "Fix and Flip Calculator", href: "/calculator" },
-      { label: "Interest Only Payment Calculator", href: "/calculator/interest-only" },
+      { label: "Fix and Flip Calculator", href: "/calculator-flip" },
+      { label: "Interest Only Payment Calculator", href: "/calculator-interest-only" },
     ],
   },
   { label: "Events", href: "/events" },
@@ -56,7 +56,7 @@ export const about = {
 export const homeLinks = [
   { label: "Get a Quote", href: "/quote" },
   { label: "Refer a Friend", href: "/referral" },
-  { label: "Underwrite Your Deal", href: "/calculator" },
+  { label: "Underwrite Your Deal", href: "/calculator-flip" },
   { label: "Upcoming Events", href: "/events" },
 ];
 

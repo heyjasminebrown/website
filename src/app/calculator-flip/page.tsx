@@ -3,7 +3,7 @@ import { Calculator } from "./calculator";
 
 export const metadata: Metadata = {
   title: "Free Fix & Flip Calculator",
-  alternates: { canonical: "/calculator" },
+  alternates: { canonical: "/calculator-flip" },
   description:
     "Underwrite your next fix and flip in minutes. Enter the purchase price, rehab budget and ARV to see projected profit and ROI.",
 };

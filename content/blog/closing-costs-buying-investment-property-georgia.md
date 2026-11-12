@@ -31,7 +31,7 @@ Georgia property taxes are based on **40% of the property's fair market value** 
 
 ## Budgeting for closing costs
 
-A simple rule of thumb is to budget a few percent of the purchase price for closing costs, plus lender points, plus prorated taxes and insurance. My [fix & flip calculator](/calculator) includes acquisition costs, property taxes and insurance so you can see them in your numbers.
+A simple rule of thumb is to budget a few percent of the purchase price for closing costs, plus lender points, plus prorated taxes and insurance. My [fix & flip calculator](/calculator-flip) includes acquisition costs, property taxes and insurance so you can see them in your numbers.
 
 ## Frequently asked questions
 

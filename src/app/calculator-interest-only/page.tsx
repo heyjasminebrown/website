@@ -3,7 +3,7 @@ import { InterestOnlyCalculator } from "./interest-only-calculator";
 
 export const metadata: Metadata = {
   title: "Free Interest Only Payment Calculator",
-  alternates: { canonical: "/calculator/interest-only" },
+  alternates: { canonical: "/calculator-interest-only" },
   description:
     "Enter your loan amount and interest rate to see your monthly payment on an interest-only loan.",
 };

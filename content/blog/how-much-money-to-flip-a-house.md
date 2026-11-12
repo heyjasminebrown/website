@@ -32,7 +32,7 @@ With a hard money loan, you're typically responsible for:
 | Reserves for surprises | about $8,000 |
 | **Total cash to have available** | **about $73,000** |
 
-These numbers are only an example. Your rate, points, hold time and costs will change the total, so run your own deal through the [fix & flip calculator](/calculator).
+These numbers are only an example. Your rate, points, hold time and costs will change the total, so run your own deal through the [fix & flip calculator](/calculator-flip).
 
 ## Ways to need less cash
 
