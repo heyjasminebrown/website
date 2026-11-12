@@ -33,7 +33,7 @@ Private money comes from individuals (friends, family, colleagues or other inves
 
 ## Using them together
 
-Many investors combine them: a hard money loan funds most of the purchase and rehab, and a private money partner covers part of the down payment. My [fix & flip calculator](/calculator-flip) lets you add a second loan to see how it changes your profit.
+Many investors combine them: a hard money loan funds most of the purchase and rehab, and a private money partner covers part of the down payment. My [fix & flip calculator](/calculator-flip) lets you add a capital partner contribution to see how it changes your profit.
 
 ## Quick comparison
 

@@ -1,7 +1,8 @@
 // Fix & flip underwriting, ported from Jasmine's "Property Analysis Template" spreadsheet.
 // Percentages are whole numbers (80 = 80%); points are whole numbers (2 = 2 points).
 // The lender finances a share of the purchase plus a share of the rehab, interest only for the full
-// hold time. The interest is counted as a monthly carrying cost; points are the financing cost.
+// hold time. The interest is counted as a monthly carrying cost. A capital partner can also contribute a
+// dollar amount at their own interest rate for the hold; points and the partner's interest are financing fees.
 
 export type FlipInputs = {
   resaleValue: number;
@@ -12,6 +13,8 @@ export type FlipInputs = {
   rehabFinancedPct: number;
   firstPoints: number;
   firstRate: number;
+  partnerAmount: number;
+  partnerRate: number;
   monthlyHoa: number;
   monthlyUtilities: number;
   monthlyTaxes: number;
@@ -32,6 +35,8 @@ export const defaultInputs: FlipInputs = {
   rehabFinancedPct: 100,
   firstPoints: 1,
   firstRate: 0,
+  partnerAmount: 0,
+  partnerRate: 0,
   monthlyHoa: 0,
   monthlyUtilities: 0,
   monthlyTaxes: 0,
@@ -56,7 +61,8 @@ export function underwrite(i: FlipInputs) {
   const projectCost = i.purchasePrice + i.renovationCost;
   const lenderAmount = (i.purchasePrice * i.purchaseFinancedPct + i.renovationCost * i.rehabFinancedPct) / 100;
   const first = loan(lenderAmount, i.firstPoints, i.firstRate, i.holdMonths);
-  const financingCost = first.pointsCost;
+  const partner = loan(i.partnerAmount, 0, i.partnerRate, i.holdMonths);
+  const financingCost = first.pointsCost + partner.interest;
 
   const monthlyHolding = first.monthlyPayment + i.monthlyHoa + i.monthlyUtilities + i.monthlyTaxes + i.monthlyInsurance;
   const holdingCost = monthlyHolding * i.holdMonths;
@@ -78,6 +84,7 @@ export function underwrite(i: FlipInputs) {
   return {
     projectCost,
     first,
+    partner,
     financingCost,
     monthlyHolding,
     holdingCost,

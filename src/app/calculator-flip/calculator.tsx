@@ -27,6 +27,14 @@ const sections: { title: string; note?: string; showPayment?: boolean; fields: [
     ],
   },
   {
+    title: "Capital partner contribution",
+    note: "Use this section if you have a partner bringing additional capital to your project. Please keep in mind that we do not allow second liens.",
+    fields: [
+      ["partnerAmount", "Contribution amount", "$"],
+      ["partnerRate", "Interest rate", "%"],
+    ],
+  },
+  {
     title: "Monthly carrying costs",
     showPayment: true,
     fields: [
