@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
 import { leadMagnets } from "@/content/lead-magnets";
 import { getPosts } from "@/lib/blog";
-import { nav, site } from "@/content/site";
+import { navLinks, site } from "@/content/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
-    ...nav.map((item) => item.href).filter((href) => href !== "/"),
+    ...navLinks.map((item) => item.href).filter((href) => href !== "/"),
     "/about",
     "/broker",
     "/conference",

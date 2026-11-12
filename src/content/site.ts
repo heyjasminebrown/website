@@ -20,15 +20,28 @@ export const site = {
   ],
 };
 
-export const nav = [
+export type NavLink = { label: string; href: string };
+// An item with `children` is a dropdown in the menu.
+export type NavItem = NavLink | { label: string; children: NavLink[] };
+
+export const nav: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Loan Programs", href: "/conventus" },
   { label: "Get a Quote", href: "/quote" },
   { label: "Referral Program", href: "/referral" },
-  { label: "Calculator", href: "/calculator" },
+  {
+    label: "Calculators",
+    children: [
+      { label: "Fix and Flip Calculator", href: "/calculator" },
+      { label: "Interest Only Payment Calculator", href: "/calculator/interest-only" },
+    ],
+  },
   { label: "Events", href: "/events" },
   { label: "Wealthy Notes", href: "/blog" },
 ];
+
+/** Every page in the menu, dropdowns included, as a flat list (footer, sitemap). */
+export const navLinks: NavLink[] = nav.flatMap((item) => ("children" in item ? item.children : [item]));
 
 export const about = {
   heading: "Hey there, I’m Jasmine.",

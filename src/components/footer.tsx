@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { nav, site } from "@/content/site";
+import { navLinks, site } from "@/content/site";
 
 export function Footer() {
   return (
@@ -13,7 +13,7 @@ export function Footer() {
         </div>
         <div className="flex gap-10">
           <ul className="space-y-2">
-            {nav.map((item) => (
+            {navLinks.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className="hover:text-foreground">
                   {item.label}
