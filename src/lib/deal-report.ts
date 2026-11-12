@@ -36,12 +36,12 @@ export function dealSections(i: FlipInputs, r: FlipResult): Section[] {
         {
           label: "Carrying costs",
           value: money(r.holdingCost),
-          note: `${money(r.monthlyHolding)}/mo × ${i.holdMonths} months`,
+          note: `${money(r.monthlyHolding)}/mo × ${i.holdMonths} months: interest, HOA, utilities, taxes & insurance`,
         },
         {
           label: "Acquisition costs",
           value: money(r.costToBuy),
-          note: `${i.buyRealtorPct}% realtor fees, ${i.buyClosingPct}% closing costs, taxes & insurance`,
+          note: `${i.buyRealtorPct}% realtor fees + ${i.buyClosingPct}% closing costs`,
         },
         {
           label: "Selling costs",

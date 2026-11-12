@@ -32,13 +32,13 @@ const sections: { title: string; note?: string; showPayment?: boolean; fields: [
     fields: [
       ["monthlyHoa", "HOA", "$"],
       ["monthlyUtilities", "Utilities", "$"],
+      ["monthlyTaxes", "Property taxes", "$"],
+      ["monthlyInsurance", "Insurance", "$"],
     ],
   },
   {
     title: "Acquisition costs",
     fields: [
-      ["propertyTaxes", "Property taxes", "$"],
-      ["insurance", "Insurance", "$"],
       ["buyRealtorPct", "Realtor fees (% of purchase price)", "%"],
       ["buyClosingPct", "Closing costs", "%"],
     ],
